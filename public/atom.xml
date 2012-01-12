@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
-  <link href="http://yoursite.com/atom.xml" rel="self"/>
-  <link href="http://yoursite.com/"/>
-  <updated>2012-01-12T09:31:45-05:00</updated>
-  <id>http://yoursite.com/</id>
+  <title><![CDATA[EngineerInk]]></title>
+  <link href="http://engineerink.heroku.com/atom.xml" rel="self"/>
+  <link href="http://engineerink.heroku.com/"/>
+  <updated>2012-01-12T09:54:48-05:00</updated>
+  <id>http://engineerink.heroku.com/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Upgrade]]></title>
+    <link href="http://engineerink.heroku.com/blog/2012/01/12/rails-upgrade/"/>
+    <updated>2012-01-12T09:38:00-05:00</updated>
+    <id>http://engineerink.heroku.com/blog/2012/01/12/rails-upgrade</id>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
+
+<h2>Method</h2>
+
+<h2>Hurdles</h2>
+
+<h2>Milestones</h2>
+
+<h2>Deployment</h2>
+
+<h2>Retrospective</h2>
+]]></content>
+  </entry>
   
 </feed>

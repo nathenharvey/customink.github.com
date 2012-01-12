@@ -2,10 +2,10 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://yoursite.com
-title: My Octopress Blog
-subtitle: A blogging framework for hackers.
-author: Your Name
+url: http://engineerink.heroku.com
+title: EngineerInk
+subtitle: A CustomInk Technology Blog 
+author: 
 simple_search: http://google.com/search
 description:
 
