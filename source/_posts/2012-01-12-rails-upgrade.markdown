@@ -8,13 +8,26 @@ categories:
 
 Introduction
 ------------
+
 Method
 ------------
-Hurdles
+### Highlander
+### Rails XSS gem
+### Test Suite
+
+Challenges
 ------------
+### Legacy
+### Oracle
+### Fixtures
+### Mailer
+
 Milestones
 ------------
+
 Deployment
 ------------
+### Dark Production
+
 Retrospective
 ------------

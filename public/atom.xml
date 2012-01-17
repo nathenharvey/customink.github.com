@@ -4,7 +4,7 @@
   <title><![CDATA[EngineerInk]]></title>
   <link href="http://engineerink.heroku.com/atom.xml" rel="self"/>
   <link href="http://engineerink.heroku.com/"/>
-  <updated>2012-01-12T09:54:48-05:00</updated>
+  <updated>2012-01-17T13:45:48-05:00</updated>
   <id>http://engineerink.heroku.com/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -22,11 +22,27 @@
 
 <h2>Method</h2>
 
-<h2>Hurdles</h2>
+<h3>Highlander</h3>
+
+<h3>Rails XSS gem</h3>
+
+<h3>Test Suite</h3>
+
+<h2>Challenges</h2>
+
+<h3>Legacy</h3>
+
+<h3>Oracle</h3>
+
+<h3>Fixtures</h3>
+
+<h3>Mailer</h3>
 
 <h2>Milestones</h2>
 
 <h2>Deployment</h2>
+
+<h3>Dark Production</h3>
 
 <h2>Retrospective</h2>
 ]]></content>
