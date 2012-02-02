@@ -36,7 +36,9 @@ The EngineerInk Blog uses [Octopress](http://octopress.org/) which requires Ruby
       
 4\. Add post categories to the YAML front matter  
 
+    author: Tien Nguyen
     categories: [Evil, Muwahaha, Kittens]
+    published: false # working draft, will not be published on generate
 
 5\. Write Stuff
 
