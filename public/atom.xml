@@ -4,7 +4,7 @@
   <title><![CDATA[EngineerInk]]></title>
   <link href="http://engineerink.heroku.com/atom.xml" rel="self"/>
   <link href="http://engineerink.heroku.com/"/>
-  <updated>2012-02-02T12:50:13-05:00</updated>
+  <updated>2012-02-02T14:45:03-05:00</updated>
   <id>http://engineerink.heroku.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
@@ -12,21 +12,5 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Taking over the wwworld: One custom t-shirt at a time]]></title>
-    <link href="http://engineerink.heroku.com/blog/2012/02/02/taking-over-the-wwworld-one-custom-t-shirt-at-a-time/"/>
-    <updated>2012-02-02T12:47:00-05:00</updated>
-    <id>http://engineerink.heroku.com/blog/2012/02/02/taking-over-the-wwworld-one-custom-t-shirt-at-a-time</id>
-    <content type="html"><![CDATA[<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">method_missing</span><span class="p">(</span><span class="n">blah</span><span class="p">,</span> <span class="n">args</span><span class="o">*</span><span class="p">)</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;wee&quot;</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
   
 </feed>
