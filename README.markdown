@@ -41,6 +41,8 @@ The EngineerInk Blog uses [Octopress](http://octopress.org/) which requires Ruby
     published: false # working draft, will not be published on generate
 
 5\. Write Stuff
+    
+    (The Hard Part)
 
 6\. Generate & Preview
 
@@ -50,8 +52,10 @@ The EngineerInk Blog uses [Octopress](http://octopress.org/) which requires Ruby
 
 7\. Publish
 
-    TBD
-
+    gem install heroku
+    git remote add heroku git@heroku.com:engineerink.git
+    git push heroku master
+    # See your new article published at http://engineerink.heroku.com
 
 ## Resources
 * [Octopress Docs](http://octopress.org/docs)
