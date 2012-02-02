@@ -7,6 +7,9 @@ body > header {
       color: $title_color;
       text-decoration: none;
     }
+    span#tail {
+      color: $subtitle_color;
+    }
   }
   h2 {
     margin: .2em 0 0;
