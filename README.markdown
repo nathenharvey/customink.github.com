@@ -3,7 +3,7 @@ EngineerInk Blog
 
 ## Installation
 
-The CustomInk Technology Blog uses [Octopress](http://octopress.org/) which requires Ruby 1.9.2.
+The EngineerInk Blog uses [Octopress](http://octopress.org/) which requires Ruby 1.9.2.
 
 1\. Install Ruby 1.9.2
 
