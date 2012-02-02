@@ -34,7 +34,7 @@ The EngineerInk Blog uses [Octopress](http://octopress.org/) which requires Ruby
 
 3\. Open the generated markdown file
       
-4\. Add post categories to the YAML front matter  
+4\. Add metadata to the YAML front matter  
 
     author: Tien Nguyen
     categories: [Evil, Muwahaha, Kittens]
@@ -52,10 +52,13 @@ The EngineerInk Blog uses [Octopress](http://octopress.org/) which requires Ruby
 
 7\. Publish
 
+Ask Tien if you need to be added as a collaborate to the heroku app
+
     gem install heroku
     git remote add heroku git@heroku.com:engineerink.git
     git push heroku master
-    # See your new article published at http://engineerink.heroku.com
+
+See your new article published at http://engineerink.heroku.com
 
 ## Resources
 * [Octopress Docs](http://octopress.org/docs)
