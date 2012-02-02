@@ -25,8 +25,8 @@ The EngineerInk Blog uses [Octopress](http://octopress.org/) which requires Ruby
 1\. Note:
 
 * Update the blog in the same way you would update code
-* Merge into master completed posts ready to be published in the next push
 * Branch off of master or work locally for long running articles
+* Push into master completed posts ready to be published in the next push
 
 2\. Create a new post
 
