@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>EngineerInk</title>
+  <title>Organizing Your Rails Models - EngineerInk</title>
   <meta name="author" content="CustomInk">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://engineerink.heroku.com">
+  <link rel="canonical" href="http://engineerink.heroku.com/blog/2012/02/03/organizing-your-rails-models">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -64,15 +64,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/02/03/organizing-your-rails-models/">Organizing Your Rails Models</a></h1>
+      <h1 class="entry-title">Organizing Your Rails Models</h1>
     
     
       <p class="meta">
@@ -95,7 +92,7 @@
   </header>
 
 
-  <div class="entry-content"><p>Like people, applications start out small.  Unlike people, applications do not always have a predictable growth pattern.  Sometimes they grow really big, and sometimes not at all.  When applications grow large, organization becomes important because it is no longer possible to remember every detail about your application without consulting the source code.</p>
+<div class="entry-content"><p>Like people, applications start out small.  Unlike people, applications do not always have a predictable growth pattern.  Sometimes they grow really big, and sometimes not at all.  When applications grow large, organization becomes important because it is no longer possible to remember every detail about your application without consulting the source code.</p>
 
 <p>&#8220;We use Rails, the convention tells us how to organize our code&#8221;.  Yes, but having 50 or more files in your app/models directory is hardly being organized.</p>
 
@@ -126,18 +123,57 @@
 
 <p>This allows developers to quickly see what models make up an order and what models either stand on their own, or are shared across multiple domains.  And for a large application, you are now able to quickly summarize the high level business objects that make up your system.</p>
 </div>
+
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Karle Durante</span></span>
+
+      
+
+
+
+
+
+
+
+
   
 
 
-    </article>
+<time datetime="2012-02-03T15:38:00-05:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
   
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://engineerink.heroku.com/blog/2012/02/03/organizing-your-rails-models/" data-via="" data-counturl="http://engineerink.heroku.com/blog/2012/02/03/organizing-your-rails-models/" >Tweet</a>
+  
+  
+  
 </div>
+
+    
+    <p class="meta">
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -159,6 +195,7 @@
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -173,7 +210,10 @@
       var disqus_shortname = 'engineerink';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://engineerink.heroku.com/blog/2012/02/03/organizing-your-rails-models/';
+        var disqus_url = 'http://engineerink.heroku.com/blog/2012/02/03/organizing-your-rails-models/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

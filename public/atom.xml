@@ -4,7 +4,7 @@
   <title><![CDATA[EngineerInk]]></title>
   <link href="http://engineerink.heroku.com/atom.xml" rel="self"/>
   <link href="http://engineerink.heroku.com/"/>
-  <updated>2012-02-02T14:45:03-05:00</updated>
+  <updated>2012-02-03T22:57:39-05:00</updated>
   <id>http://engineerink.heroku.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
@@ -12,5 +12,43 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Organizing Your Rails Models]]></title>
+    <link href="http://engineerink.heroku.com/blog/2012/02/03/organizing-your-rails-models/"/>
+    <updated>2012-02-03T15:38:00-05:00</updated>
+    <id>http://engineerink.heroku.com/blog/2012/02/03/organizing-your-rails-models</id>
+    <content type="html"><![CDATA[<p>Like people, applications start out small.  Unlike people, applications do not always have a predictable growth pattern.  Sometimes they grow really big, and sometimes not at all.  When applications grow large, organization becomes important because it is no longer possible to remember every detail about your application without consulting the source code.</p>
+
+<p>&#8220;We use Rails, the convention tells us how to organize our code&#8221;.  Yes, but having 50 or more files in your app/models directory is hardly being organized.</p>
+
+<p>A simple thing I like to do is group related models into folders.  This allows you to organize the related models of a domain into a single location while any shared or stand alone models simply remain in the root directory.  For instance, my directory structure may look something like:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>app
+</span><span class='line'>|_models
+</span><span class='line'>   |_address.rb
+</span><span class='line'>   |_orders
+</span><span class='line'>      |_order.rb
+</span><span class='line'>      |_item.rb
+</span><span class='line'>      |_shipping_detail.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And to make sure Rails can find all of my models, I need to update config/application.rb file as such:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">autoload_paths</span> <span class="o">+=</span> <span class="o">[</span><span class="err">&#39;</span><span class="n">app</span><span class="o">/</span><span class="n">models</span><span class="o">/**</span><span class="s2">&quot;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This allows developers to quickly see what models make up an order and what models either stand on their own, or are shared across multiple domains.  And for a large application, you are now able to quickly summarize the high level business objects that make up your system.</p>
+]]></content>
+  </entry>
   
 </feed>
