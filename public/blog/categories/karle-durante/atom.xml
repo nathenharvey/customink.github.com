@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Karle Durante | EngineerInk]]></title>
+  <link href="http://engineerink.heroku.com/blog/categories/karle-durante/atom.xml" rel="self"/>
+  <link href="http://engineerink.heroku.com/"/>
+  <updated>2012-02-05T09:41:58-05:00</updated>
+  <id>http://engineerink.heroku.com/</id>
+  <author>
+    <name><![CDATA[CustomInk]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Organizing Your Rails Models]]></title>
+    <link href="http://engineerink.heroku.com/blog/2012/02/03/organizing-your-rails-models/"/>
+    <updated>2012-02-03T15:38:00-05:00</updated>
+    <id>http://engineerink.heroku.com/blog/2012/02/03/organizing-your-rails-models</id>
+    <content type="html"><![CDATA[<p>Like people, applications start out small.  Unlike people, applications do not always have a predictable growth pattern.  Sometimes they grow really big, and sometimes not at all.  When applications grow large, organization becomes important because it is no longer possible to remember every detail about your application without consulting the source code.</p>
+
+<p>"We use Rails, the convention tells us how to organize our code".  Yes, but having 50 or more files in your app/models directory is hardly being organized.</p>
+
+<p>A simple thing I like to do is group related models into folders.  This allows you to organize the related models of a domain into a single location while any shared or stand alone models simply remain in the root directory.  For instance, my directory structure may look something like:</p>
+
+<p>```
+app
+|<em>models
+   |</em>address.rb
+   |_orders</p>
+
+<pre><code>  |_order.rb
+  |_item.rb
+  |_shipping_detail.rb
+</code></pre>
+
+<p>```</p>
+
+<p>And to make sure Rails can find all of my models, I need to update config/application.rb file as such:</p>
+
+<p><code>ruby
+config.autoload_paths += ['app/models/**"]
+</code></p>
+
+<p>This allows developers to quickly see what models make up an order and what models either stand on their own, or are shared across multiple domains.  And for a large application, you are now able to quickly summarize the high level business objects that make up your system.</p>
+]]></content>
+  </entry>
+  
+</feed>

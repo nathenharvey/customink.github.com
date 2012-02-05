@@ -4,6 +4,7 @@ title: "Organizing Your Rails Models"
 date: 2012-02-03 15:38
 comments: true
 categories: 
+  - Karle Durante
 author: Karle Durante
 published: true
 ---
