@@ -5,7 +5,12 @@ date: 2012-01-31 10:14
 author: Jake Vanderdray
 comments: true
 published: true
-categories: [Chef, PagerDuty, Nagios, Jake Vanderdray]
+categories:
+  - chef
+  - nagios
+  - pagerduty
+  - web operations
+  - Jake Vanderdray
 ---
 
 ## Three Things that Work Great Together

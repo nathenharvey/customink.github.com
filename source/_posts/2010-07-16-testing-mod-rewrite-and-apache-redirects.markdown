@@ -5,9 +5,7 @@ date: 2010-07-16 09:00
 comments: true
 categories:
   - apache
-  - customink
   - devops
-  - ruby on rails
   - sysadmin
   - testing
   - web operations
