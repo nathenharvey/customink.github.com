@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Jake Vanderdray | EngineerInk]]></title>
-  <link href="http://engineerink.heroku.com/blog/categories/jake-vanderdray/atom.xml" rel="self"/>
-  <link href="http://engineerink.heroku.com/"/>
-  <updated>2012-02-05T10:39:33-05:00</updated>
-  <id>http://engineerink.heroku.com/</id>
+  <link href="http://technology.customink.com/blog/categories/jake-vanderdray/atom.xml" rel="self"/>
+  <link href="http://technology.customink.com/"/>
+  <updated>2012-02-05T11:13:45-05:00</updated>
+  <id>http://technology.customink.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[PagerDuty, Nagios and Chef]]></title>
-    <link href="http://engineerink.heroku.com/blog/2012/01/31/pagerduty/"/>
+    <link href="http://technology.customink.com/blog/2012/01/31/pagerduty/"/>
     <updated>2012-01-31T10:14:00-05:00</updated>
-    <id>http://engineerink.heroku.com/blog/2012/01/31/pagerduty</id>
+    <id>http://technology.customink.com/blog/2012/01/31/pagerduty</id>
     <content type="html"><![CDATA[<h2>Three Things that Work Great Together</h2>
 
 <p>If you use Chef and Nagios, you already know what a great combination they make.  As you build new servers they automatically start getting monitored by Nagios.  Without you having to do anything they're grouped together based on role, so its easy to apply the same checks for all servers in a given role.  If you haven't tried Nagios built with the chef cookbook its easy to get started with this <a href="http://wiki.opscode.com/display/chef/Nagios+Quick+Start">guide</a> from Opscode.</p>

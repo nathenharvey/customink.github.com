@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: hudson | EngineerInk]]></title>
-  <link href="http://engineerink.heroku.com/blog/categories/hudson/atom.xml" rel="self"/>
-  <link href="http://engineerink.heroku.com/"/>
-  <updated>2012-02-05T10:39:33-05:00</updated>
-  <id>http://engineerink.heroku.com/</id>
+  <link href="http://technology.customink.com/blog/categories/hudson/atom.xml" rel="self"/>
+  <link href="http://technology.customink.com/"/>
+  <updated>2012-02-05T11:13:45-05:00</updated>
+  <id>http://technology.customink.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Green Screen]]></title>
-    <link href="http://engineerink.heroku.com/blog/2012/01/02/green-screen/"/>
+    <link href="http://technology.customink.com/blog/2012/01/02/green-screen/"/>
     <updated>2012-01-02T14:17:00-05:00</updated>
-    <id>http://engineerink.heroku.com/blog/2012/01/02/green-screen</id>
+    <id>http://technology.customink.com/blog/2012/01/02/green-screen</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/customink/greenscreen">Green Screen</a> is a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area. It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room.</p>
 
 <p><img class="right" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/greenscreen.jpg" width="300" height="225" title="Green Screen Monitor" alt="Green Screen Monitor">

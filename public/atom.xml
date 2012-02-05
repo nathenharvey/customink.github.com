@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[EngineerInk]]></title>
-  <link href="http://engineerink.heroku.com/atom.xml" rel="self"/>
-  <link href="http://engineerink.heroku.com/"/>
-  <updated>2012-02-05T10:39:33-05:00</updated>
-  <id>http://engineerink.heroku.com/</id>
+  <link href="http://technology.customink.com/atom.xml" rel="self"/>
+  <link href="http://technology.customink.com/"/>
+  <updated>2012-02-05T11:13:45-05:00</updated>
+  <id>http://technology.customink.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Organizing Your Rails Models]]></title>
-    <link href="http://engineerink.heroku.com/blog/2012/02/03/organizing-your-rails-models/"/>
+    <link href="http://technology.customink.com/blog/2012/02/03/organizing-your-rails-models/"/>
     <updated>2012-02-03T15:38:00-05:00</updated>
-    <id>http://engineerink.heroku.com/blog/2012/02/03/organizing-your-rails-models</id>
+    <id>http://technology.customink.com/blog/2012/02/03/organizing-your-rails-models</id>
     <content type="html"><![CDATA[<p>Like people, applications start out small.  Unlike people, applications do not always have a predictable growth pattern.  Sometimes they grow really big, and sometimes not at all.  When applications grow large, organization becomes important because it is no longer possible to remember every detail about your application without consulting the source code.</p>
 
 <p>&#8220;We use Rails, the convention tells us how to organize our code&#8221;.  Yes, but having 50 or more files in your app/models directory is hardly being organized.</p>
@@ -53,9 +53,9 @@
   
   <entry>
     <title type="html"><![CDATA[PagerDuty, Nagios and Chef]]></title>
-    <link href="http://engineerink.heroku.com/blog/2012/01/31/pagerduty/"/>
+    <link href="http://technology.customink.com/blog/2012/01/31/pagerduty/"/>
     <updated>2012-01-31T10:14:00-05:00</updated>
-    <id>http://engineerink.heroku.com/blog/2012/01/31/pagerduty</id>
+    <id>http://technology.customink.com/blog/2012/01/31/pagerduty</id>
     <content type="html"><![CDATA[<h2>Three Things that Work Great Together</h2>
 
 <p>If you use Chef and Nagios, you already know what a great combination they make.  As you build new servers they automatically start getting monitored by Nagios.  Without you having to do anything they&#8217;re grouped together based on role, so its easy to apply the same checks for all servers in a given role.  If you haven&#8217;t tried Nagios built with the chef cookbook its easy to get started with this <a href="http://wiki.opscode.com/display/chef/Nagios+Quick+Start">guide</a> from Opscode.</p>
@@ -72,9 +72,9 @@
   
   <entry>
     <title type="html"><![CDATA[Green Screen]]></title>
-    <link href="http://engineerink.heroku.com/blog/2012/01/02/green-screen/"/>
+    <link href="http://technology.customink.com/blog/2012/01/02/green-screen/"/>
     <updated>2012-01-02T14:17:00-05:00</updated>
-    <id>http://engineerink.heroku.com/blog/2012/01/02/green-screen</id>
+    <id>http://technology.customink.com/blog/2012/01/02/green-screen</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/customink/greenscreen">Green Screen</a> is a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area. It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room.</p>
 
 <p><img class="right" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/greenscreen.jpg" width="300" height="225" title="Green Screen Monitor" alt="Green Screen Monitor">
@@ -119,9 +119,9 @@ We&#8217;ve also added support for controlling which builds are displayed from e
   
   <entry>
     <title type="html"><![CDATA[Why we chose Chef over Puppet at CustomInk]]></title>
-    <link href="http://engineerink.heroku.com/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/"/>
+    <link href="http://technology.customink.com/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/"/>
     <updated>2011-11-21T03:29:00-05:00</updated>
-    <id>http://engineerink.heroku.com/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink</id>
+    <id>http://technology.customink.com/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink</id>
     <content type="html"><![CDATA[<p>Not unlike most technology choices, the choice of which configuration management tool to use for managing your infrastructure as code is sure to spark debate among opinionated technologists. There are certainly a number of choices available all of which have their own strengths and weaknesses. There are a number of things to consider as you select a tool.</p>
 
 <p>Before we get into any of the specifics, I want to make it clear that the &#8220;right&#8221; answer to this question is a simple, but emphatic &#8220;yes!&#8221; Yes, you should be using a tool that allows you to manage your infrastructure as code. That tool should NOT be a server.txt file that you keep on the machine that documents the installation, set-up, and configuration changes you&#8217;ve made. Moving that text to somewhere other than the local server is a step in the right direction but isn&#8217;t really the answer. Moving the server.txt file to your corporate wiki is going to suck just as bad.</p>
@@ -206,9 +206,9 @@ We&#8217;ve also added support for controlling which builds are displayed from e
   
   <entry>
     <title type="html"><![CDATA[Testing mod_rewrite and apache redirects]]></title>
-    <link href="http://engineerink.heroku.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/"/>
+    <link href="http://technology.customink.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/"/>
     <updated>2010-07-16T09:00:00-04:00</updated>
-    <id>http://engineerink.heroku.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects</id>
+    <id>http://technology.customink.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects</id>
     <content type="html"><![CDATA[<p>At <a href="http://www.customink.com">CustomInk</a>, we recently migrated from mongrel to Passenger for our Ruby on Rails website. This migration included a full rewrite of our apache configuration files.</p>
 
 <p>With over 500 redirect and rewrite rules in place I needed a way to ensure my copy-n-paste skills were up to snuff and that we didn&#8217;t loose any redirects along the way.</p>
