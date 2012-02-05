@@ -34,10 +34,10 @@ The EngineerInk Blog uses [Octopress](http://octopress.org/) which requires Ruby
 
 3\. Open the generated markdown file
       
-4\. Add metadata to the YAML front matter  
+4\. Add metadata to the YAML front matter (Include your name as a category)  
 
     author: Tien Nguyen
-    categories: [Evil, Muwahaha, Kittens]
+    categories: [Evil, Muwahaha, Kittens, Tien Nguyen]
     published: false # working draft, will not be published on generate
 
 5\. Write Stuff
