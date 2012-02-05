@@ -24,7 +24,7 @@ hgroup {
   background-image: url('/images/cilogo.jpg');
   background-repeat:no-repeat;
   background-size:76px 76px;
-  background-position: 0 12px;
+  /** background-position: 0 12px; **/
 }
 
 body header hgroup h1, body header hgroup h2 {
