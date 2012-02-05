@@ -3,6 +3,7 @@ layout: post
 title: "Testing mod_rewrite and apache redirects"
 date: 2010-07-16 09:00
 comments: true
+author: Nathen Harvey
 categories:
   - apache
   - devops

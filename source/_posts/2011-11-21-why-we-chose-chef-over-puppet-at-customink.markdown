@@ -3,6 +3,7 @@ layout: post
 title: "Why we chose Chef over Puppet at CustomInk"
 date: 2011-11-21 03:29
 comments: true
+author: Nathen Harvey
 categories:
   - chef
   - devops
