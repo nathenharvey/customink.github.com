@@ -52,13 +52,13 @@ The EngineerInk Blog uses [Octopress](http://octopress.org/) which requires Ruby
 
 7\. Publish
 
-Ask Tien if you need to be added as a collaborator to the heroku app
+Ask Nathen if you need to be added as a collaborator to the heroku app
 
     gem install heroku
-    git remote add heroku git@heroku.com:engineerink.git
+    git remote add heroku git@heroku.com:customink-technology.git
     git push heroku master
 
-See your new article published at http://engineerink.heroku.com
+See your new article published at http://technology.customink.com
 
 ## Resources
 * [Octopress Docs](http://octopress.org/docs)
