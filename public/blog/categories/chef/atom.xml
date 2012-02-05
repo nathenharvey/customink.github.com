@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Chef | EngineerInk]]></title>
+  <link href="http://engineerink.heroku.com/blog/categories/chef/atom.xml" rel="self"/>
+  <link href="http://engineerink.heroku.com/"/>
+  <updated>2012-02-05T10:17:18-05:00</updated>
+  <id>http://engineerink.heroku.com/</id>
+  <author>
+    <name><![CDATA[CustomInk]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[PagerDuty, Nagios and Chef]]></title>
+    <link href="http://engineerink.heroku.com/blog/2012/01/31/pagerduty/"/>
+    <updated>2012-01-31T10:14:00-05:00</updated>
+    <id>http://engineerink.heroku.com/blog/2012/01/31/pagerduty</id>
+    <content type="html"><![CDATA[<h2>Three Things that Work Great Together</h2>
+
+<p>If you use Chef and Nagios, you already know what a great combination they make.  As you build new servers they automatically start getting monitored by Nagios.  Without you having to do anything they're grouped together based on role, so its easy to apply the same checks for all servers in a given role.  If you haven't tried Nagios built with the chef cookbook its easy to get started with this <a href="http://wiki.opscode.com/display/chef/Nagios+Quick+Start">guide</a> from Opscode.</p>
+
+<p><a href="http://www.pagerduty.com/]">PagerDuty</a> is a service that manages your on-call alerting and escalation policies.  Its hard to love a service that wakes you up in the middle of the night telling you about problems with your servers (my wife is really not a fan), but PagerDuty is helpful.  We generally set it to send an email about a problem first, then send an SMS text and finally to actually make a phone call if no one has responded.  It will go through a rotating list of people on call and accepts alerts from a number of monitoring services including Nagios and AlertSite.</p>
+
+<p>Opscode recently accepted my addition of a PagerDuty recipe to the <a href="https://github.com/opscode/cookbooks/tree/master/nagios">Nagios cookbook</a> which makes it incredibly easy to connect your Nagios instance to PagerDuty.  You just add a PagerDuty API key as an attribute, apply the pagerduty recipe to your nagios server (see their <a href="http://www.pagerduty.com/docs/guides/nagios-integration-guide">guide</a> for instructions on getting your key) and you're good to go.</p>
+
+<p>If you add the API key(s) to your Chef environments, you can tie each environment to a different escalation policy.  That way your staging environments just send email alerts while production actually texts and calls.</p>
+
+<p>One of the big wins of using the Nagios plugins is that if a service recovers the PagerDuty incident gets resolved automatically so it doesn't continue to escalate the problem.  Also if you acknowledge a problem in Nagios the acknowledgment flows through to PagerDuty.</p>
+]]></content>
+  </entry>
+  
+</feed>

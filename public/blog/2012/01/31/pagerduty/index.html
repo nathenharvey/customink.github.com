@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Organizing Your Rails Models - EngineerInk</title>
+  <title>PagerDuty, Nagios and Chef - EngineerInk</title>
   <meta name="author" content="CustomInk">
 
   
-  <meta name="description" content="Like people, applications start out small. Unlike people, applications do not always have a predictable growth pattern. Sometimes they grow really &hellip;">
+  <meta name="description" content="Three Things that Work Great Together If you use Chef and Nagios, you already know what a great combination they make. As you build new servers they &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://engineerink.heroku.com/blog/2012/02/03/organizing-your-rails-models">
+  <link rel="canonical" href="http://engineerink.heroku.com/blog/2012/01/31/pagerduty">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -69,7 +69,7 @@
   
   <header>
     
-      <h1 class="entry-title">Organizing Your Rails Models</h1>
+      <h1 class="entry-title">PagerDuty, Nagios and Chef</h1>
     
     
       <p class="meta">
@@ -85,43 +85,24 @@
   
 
 
-<time datetime="2012-02-03T15:38:00-05:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2012</time>
+<time datetime="2012-01-31T10:14:00-05:00" pubdate data-updated="true">Jan 31<span>st</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Like people, applications start out small.  Unlike people, applications do not always have a predictable growth pattern.  Sometimes they grow really big, and sometimes not at all.  When applications grow large, organization becomes important because it is no longer possible to remember every detail about your application without consulting the source code.</p>
+<div class="entry-content"><h2>Three Things that Work Great Together</h2>
 
-<p>&#8220;We use Rails, the convention tells us how to organize our code&#8221;.  Yes, but having 50 or more files in your app/models directory is hardly being organized.</p>
+<p>If you use Chef and Nagios, you already know what a great combination they make.  As you build new servers they automatically start getting monitored by Nagios.  Without you having to do anything they&#8217;re grouped together based on role, so its easy to apply the same checks for all servers in a given role.  If you haven&#8217;t tried Nagios built with the chef cookbook its easy to get started with this <a href="http://wiki.opscode.com/display/chef/Nagios+Quick+Start">guide</a> from Opscode.</p>
 
-<p>A simple thing I like to do is group related models into folders.  This allows you to organize the related models of a domain into a single location while any shared or stand alone models simply remain in the root directory.  For instance, my directory structure may look something like:</p>
+<p><a href="http://www.pagerduty.com/]">PagerDuty</a> is a service that manages your on-call alerting and escalation policies.  Its hard to love a service that wakes you up in the middle of the night telling you about problems with your servers (my wife is really not a fan), but PagerDuty is helpful.  We generally set it to send an email about a problem first, then send an SMS text and finally to actually make a phone call if no one has responded.  It will go through a rotating list of people on call and accepts alerts from a number of monitoring services including Nagios and AlertSite.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>app
-</span><span class='line'>|_models
-</span><span class='line'>   |_address.rb
-</span><span class='line'>   |_orders
-</span><span class='line'>      |_order.rb
-</span><span class='line'>      |_item.rb
-</span><span class='line'>      |_shipping_detail.rb</span></code></pre></td></tr></table></div></figure>
+<p>Opscode recently accepted my addition of a PagerDuty recipe to the <a href="https://github.com/opscode/cookbooks/tree/master/nagios">Nagios cookbook</a> which makes it incredibly easy to connect your Nagios instance to PagerDuty.  You just add a PagerDuty API key as an attribute, apply the pagerduty recipe to your nagios server (see their <a href="http://www.pagerduty.com/docs/guides/nagios-integration-guide">guide</a> for instructions on getting your key) and you&#8217;re good to go.</p>
 
+<p>If you add the API key(s) to your Chef environments, you can tie each environment to a different escalation policy.  That way your staging environments just send email alerts while production actually texts and calls.</p>
 
-<p>And to make sure Rails can find all of my models, I need to update config/application.rb file as such:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">autoload_paths</span> <span class="o">+=</span> <span class="o">[</span><span class="err">&#39;</span><span class="n">app</span><span class="o">/</span><span class="n">models</span><span class="o">/**</span><span class="s2">&quot;]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This allows developers to quickly see what models make up an order and what models either stand on their own, or are shared across multiple domains.  And for a large application, you are now able to quickly summarize the high level business objects that make up your system.</p>
+<p>One of the big wins of using the Nagios plugins is that if a service recovers the PagerDuty incident gets resolved automatically so it doesn&#8217;t continue to escalate the problem.  Also if you acknowledge a problem in Nagios the acknowledgment flows through to PagerDuty.</p>
 </div>
 
 
@@ -130,7 +111,7 @@
       
   
 
-<span class="byline author vcard">Posted by <span class="fn">Karle Durante</span></span>
+<span class="byline author vcard">Posted by <span class="fn">Jake Vanderdray</span></span>
 
       
 
@@ -144,12 +125,12 @@
   
 
 
-<time datetime="2012-02-03T15:38:00-05:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2012</time>
+<time datetime="2012-01-31T10:14:00-05:00" pubdate data-updated="true">Jan 31<span>st</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/karle-durante/'>Karle Durante</a>
+    <a class='category' href='/blog/categories/chef/'>Chef</a>, <a class='category' href='/blog/categories/jake-vanderdray/'>Jake Vanderdray</a>, <a class='category' href='/blog/categories/nagios/'>Nagios</a>, <a class='category' href='/blog/categories/pagerduty/'>PagerDuty</a>
   
 </span>
 
@@ -158,7 +139,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://engineerink.heroku.com/blog/2012/02/03/organizing-your-rails-models/" data-via="" data-counturl="http://engineerink.heroku.com/blog/2012/02/03/organizing-your-rails-models/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://engineerink.heroku.com/blog/2012/01/31/pagerduty/" data-via="" data-counturl="http://engineerink.heroku.com/blog/2012/01/31/pagerduty/" >Tweet</a>
   
   
   
@@ -167,8 +148,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/01/31/pagerduty/" title="Previous Post: PagerDuty, Nagios and Chef">&laquo; PagerDuty, Nagios and Chef</a>
+        <a class="basic-alignment left" href="/blog/2012/01/02/green-screen/" title="Previous Post: Green Screen">&laquo; Green Screen</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2012/02/03/organizing-your-rails-models/" title="next Post: Organizing Your Rails Models">Organizing Your Rails Models &raquo;</a>
       
     </p>
   </footer>
@@ -235,8 +218,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://engineerink.heroku.com/blog/2012/02/03/organizing-your-rails-models/';
-        var disqus_url = 'http://engineerink.heroku.com/blog/2012/02/03/organizing-your-rails-models/';
+        var disqus_identifier = 'http://engineerink.heroku.com/blog/2012/01/31/pagerduty/';
+        var disqus_url = 'http://engineerink.heroku.com/blog/2012/01/31/pagerduty/';
         var disqus_script = 'embed.js';
       
     (function () {
