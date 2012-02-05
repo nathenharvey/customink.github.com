@@ -54,7 +54,6 @@ The EngineerInk Blog uses [Octopress](http://octopress.org/) which requires Ruby
 
 Ask Nathen if you need to be added as a collaborator to the heroku app
 
-    gem install heroku
     git remote add heroku git@heroku.com:customink-technology.git
     git push heroku master
 
