@@ -19,3 +19,13 @@
 //$sidebar-pad-medium: 15px;
 //$sidebar-pad-wide: 20px;
 //$sidebar-width-wide: 300px;
+
+hgroup {
+  background-image: url('/images/cilogo.jpg');
+  background-repeat:no-repeat;
+  background-size:76px 76px;
+}
+
+body header hgroup h1, body header hgroup h2 {
+  margin-left: 80px;
+}
