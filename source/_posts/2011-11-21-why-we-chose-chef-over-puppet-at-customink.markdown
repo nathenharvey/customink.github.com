@@ -9,6 +9,7 @@ categories:
   - heroku
   - puppet
   - sysadmin
+  - web operations
   - Nathen Harvey
 ---
 Not unlike most technology choices, the choice of which configuration management tool to use for managing your infrastructure as code is sure to spark debate among opinionated technologists. There are certainly a number of choices available all of which have their own strengths and weaknesses. There are a number of things to consider as you select a tool.
