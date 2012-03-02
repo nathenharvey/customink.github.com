@@ -106,7 +106,7 @@ namespace :migrate do
     field_mappings = {
       :userid         => :id,
       :creation_date  => Mapper::ListMapping.new(
-                          [:created_at, :update_at_]
+                          [:created_at, :update_at]
                          ),
       :user_data      => Mapper::ComplexMapping.new(
                           :account_number, 
