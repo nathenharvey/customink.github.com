@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Karle Durante | EngineerInk]]></title>
-  <link href="http://technology.customink.com/blog/categories/karle-durante/atom.xml" rel="self"/>
+  <title><![CDATA[Category: ruby | EngineerInk]]></title>
+  <link href="http://technology.customink.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://technology.customink.com/"/>
   <updated>2012-03-02T16:27:02-05:00</updated>
   <id>http://technology.customink.com/</id>

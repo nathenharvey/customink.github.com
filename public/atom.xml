@@ -4,7 +4,7 @@
   <title><![CDATA[EngineerInk]]></title>
   <link href="http://technology.customink.com/atom.xml" rel="self"/>
   <link href="http://technology.customink.com/"/>
-  <updated>2012-02-08T08:55:03-05:00</updated>
+  <updated>2012-03-02T16:27:02-05:00</updated>
   <id>http://technology.customink.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
@@ -12,6 +12,231 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Simple Data Mapper]]></title>
+    <link href="http://technology.customink.com/blog/2012/03/02/simple-data-mapper/"/>
+    <updated>2012-03-02T15:35:00-05:00</updated>
+    <id>http://technology.customink.com/blog/2012/03/02/simple-data-mapper</id>
+    <content type="html"><![CDATA[<p>I recently tackled a pretty typical data migration task where some source model had to be transformed into some target model.  About 80% of the elements were mapped field for field, and the other 20% had to be mutated in some way.  Tired of writing one off rake tasks to pull and transform data, I came up with a little data mapper class that I cold reuse in the future.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Mapper</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:source_model</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:mappings</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">AttributeMapping</span><span class="p">;</span><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">ListMapping</span> <span class="o">&lt;</span> <span class="no">AttributeMapping</span>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:fields</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># fields - array of field symbols we want to map data into</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="n">fields</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">source_obj</span><span class="p">,</span> <span class="n">source_attribute</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">{}</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">values</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">fields</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">field</span><span class="o">|</span>
+</span><span class='line'>          <span class="n">values</span><span class="o">[</span><span class="n">field</span><span class="o">]</span> <span class="o">=</span> <span class="n">source_obj</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">source_attribute</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">ComplexMapping</span> <span class="o">&lt;</span> <span class="no">AttributeMapping</span>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:field</span>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:instruction</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># field       - field symbol we want to map data into</span>
+</span><span class='line'>    <span class="c1"># instruction - lambda which accepts source object and source attribute. </span>
+</span><span class='line'>    <span class="c1">#               expected to return value to be mapped to field (on target obj)</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">instruction</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">field</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">instruction</span> <span class="o">=</span> <span class="n">instruction</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">source_obj</span><span class="p">,</span> <span class="n">source_attribute</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">{</span> <span class="n">field</span> <span class="o">=&gt;</span> <span class="n">instruction</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">source_obj</span><span class="p">,</span> <span class="n">source_attribute</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">source_model</span><span class="p">,</span> <span class="n">mappings</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">source_model</span> <span class="o">=</span> <span class="n">source_model</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">mappings</span> <span class="o">=</span> <span class="n">mappings</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">conjure</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">values</span> <span class="o">=</span> <span class="n">map_values_for</span><span class="p">(</span> <span class="nb">self</span><span class="o">.</span><span class="n">source_model</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">mappings</span> <span class="p">)</span>
+</span><span class='line'>    <span class="n">model</span><span class="o">.</span><span class="n">to_s</span><span class="o">.</span><span class="n">camelize</span><span class="o">.</span><span class="n">constantize</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">map_values_for</span><span class="p">(</span><span class="n">source_model</span><span class="p">,</span> <span class="n">mappings</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{}</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">values</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">mappings</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="kp">attr</span><span class="p">,</span> <span class="n">mapping</span><span class="o">|</span>
+</span><span class='line'>        <span class="k">if</span> <span class="no">AttributeMapping</span> <span class="o">===</span> <span class="n">mapping</span>
+</span><span class='line'>          <span class="n">values</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">mapping</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">source_model</span><span class="p">,</span> <span class="kp">attr</span><span class="p">))</span>
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>          <span class="n">values</span><span class="o">[</span><span class="n">mapping</span><span class="o">]</span> <span class="o">=</span> <span class="n">source_model</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="kp">attr</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using the mapper is really simple.  Let&#8217;s say my source model, LegacyCustomer, is based is based off of a legacy table from an older system and looks like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">LegacyCustomer</span><span class="p">(</span>
+</span><span class='line'>  <span class="n">userid</span><span class="p">:</span> <span class="n">integer</span><span class="p">,</span>        <span class="c1"># primary key</span>
+</span><span class='line'>  <span class="n">creationdate</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="c1"># date record was created</span>
+</span><span class='line'>  <span class="n">accountnum</span><span class="p">:</span> <span class="n">string</span>      <span class="c1"># customer number. it&#39;s prefixed with </span>
+</span><span class='line'>                          <span class="c1"># &quot;LGCY-&quot; string that we no longer need!</span>
+</span><span class='line'><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And we want to migrate the LegacyCustomer data to a new Customer model that looks like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Customer</span><span class="p">(</span>
+</span><span class='line'>  <span class="nb">id</span><span class="p">:</span> <span class="n">integer</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">created_at</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">updated_at</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">account_number</span><span class="p">:</span> <span class="n">string</span>
+</span><span class='line'><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>My rake task to run the migration would look like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">namespace</span> <span class="ss">:migrate</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">task</span> <span class="ss">:legacy_customers</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">field_mappings</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>      <span class="ss">:userid</span>         <span class="o">=&gt;</span> <span class="ss">:id</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:creation_date</span>  <span class="o">=&gt;</span> <span class="no">Mapper</span><span class="o">::</span><span class="no">ListMapping</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+</span><span class='line'>                          <span class="o">[</span><span class="ss">:created_at</span><span class="p">,</span> <span class="ss">:update_at_</span><span class="o">]</span>
+</span><span class='line'>                         <span class="p">),</span>
+</span><span class='line'>      <span class="ss">:user_data</span>      <span class="o">=&gt;</span> <span class="no">Mapper</span><span class="o">::</span><span class="no">ComplexMapping</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+</span><span class='line'>                          <span class="ss">:account_number</span><span class="p">,</span>
+</span><span class='line'>                          <span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">obj</span><span class="p">,</span> <span class="kp">attr</span><span class="o">|</span> <span class="n">obj</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="kp">attr</span><span class="p">)</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;LGCY-&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)}</span>
+</span><span class='line'>                         <span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="no">LegacyCustomer</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">legacy_customer</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">mapper</span> <span class="o">=</span> <span class="no">Mapper</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">legacy_customer</span><span class="p">,</span> <span class="n">field_mappings</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">customer</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">conjure</span><span class="p">(</span><span class="ss">:customer</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">customer</span><span class="o">.</span><span class="n">save!</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As my migration marched on &#8216;one off&#8217; data errors would pop up causing the script to fail.  This is what ultimately led me to create the ComplexMapping class.  Every time some white space, funny character, or field split requirement bombed my script I was able to add some code to my ComplexMapping requirement to solve it.</p>
+
+<p>I wanted to share this experience for two reasons:</p>
+
+<p>Ruby is awesome.  Metaprogramming and Procs made this mapper possible.  When I first started programming with Ruby, these were the two hardest concepts for me to wrap my head around.  Investing time into learning these aspects of ruby have made me such a better ruby programmer.</p>
+
+<p>The second reason is to reinforce the lesson that doing things the lazy (comfortable) way will rarely ever benefit you.  This mapper class not only made writing and maintaining my migration script easier.  It has also found it&#8217;s way into some production code.</p>
+
+<p>Abstracting concepts (or remembering the <a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">single responsibility principle</a>) will always benefit you in the future.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Organizing Your Rails Models]]></title>
