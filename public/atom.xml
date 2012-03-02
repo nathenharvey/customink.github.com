@@ -4,7 +4,7 @@
   <title><![CDATA[EngineerInk]]></title>
   <link href="http://technology.customink.com/atom.xml" rel="self"/>
   <link href="http://technology.customink.com/"/>
-  <updated>2012-03-02T16:27:02-05:00</updated>
+  <updated>2012-03-02T16:37:54-05:00</updated>
   <id>http://technology.customink.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
@@ -147,7 +147,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Using the mapper is really simple.  Let&#8217;s say my source model, LegacyCustomer, is based is based off of a legacy table from an older system and looks like:</p>
+<p>Using the mapper is really simple.  Let&#8217;s say my source model, LegacyCustomer, is based off of a legacy table from an older system and looks like:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -208,7 +208,7 @@
 </span><span class='line'>    <span class="n">field_mappings</span> <span class="o">=</span> <span class="p">{</span>
 </span><span class='line'>      <span class="ss">:userid</span>         <span class="o">=&gt;</span> <span class="ss">:id</span><span class="p">,</span>
 </span><span class='line'>      <span class="ss">:creation_date</span>  <span class="o">=&gt;</span> <span class="no">Mapper</span><span class="o">::</span><span class="no">ListMapping</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
-</span><span class='line'>                          <span class="o">[</span><span class="ss">:created_at</span><span class="p">,</span> <span class="ss">:update_at_</span><span class="o">]</span>
+</span><span class='line'>                          <span class="o">[</span><span class="ss">:created_at</span><span class="p">,</span> <span class="ss">:update_at</span><span class="o">]</span>
 </span><span class='line'>                         <span class="p">),</span>
 </span><span class='line'>      <span class="ss">:user_data</span>      <span class="o">=&gt;</span> <span class="no">Mapper</span><span class="o">::</span><span class="no">ComplexMapping</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
 </span><span class='line'>                          <span class="ss">:account_number</span><span class="p">,</span>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Karle Durante | EngineerInk]]></title>
   <link href="http://technology.customink.com/blog/categories/karle-durante/atom.xml" rel="self"/>
   <link href="http://technology.customink.com/"/>
-  <updated>2012-03-02T16:27:02-05:00</updated>
+  <updated>2012-03-02T16:37:54-05:00</updated>
   <id>http://technology.customink.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
@@ -100,7 +100,7 @@ end
 end
 ```</p>
 
-<p>Using the mapper is really simple.  Let's say my source model, LegacyCustomer, is based is based off of a legacy table from an older system and looks like:</p>
+<p>Using the mapper is really simple.  Let's say my source model, LegacyCustomer, is based off of a legacy table from an older system and looks like:</p>
 
 <p>```ruby
 LegacyCustomer(
@@ -132,7 +132,7 @@ namespace :migrate do
 <pre><code>field_mappings = {
   :userid         =&gt; :id,
   :creation_date  =&gt; Mapper::ListMapping.new(
-                      [:created_at, :update_at_]
+                      [:created_at, :update_at]
                      ),
   :user_data      =&gt; Mapper::ComplexMapping.new(
                       :account_number, 
