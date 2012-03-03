@@ -11,6 +11,7 @@ author: Karle Durante
 published: true
 ---
 
+
 I recently tackled a pretty typical data migration task where some source model had to be transformed into some target model.  About 80% of the elements were mapped field for field, and the other 20% had to be mutated in some way.  Tired of writing one off rake tasks to pull and transform data, I came up with a little data mapper class that I cold reuse in the future. 
 
 ```ruby
