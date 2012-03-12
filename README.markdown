@@ -62,4 +62,9 @@ See your new article published at http://technology.customink.com
 ## Resources
 * [Octopress Docs](http://octopress.org/docs)
 * [Markdown Docs](http://daringfireball.net/projects/markdown/)
+* [Jekyll Docs](https://github.com/mojombo/jekyll/wiki/template-data)
+* [Liquid Docs](https://github.com/Shopify/liquid/wiki/Liquid-for-Designers)
 
+## TODO
+* Add author bio pages
+* Add post push content generation to heroku (unversion public directory)
