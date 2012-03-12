@@ -3,7 +3,7 @@ layout: post
 title: "Why we chose Chef over Puppet at CustomInk"
 date: 2011-11-21 03:29
 comments: true
-author: Nathen Harvey
+author: nathen-harvey
 categories:
   - chef
   - devops
@@ -11,7 +11,6 @@ categories:
   - puppet
   - sysadmin
   - web operations
-  - Nathen Harvey
 ---
 Not unlike most technology choices, the choice of which configuration management tool to use for managing your infrastructure as code is sure to spark debate among opinionated technologists. There are certainly a number of choices available all of which have their own strengths and weaknesses. There are a number of things to consider as you select a tool.
 

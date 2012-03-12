@@ -3,14 +3,13 @@ layout: post
 title: "Testing mod_rewrite and apache redirects"
 date: 2010-07-16 09:00
 comments: true
-author: Nathen Harvey
+author: nathen-harvey
 categories:
   - apache
   - devops
   - sysadmin
   - testing
   - web operations
-  - Nathen Harvey
 ---
 At [CustomInk](http://www.customink.com), we recently migrated from mongrel to Passenger for our Ruby on Rails website. This migration included a full rewrite of our apache configuration files.
 

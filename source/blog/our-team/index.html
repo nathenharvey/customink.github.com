@@ -1,0 +1,12 @@
+---
+layout: page
+title: Our Team
+footer: false
+---
+
+<div id="author-archives">
+{% for author in site.authors %}
+  <h2><a href="{{ root_url }}/blog/our-team/{{ author[0] }}.html">{{ author[1].display_name }}</a></h2>
+{% endfor %}
+</div>
+

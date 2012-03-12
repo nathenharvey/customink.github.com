@@ -2,7 +2,7 @@
 layout: post
 title: "PagerDuty, Nagios and Chef"
 date: 2012-01-31 10:14
-author: Jake Vanderdray
+author: jake-vanderdray
 comments: true
 published: true
 categories:
@@ -10,7 +10,6 @@ categories:
   - nagios
   - pagerduty
   - web operations
-  - Jake Vanderdray
 ---
 
 ## Three Things that Work Great Together
