@@ -24,6 +24,37 @@ subscribe_email:
 email:
 
 # ----------------------- #
+#        Authors          #
+# ----------------------- #
+authors:
+  andrea-cardy:
+    display_name: Andrea Cardy
+  andrew-willis:
+    display_name: Andrew Willis
+  dave-vanderson:
+    display_name: Dave Vanderson
+  jake-vanderdray:
+    display_name: Jake Vanderdray
+  john-hall:
+    display_name: John Hall
+  jon-morton:
+    display_name: Jon Morton
+  justin-molineaux:
+    display_name: Justin Molineaux
+  karle-durante:
+    display_name: Karle Durante
+  nathan-hessler:
+    display_name: Nathan Hessler
+  nathen-harvey:
+    display_name: Nathen Harvey
+  ramez-mourad:
+    display_name: Ramez Mourad
+  stafford-brunk:
+    display_name: Stafford Brunk
+  tien-nguyen:
+    display_name: Tien Nguyen
+    
+# ----------------------- #
 #    Jekyll & Plugins     #
 # ----------------------- #
 

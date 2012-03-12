@@ -3,7 +3,7 @@ layout: post
 title: "Green Screen"
 date: 2012-01-02 14:17
 comments: true
-author: Nathen Harvey
+author: nathen-harvey
 categories: 
   - devops
   - greenscreen
@@ -12,7 +12,6 @@ categories:
   - sinatra
   - sysadmin
   - testing
-  - Nathen Harvey
 ---
 [Green Screen](https://github.com/customink/greenscreen) is a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area. It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room.
 

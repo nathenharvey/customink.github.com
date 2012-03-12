@@ -6,8 +6,7 @@ comments: true
 categories: 
   - rails
   - ruby
-  - Karle Durante
-author: Karle Durante
+author: karle-durante
 published: true
 ---
 
