@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: performance | EngineerInk]]></title>
+  <link href="http://technology.customink.com/blog/categories/performance/atom.xml" rel="self"/>
+  <link href="http://technology.customink.com/"/>
+  <updated>2012-03-16T07:11:14-04:00</updated>
+  <id>http://technology.customink.com/</id>
+  <author>
+    <name><![CDATA[CustomInk]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Simple Garbage Collection Tuning for Rails]]></title>
+    <link href="http://technology.customink.com/blog/2012/03/16/simple-garbage-collection-tuning-for-rails/"/>
+    <updated>2012-03-16T08:07:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/03/16/simple-garbage-collection-tuning-for-rails</id>
+    <content type="html"><![CDATA[<p>Ruby is known for being bad at garbage collection.  The truth is that the default GC settings aren't very good for a Rails application so if you run a Rails app you really should do some tuning (this requires either Ruby Enterprise or Ruby 1.9.2).  Here's a streamlined process for getting started:</p>
+
+<h3>Get a Baseline</h3>
+
+<p>Turn on collecting GC stats for New Relic (of course you're using <a href="http://newrelic.com/">New Relic</a>).  You want to know what you're fixing and this will probably show you that about &#8531; of the "Ruby" portion of your app response time is really garbage collection.  Just add the following line to your <code>environment.rb</code> file:</p>
+
+<p><code>GC.enable_stats if defined?(GC) &amp;&amp; GC.respond_to?(:enable_stats)</code></p>
+
+<h3>Examine the Heap</h3>
+
+<p>Once you've gathered enough data in NewRelic to be able to see a change, you'll want to see what the heap looks like in one of your passenger threads.</p>
+
+<ul>
+<li>Take one of your app servers out of production</li>
+<li>Install gdb.rb:</li>
+</ul>
+
+
+<p><code>sudo gem install gdb.rb</code></p>
+
+<ul>
+<li>Use <code>sudo passenger-status</code> to find a thread that has handled enough requests to be pretty well warmed up and note its PID.</li>
+<li>Connect to the passenger thread with gdb.rb:</li>
+</ul>
+
+
+<p><code>sudo gdb.rb &lt;pid&gt;</code></p>
+
+<ul>
+<li>Get gdb.rb to print out the stats about your objects:</li>
+</ul>
+
+
+<p><code>ruby objects</code></p>
+
+<p>You're looking for a section that looks like this:</p>
+
+<pre><code>HEAPS            9
+  SLOTS      3061241
+  LIVE       1457106 (47.60%)
+  FREE       1604135 (52.40%)
+</code></pre>
+
+<p>We're going to assume that "LIVE" number is representative of how many slots you normally use up.  Round that up to something sensible like 1,500,000.  Now do the math like this:</p>
+
+<pre><code>RUBY_HEAP_MIN_SLOTS=1800000          # Slots Live + 20%
+RUBY_HEAP_FREE_MIN=18000             # 1% of HEAP_MIN_SLOTS
+RUBY_HEAP_SLOTS_INCREMENT=144000     # 8% of HEAP_MIN_SLOTS
+RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+RUBY_GC_MALLOC_LIMIT=60000000
+</code></pre>
+
+<p>I know there's no explanation for those last two settings, but I haven't really explained the math behind the other numbers either.  This is meant to be a good starting point.  Its customized for your app to some degree, but with some assumptions.</p>
+
+<h2>Wrap Your Ruby</h2>
+
+<p>Now create a wrapper script that sets these variables in the environment before calling ruby.  I'm going to assume you put it in <code>/usr/local/bin</code> and call it <code>ruby_tuned</code>.  The file should look like this (make sure you adjust for the path to ruby on your system):</p>
+
+<pre><code>#!/bin/bash
+
+export RUBY_HEAP_MIN_SLOTS=1800000
+export RUBY_HEAP_FREE_MIN=18000
+export RUBY_HEAP_SLOTS_INCREMENT=144000
+export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+export RUBY_GC_MALLOC_LIMIT=60000000
+
+exec "/usr/local/bin/ruby" "$@"
+</code></pre>
+
+<h2>Update Passenger</h2>
+
+<p>Have passenger use your <code>ruby_tuned</code> wrapper instead of calling ruby directly by updating <code>passenger.conf</code> (look in <code>/etc/apache2/mods-enabled</code> on Ubuntu).  You'll want it to look like this:</p>
+
+<pre><code>PassengerRoot /usr/local/lib/ruby/gems/1.8/gems/passenger-3.0.11
+PassengerRuby /usr/local/bin/ruby_tuned
+</code></pre>
+
+<p>Now restart apache, add the server back into production and check NewRelic to see how you did.</p>
+
+<h2>What We Got</h2>
+
+<p><img src="http://technology.customink.com/images/Response_Time_GC.jpg"></p>
+
+<p>The graph above is from New Relic as I rolled the changes out one server at a time.  When we applied these changes to our first app we saw:</p>
+
+<ul>
+<li>Time spent in GC drop from ~35ms per request to ~10ms</li>
+<li>CPU usage drop almost in half</li>
+<li>A slight increase in memory used</li>
+</ul>
+
+
+<h2>Where Those Numbers Actually Came From</h2>
+
+<p>To understand these settings and what they do checkout:</p>
+
+<ul>
+<li><a href="http://www.viddler.com/v/87ae120a">This Presentation from Joe Damato</a></li>
+<li><a href="http://www.coffeepowered.net/2009/06/13/fine-tuning-your-garbage-collector/">This Post from Chris Heald</a> (he adds a gem to his app instead of using gdb.rb)</li>
+<li><a href="http://www.rubyenterpriseedition.com/documentation.html#_garbage_collector_performance_tuning">The Ruby Enterprise GC documentation</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>
