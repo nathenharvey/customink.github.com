@@ -11,8 +11,6 @@ author: karle-durante
 published: true
 ---
 
-RubyNation 2012
-
 [RubyNation](http://www.rubynation.org/) is awesome.  Most ruby events are awesome, but in particular I enjoy RubyNation because it's local to me.  It's not that I don't like traveling to other conferences or that I think Washington DC is the best possible place for a conference.  What I love about RubyNation being local is having 200+ ruby developers from my immediate locale in one single place, at one single time.  Of course, it doesn't hurt to have [Jim Weirich](http://onestepback.org) and [Corey Haines](http://coreyhaines.com/) show up, either.
 
 The other thing I love about RubyNation are all the great talks.  Even the bad talks are still good talks.  Even the terrible talks turn into great talks because when you step into the hallway, there are amazing people who showed up to RubyNation waiting to have a great talk with you.  Every year, without fail, I meet new people and learn new things.  I don't think you can put a price tag on that.
