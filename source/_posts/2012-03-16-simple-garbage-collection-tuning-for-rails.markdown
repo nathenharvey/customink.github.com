@@ -4,7 +4,7 @@ title: "Simple Garbage Collection Tuning for Rails"
 date: 2012-03-16 08:07
 author: jake-vanderdray
 comments: true
-published: false
+published: true
 categories: 
   - apache
   - garbage collection
