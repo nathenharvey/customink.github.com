@@ -4,7 +4,7 @@
   <title><![CDATA[Category: RubyNation | EngineerInk]]></title>
   <link href="http://technology.customink.com/blog/categories/rubynation/atom.xml" rel="self"/>
   <link href="http://technology.customink.com/"/>
-  <updated>2012-03-27T09:05:39-04:00</updated>
+  <updated>2012-03-27T13:01:06-04:00</updated>
   <id>http://technology.customink.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
@@ -31,7 +31,7 @@ Brennan Dunn's talk on <a href="http://speakerdeck.com/u/brennandunn/p/rails-wit
 John Athayde's talk on <a href="http://speakerdeck.com/u/boboroshi/p/the-rails-view-the-junk-drawer-grows-up">The Rails View: The Junk Drawer Grows Up</a>,
 Chris Strom's talk on <a href="http://speakerdeck.com/u/chris/p/you-aint-spdy-ruby-nation">You Ain't SPDY</a></p>
 
-<p>Andrew Glover's "Asynchronous Processing and Messaging" talk was a great introduction to Resque and Redis.  Although I didn't attend his talk, people told me that Mike Subelsky's talk <a href="http://www.subelsky.com/2012/03/slides-from-my-coding-for-uncertainty.html">Coding for Uncertainty</a> was amazing.  Before you knew it, Jim Weirich was wrapping up day one by teaching us how to use Ruby for purely functional programming purposes to implement the <a href="https://twitter.com/#!/karledurante/status/183312951598514176/photo/1">Y Combinator</a>.</p>
+<p>Andrew Glover's <a href="https://github.com/aglover/resque-example">Asynchronous Processing and Messaging</a> talk was a great introduction to Resque and Redis.  Although I didn't attend his talk, people told me that Mike Subelsky's talk <a href="http://www.subelsky.com/2012/03/slides-from-my-coding-for-uncertainty.html">Coding for Uncertainty</a> was amazing.  Before you knew it, Jim Weirich was wrapping up day one by teaching us how to use Ruby for purely functional programming purposes to implement the <a href="https://twitter.com/#!/karledurante/status/183312951598514176/photo/1">Y Combinator</a>.</p>
 
 <p>Day two had a couple of front end related talks, but really seemed to focus more on some of the toolkits we use with ruby and some theory to help rubyists navigate the programming waters.</p>
 

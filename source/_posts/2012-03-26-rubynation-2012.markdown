@@ -24,7 +24,7 @@ Brennan Dunn's talk on [Rails Without Views](http://speakerdeck.com/u/brennandun
 John Athayde's talk on [The Rails View: The Junk Drawer Grows Up](http://speakerdeck.com/u/boboroshi/p/the-rails-view-the-junk-drawer-grows-up), 
 Chris Strom's talk on [You Ain't SPDY](http://speakerdeck.com/u/chris/p/you-aint-spdy-ruby-nation)
 
-Andrew Glover's "Asynchronous Processing and Messaging" talk was a great introduction to Resque and Redis.  Although I didn't attend his talk, people told me that Mike Subelsky's talk [Coding for Uncertainty](http://www.subelsky.com/2012/03/slides-from-my-coding-for-uncertainty.html) was amazing.  Before you knew it, Jim Weirich was wrapping up day one by teaching us how to use Ruby for purely functional programming purposes to implement the [Y Combinator](https://twitter.com/#!/karledurante/status/183312951598514176/photo/1).
+Andrew Glover's [Asynchronous Processing and Messaging](https://github.com/aglover/resque-example) talk was a great introduction to Resque and Redis.  Although I didn't attend his talk, people told me that Mike Subelsky's talk [Coding for Uncertainty](http://www.subelsky.com/2012/03/slides-from-my-coding-for-uncertainty.html) was amazing.  Before you knew it, Jim Weirich was wrapping up day one by teaching us how to use Ruby for purely functional programming purposes to implement the [Y Combinator](https://twitter.com/#!/karledurante/status/183312951598514176/photo/1).
 
 Day two had a couple of front end related talks, but really seemed to focus more on some of the toolkits we use with ruby and some theory to help rubyists navigate the programming waters.  
 
