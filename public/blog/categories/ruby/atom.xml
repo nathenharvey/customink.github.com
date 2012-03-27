@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ruby | EngineerInk]]></title>
   <link href="http://technology.customink.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://technology.customink.com/"/>
-  <updated>2012-03-26T15:40:19-04:00</updated>
+  <updated>2012-03-27T08:28:28-04:00</updated>
   <id>http://technology.customink.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
@@ -31,11 +31,11 @@ Brennan Dunn's talk on <a href="http://speakerdeck.com/u/brennandunn/p/rails-wit
 John Athayde's talk on <a href="http://speakerdeck.com/u/boboroshi/p/the-rails-view-the-junk-drawer-grows-up">The Rails View: The Junk Drawer Grows Up</a>,
 Chris Strom's talk on <a href="http://speakerdeck.com/u/chris/p/you-aint-spdy-ruby-nation">You Ain't SPDY</a></p>
 
-<p>Andrew Glover's "Asynchronous Processing and Messaging" talk was a great introduction to Resque and Redis.  Although I didn't attend his talk, people told me that Mike Subelsky's talk "Coding for Uncertainty" was amazing.  Before you knew it, Jim Weirich was wrapping up day one by teaching us how to use Ruby for purely functional programming purposes to implement the <a href="https://twitter.com/#!/karledurante/status/183312951598514176/photo/1">Y Combinator</a>.</p>
+<p>Andrew Glover's "Asynchronous Processing and Messaging" talk was a great introduction to Resque and Redis.  Although I didn't attend his talk, people told me that Mike Subelsky's talk <a href="http://www.subelsky.com/2012/03/slides-from-my-coding-for-uncertainty.html">Coding for Uncertainty</a> was amazing.  Before you knew it, Jim Weirich was wrapping up day one by teaching us how to use Ruby for purely functional programming purposes to implement the <a href="https://twitter.com/#!/karledurante/status/183312951598514176/photo/1">Y Combinator</a>.</p>
 
 <p>Day two had a couple of front end related talks, but really seemed to focus more on some of the toolkits we use with ruby and some theory to help rubyists navigate the programming waters.</p>
 
-<p>I really enjoyed Russ Olsen's "Eloquent Expressions" and Jeff Casimir's "Adventures on the Golden Path".  As well, Patrick Peak and Nathen Harvey gave great talks on how to better organize your applications with <a href="http://speakerdeck.com/u/peakpg/p/plays-well-with-others-building-mountable-apps">mountable applications</a> and <a href="https://github.com/nathenharvey/cooking-with-chef">deployment strategies</a>, respectively.  <a href="https://github.com/ajburton">Anthony Burton</a> has posted a more <a href="https://gist.github.com/2182892">complete list of talks here</a>.</p>
+<p>I really enjoyed Russ Olsen's "Eloquent Expressions" and Jeff Casimir's <a href="http://speakerdeck.com/u/j3/p/adventures-on-the-golden-path">Adventures on the Golden Path</a>.  As well, Patrick Peak and Nathen Harvey gave great talks on how to better organize your applications with <a href="http://speakerdeck.com/u/peakpg/p/plays-well-with-others-building-mountable-apps">mountable applications</a> and <a href="https://github.com/nathenharvey/cooking-with-chef">deployment strategies</a>, respectively.  <a href="https://github.com/ajburton">Anthony Burton</a> has posted a more <a href="https://gist.github.com/2182892">complete list of talks here</a>.</p>
 
 <p>Corey Haines closed out the event with a call to arms for our community to mentor the next generation.  Corey's point was simple: there is a need for more developers.  Companies will step in to "make" new ones.  Do you want good developers or bad developers?  <a href="http://rubytutor.org/">Ruby Tutor</a> is a place where we can help to make the next generation great.</p>
 
