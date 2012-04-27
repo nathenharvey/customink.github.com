@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>RubyNation 2012 - EngineerInk</title>
+  <title>Critical Oversight: Indexes - EngineerInk</title>
   <meta name="author" content="CustomInk">
 
   
-  <meta name="description" content="RubyNation is awesome. Most ruby events are awesome, but in particular I enjoy RubyNation because it&#8217;s local to me. It&#8217;s not that I don&# &hellip;">
+  <meta name="description" content="One of the most common production issues I run into are missing indexes. The other day I got to thinking that they are usually missing because of the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://technology.customink.com/blog/2012/03/26/rubynation-2012">
+  <link rel="canonical" href="http://technology.customink.com/blog/2012/04/27/critical-oversight-indexes">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -70,7 +70,7 @@
   
   <header>
     
-      <h1 class="entry-title">RubyNation 2012</h1>
+      <h1 class="entry-title">Critical Oversight: Indexes</h1>
     
     
       <p class="meta">
@@ -92,35 +92,55 @@
   
 
 
-<time datetime="2012-03-26T13:36:00-04:00" pubdate data-updated="true">Mar 26<span>th</span>, 2012</time>
+<time datetime="2012-04-27T11:48:00-04:00" pubdate data-updated="true">Apr 27<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p><a href="http://www.rubynation.org/">RubyNation</a> is awesome.  Most ruby events are awesome, but in particular I enjoy RubyNation because it&#8217;s local to me.  It&#8217;s not that I don&#8217;t like traveling to other conferences or that I think Washington DC is the best possible place for a conference.  What I love about RubyNation being local is having 200+ ruby developers from my immediate locale in one single place, at one single time.  Of course, it doesn&#8217;t hurt to have <a href="http://onestepback.org">Jim Weirich</a> and <a href="http://coreyhaines.com/">Corey Haines</a> show up, either.</p>
+<div class="entry-content"><p>One of the most common production issues I run into are missing indexes.  The other day I got to thinking that they are usually missing because of the evolution of the software.</p>
 
-<p>The other thing I love about RubyNation are all the great talks.  Even the bad talks are still good talks.  Even the terrible talks turn into great talks because when you step into the hallway, there are amazing people who showed up to RubyNation waiting to have a great talk with you.  Every year, without fail, I meet new people and learn new things.  I don&#8217;t think you can put a price tag on that.</p>
+<p>We might use some rails generators to prototype some basic functionality.  Then we&#8217;ll iterate over a set of stories incorporating new behavior.  Maybe we&#8217;ll do some refactoring, scrap some features, pull out some dead code and &#8220;harden&#8221; some areas we&#8217;ve identified as brittle.  But we almost never analyze the &#8220;data model&#8221; before we deploy.</p>
 
-<p>There were lots of highlights for me this year, and some surprises.  The first surprise should really have been no surprise at all, since it&#8217;s a developing trend at all Ruby/Rails related events: JavaScript.  In his opening keynote, Justin Getland says something to the effect of &#8220;Adapt or die&#8221;.  Justin&#8217;s message was clear: wherever there is a gap, someone will be there to fill it.  There is a gap in JavaScript knowledge, so it&#8217;s time to step in or someone else will.</p>
+<p>Have we considered our data access patterns?  Did we create foreign keys to enforce data integrity?  Do we have any idea how big these tables are going to grow?  We almost certainly don&#8217;t need to shard them…do we?</p>
 
-<p>The first day at RubyNation had one track that was entirely JavaScript and View focused.  The second track was a grab bag of ruby related topics such as toolkits or programming approaches.  Some of the JS/View track presentations that stuck out to me were:</p>
+<p>No, we almost never do this.</p>
 
-<p>Roy Tomeij&#8217;s talk on <a href="http://roytomeij.com/slides/rubynation2012">Modular and Reusable Front-End code</a>,
-Brennan Dunn&#8217;s talk on <a href="http://speakerdeck.com/u/brennandunn/p/rails-without-views">Rails Without Views</a>,
-John Athayde&#8217;s talk on <a href="http://speakerdeck.com/u/boboroshi/p/the-rails-view-the-junk-drawer-grows-up">The Rails View: The Junk Drawer Grows Up</a>,
-Chris Strom&#8217;s talk on <a href="http://speakerdeck.com/u/chris/p/you-aint-spdy-ruby-nation">You Ain&#8217;t SPDY</a></p>
+<p>Instead we race to ship.  &#8221;<a href="http://www.customink.com/lab/?cid=jub0-000p-fxs7#shared">Deploy early, deploy often</a>&#8221; is our motto, and we love it.  Deploying code is awesome, it means people are going to use it.  People using our code makes us happy because it means we didn&#8217;t waste our time today.  We did something real that people got to use.</p>
 
-<p>Andrew Glover&#8217;s <a href="https://github.com/aglover/resque-example">Asynchronous Processing and Messaging</a> talk was a great introduction to Resque and Redis.  Although I didn&#8217;t attend his talk, people told me that Mike Subelsky&#8217;s talk <a href="http://www.subelsky.com/2012/03/slides-from-my-coding-for-uncertainty.html">Coding for Uncertainty</a> was amazing.  Before you knew it, Jim Weirich was wrapping up day one by teaching us how to use Ruby for purely functional programming purposes to implement the <a href="https://twitter.com/#!/karledurante/status/183312951598514176/photo/1">Y Combinator</a>.</p>
+<p>A few months down the road comes the tipping point.  One of your tables amasses a few hundred thousand rows.  Your pages start to take seconds to load because your queries take seconds to run.  Your database connections are tied up, and when your site gets enough traffic, things start to fall over.</p>
 
-<p>Day two had a couple of front end related talks, but really seemed to focus more on some of the toolkits we use with ruby and some theory to help rubyists navigate the programming waters.</p>
+<p>This literally just happened to us.  Again.  We missed one little index on one little foreign key in one little table.  And then one of our database servers stopped responding.   Spiked CPU, connections maxed out, alerts firing, then fail over.</p>
 
-<p>I really enjoyed Russ Olsen&#8217;s <a href="http://speakerdeck.com/u/russolsen/p/eloquent-explanations-rubynation-2012">Eloquent Expressions</a> and Jeff Casimir&#8217;s <a href="http://speakerdeck.com/u/j3/p/adventures-on-the-golden-path">Adventures on the Golden Path</a>.  As well, Patrick Peak and Nathen Harvey gave great talks on how to better organize your applications with <a href="http://speakerdeck.com/u/peakpg/p/plays-well-with-others-building-mountable-apps">mountable applications</a> and <a href="https://github.com/nathenharvey/cooking-with-chef">deployment strategies</a>, respectively.  <a href="https://github.com/ajburton">Anthony Burton</a> has posted a more <a href="https://gist.github.com/2182892">complete list of talks here</a>.</p>
+<p>While Rails makes it really easy to create models without even thinking about the database, Rails also makes it very easy to deal with the database.  In James Edward Gray&#8217;s talk <a href="http://speakerdeck.com/u/jeg2/p/10-things-you-didnt-know-rails-could-do?utm_source=rubyweekly&amp;utm_medium=email">10 Things You Didn&#8217;t Know Rails Could Do</a> he shows you how to use rails migration generators to create your table AND index your fields.</p>
 
-<p>Corey Haines closed out the event with a call to arms for our community to mentor the next generation.  Corey&#8217;s point was simple: there is a need for more developers.  Companies will step in to &#8220;make&#8221; new ones.  Do you want good developers or bad developers?  <a href="http://rubytutor.org/">Ruby Tutor</a> is a place where we can help to make the next generation great.</p>
+<p>If you don&#8217;t like generators, you can simply use the &#8216;add_index&#8217; method in the migration itself:</p>
 
-<p>Thanks to all the people who made RubyNation such a great event this year.  See you all next year.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateFoo</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">up</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:foos</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:foreign_key</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">string</span>  <span class="ss">:other_valuable_data</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">add_index</span><span class="p">(</span><span class="ss">:foos</span><span class="p">,</span> <span class="ss">:foreign_key</span><span class="p">,</span> <span class="ss">:name</span> <span class="o">=&gt;</span> <span class="s1">&#39;foos_foreign_key&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Of course, if you don&#8217;t think to add the index when you created the table, you can always create a migration just to add the index.  The key is adding a checkpoint to your development process in which you analyze your data structures for completeness.  Adding this checkpoint gives you a chance to add any missing database constructs before it&#8217;s too late.</p>
 </div>
 
 
@@ -145,12 +165,12 @@ Chris Strom&#8217;s talk on <a href="http://speakerdeck.com/u/chris/p/you-aint-s
   
 
 
-<time datetime="2012-03-26T13:36:00-04:00" pubdate data-updated="true">Mar 26<span>th</span>, 2012</time>
+<time datetime="2012-04-27T11:48:00-04:00" pubdate data-updated="true">Apr 27<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/rubynation/'>RubyNation</a>, <a class='category' href='/blog/categories/conference/'>conference</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
+    <a class='category' href='/blog/categories/indexes/'>indexes</a>, <a class='category' href='/blog/categories/process/'>process</a>, <a class='category' href='/blog/categories/rails/'>rails</a>
   
 </span>
 
@@ -159,7 +179,7 @@ Chris Strom&#8217;s talk on <a href="http://speakerdeck.com/u/chris/p/you-aint-s
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://technology.customink.com/blog/2012/03/26/rubynation-2012/" data-via="CustomInkTech" data-counturl="http://technology.customink.com/blog/2012/03/26/rubynation-2012/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://technology.customink.com/blog/2012/04/27/critical-oversight-indexes/" data-via="CustomInkTech" data-counturl="http://technology.customink.com/blog/2012/04/27/critical-oversight-indexes/" >Tweet</a>
   
   
   
@@ -168,10 +188,8 @@ Chris Strom&#8217;s talk on <a href="http://speakerdeck.com/u/chris/p/you-aint-s
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/03/16/simple-garbage-collection-tuning-for-rails/" title="Previous Post: Simple Garbage Collection Tuning for Rails">&laquo; Simple Garbage Collection Tuning for Rails</a>
+        <a class="basic-alignment left" href="/blog/2012/03/26/rubynation-2012/" title="Previous Post: RubyNation 2012">&laquo; RubyNation 2012</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/04/27/critical-oversight-indexes/" title="next Post: Critical Oversight: Indexes">Critical Oversight: Indexes &raquo;</a>
       
     </p>
   </footer>
@@ -283,8 +301,8 @@ Chris Strom&#8217;s talk on <a href="http://speakerdeck.com/u/chris/p/you-aint-s
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://technology.customink.com/blog/2012/03/26/rubynation-2012/';
-        var disqus_url = 'http://technology.customink.com/blog/2012/03/26/rubynation-2012/';
+        var disqus_identifier = 'http://technology.customink.com/blog/2012/04/27/critical-oversight-indexes/';
+        var disqus_url = 'http://technology.customink.com/blog/2012/04/27/critical-oversight-indexes/';
         var disqus_script = 'embed.js';
       
     (function () {

@@ -9,7 +9,7 @@
   <meta name="author" content="CustomInk">
 
   
-  <meta name="description" content="RubyNation is awesome. Most ruby events are awesome, but in particular I enjoy RubyNation because it&#8217;s local to me. It&#8217;s not that I don&# &hellip;">
+  <meta name="description" content="One of the most common production issues I run into are missing indexes. The other day I got to thinking that they are usually missing because of the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +67,89 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/27/critical-oversight-indexes/">Critical Oversight: Indexes</a></h1>
+    
+    
+      <p class="meta">
+        
+  
+
+
+<span class="byline author vcard">Posted by <span class="fn"><a href="/blog/our-team/karle-durante.html">Karle Durante</a></span></span>
+
+ - 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-27T11:48:00-04:00" pubdate data-updated="true">Apr 27<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>One of the most common production issues I run into are missing indexes.  The other day I got to thinking that they are usually missing because of the evolution of the software.</p>
+
+<p>We might use some rails generators to prototype some basic functionality.  Then we&#8217;ll iterate over a set of stories incorporating new behavior.  Maybe we&#8217;ll do some refactoring, scrap some features, pull out some dead code and &#8220;harden&#8221; some areas we&#8217;ve identified as brittle.  But we almost never analyze the &#8220;data model&#8221; before we deploy.</p>
+
+<p>Have we considered our data access patterns?  Did we create foreign keys to enforce data integrity?  Do we have any idea how big these tables are going to grow?  We almost certainly don&#8217;t need to shard them…do we?</p>
+
+<p>No, we almost never do this.</p>
+
+<p>Instead we race to ship.  &#8221;<a href="http://www.customink.com/lab/?cid=jub0-000p-fxs7#shared">Deploy early, deploy often</a>&#8221; is our motto, and we love it.  Deploying code is awesome, it means people are going to use it.  People using our code makes us happy because it means we didn&#8217;t waste our time today.  We did something real that people got to use.</p>
+
+<p>A few months down the road comes the tipping point.  One of your tables amasses a few hundred thousand rows.  Your pages start to take seconds to load because your queries take seconds to run.  Your database connections are tied up, and when your site gets enough traffic, things start to fall over.</p>
+
+<p>This literally just happened to us.  Again.  We missed one little index on one little foreign key in one little table.  And then one of our database servers stopped responding.   Spiked CPU, connections maxed out, alerts firing, then fail over.</p>
+
+<p>While Rails makes it really easy to create models without even thinking about the database, Rails also makes it very easy to deal with the database.  In James Edward Gray&#8217;s talk <a href="http://speakerdeck.com/u/jeg2/p/10-things-you-didnt-know-rails-could-do?utm_source=rubyweekly&amp;utm_medium=email">10 Things You Didn&#8217;t Know Rails Could Do</a> he shows you how to use rails migration generators to create your table AND index your fields.</p>
+
+<p>If you don&#8217;t like generators, you can simply use the &#8216;add_index&#8217; method in the migration itself:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateFoo</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">up</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:foos</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:foreign_key</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">string</span>  <span class="ss">:other_valuable_data</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">add_index</span><span class="p">(</span><span class="ss">:foos</span><span class="p">,</span> <span class="ss">:foreign_key</span><span class="p">,</span> <span class="ss">:name</span> <span class="o">=&gt;</span> <span class="s1">&#39;foos_foreign_key&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Of course, if you don&#8217;t think to add the index when you created the table, you can always create a migration just to add the index.  The key is adding a checkpoint to your development process in which you analyze your data structures for completeness.  Adding this checkpoint gives you a chance to add any missing database constructs before it&#8217;s too late.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -839,6 +922,10 @@ We use Green Screen at <a href="http://www.customink.com">CustomInk</a> to look 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/04/27/critical-oversight-indexes/">Critical Oversight: Indexes</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/26/rubynation-2012/">RubyNation 2012</a>
       </li>
     
@@ -852,10 +939,6 @@ We use Green Screen at <a href="http://www.customink.com">CustomInk</a> to look 
     
       <li class="post">
         <a href="/blog/2012/02/03/organizing-your-rails-models/">Organizing Your Rails Models</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/01/31/pagerduty/">PagerDuty, Nagios and Chef</a>
       </li>
     
   </ul>
