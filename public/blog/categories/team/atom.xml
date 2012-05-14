@@ -4,7 +4,7 @@
   <title><![CDATA[Category: team | EngineerInk]]></title>
   <link href="http://technology.customink.com/blog/categories/team/atom.xml" rel="self"/>
   <link href="http://technology.customink.com/"/>
-  <updated>2012-05-14T13:35:03-04:00</updated>
+  <updated>2012-05-14T13:37:44-04:00</updated>
   <id>http://technology.customink.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Welcome Josh Born!]]></title>
-    <link href="http://technology.customink.com/blog/2012/05/14/welcome-josh-born-slash/"/>
+    <link href="http://technology.customink.com/blog/2012/05/14/welcome-josh-born/"/>
     <updated>2012-05-14T13:17:00-04:00</updated>
-    <id>http://technology.customink.com/blog/2012/05/14/welcome-josh-born-slash</id>
+    <id>http://technology.customink.com/blog/2012/05/14/welcome-josh-born</id>
     <content type="html"><![CDATA[<p>The CustomInk technology team wants to extend a warm welcome to our newest member, Josh Born.  Josh wasted no time and hopped onto the deploy train today for his first production release.</p>
 
 <p>At CustomInk we like to <a href="http://www.customink.com/designs/proofs/jub0-000p-fxs7/front.jpg" target="_new">continuously deploy</a> changes to our site.  This means no sprints, no iterations, no milestones.  We work, and when we are satisfied with our work, we deploy it.  On average, engineers deploy updates to our site about five to seven times a day.</p>
