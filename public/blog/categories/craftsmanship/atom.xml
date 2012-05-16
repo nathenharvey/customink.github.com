@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: craftsmanship | EngineerInk]]></title>
+  <link href="http://technology.customink.com/blog/categories/craftsmanship/atom.xml" rel="self"/>
+  <link href="http://technology.customink.com/"/>
+  <updated>2012-05-16T16:59:05-04:00</updated>
+  <id>http://technology.customink.com/</id>
+  <author>
+    <name><![CDATA[CustomInk]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Coderetreat Floyd 2012]]></title>
+    <link href="http://technology.customink.com/blog/2012/05/16/coderetreat-floyd-2012/"/>
+    <updated>2012-05-16T15:27:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/05/16/coderetreat-floyd-2012</id>
+    <content type="html"><![CDATA[<h2>One Saturday dedicated to honing your craft</h2>
+
+<p>It's easy to get caught up in the whirlwind of projects and deadlines and forget that software development is very much a craft that needs to be practiced. The complex requirements and external pressures of a production application often cloud our judgement, forcing us to forgo the fundamental concepts that create great software. It is useful to step away from the code you work on day-to-day to focus on honing your skills merely for the sake of improving as a developer. Corey Haines' Coderetreat format facilitates this by strongly suggesting its participants delete their code immediately after each session so that by the end of the day, the value created is not the code that is written, but the skills and insights learned from writing that code.</p>
+]]></content>
+  </entry>
+  
+</feed>
