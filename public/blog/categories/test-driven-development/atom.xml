@@ -4,7 +4,7 @@
   <title><![CDATA[Category: test driven development | EngineerInk]]></title>
   <link href="http://technology.customink.com/blog/categories/test-driven-development/atom.xml" rel="self"/>
   <link href="http://technology.customink.com/"/>
-  <updated>2012-05-16T16:59:05-04:00</updated>
+  <updated>2012-05-17T16:37:43-04:00</updated>
   <id>http://technology.customink.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
@@ -20,7 +20,31 @@
     <id>http://technology.customink.com/blog/2012/05/16/coderetreat-floyd-2012</id>
     <content type="html"><![CDATA[<h2>One Saturday dedicated to honing your craft</h2>
 
-<p>It's easy to get caught up in the whirlwind of projects and deadlines and forget that software development is very much a craft that needs to be practiced. The complex requirements and external pressures of a production application often cloud our judgement, forcing us to forgo the fundamental concepts that create great software. It is useful to step away from the code you work on day-to-day to focus on honing your skills merely for the sake of improving as a developer. Corey Haines' Coderetreat format facilitates this by strongly suggesting its participants delete their code immediately after each session so that by the end of the day, the value created is not the code that is written, but the skills and insights learned from writing that code.</p>
+<p>It's easy to get caught up in the whirlwind of projects and deadlines and forget that software development is very much a craft that needs to be practiced. The complex requirements and external pressures of a production application often cloud our judgement, forcing us to forgo the fundamental concepts that create great software.</p>
+
+<p>It's useful to step away from the code you work on day-to-day to focus on honing your skills merely for the sake of improving as a developer. Corey Haines' Coderetreat format facilitates this by strongly suggesting its participants delete their code immediately after each session. By the end of the day, the value created is not the code that is written, but the skills and insights learned from writing that code.</p>
+
+<p>The Coderetreat consisted of five 45 minute pairing sessions building <a href="http://en.wikipedia.org/wiki/Conway's_Game_of_Life">Conway's Game of Life</a>. The 'zero-player' game is a form of cellular automata that consists of a grid of dead or alive 'cells' represented by the squares in the grid. Based on a set of four simple rules, the grid comes to life with complex patterns and interactions between the cells.</p>
+
+<p>The rules are:</p>
+
+<ol>
+<li>Any live cell with fewer than two live neighbours dies, as if caused by under-population.</li>
+<li>Any live cell with two or three live neighbours lives on to the next generation.</li>
+<li>Any live cell with more than three live neighbours dies, as if by overcrowding.</li>
+<li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
+</ol>
+
+
+<p>With just a simple initial configuration of cells, constructs like Gosper's Glider Gun can be made:</p>
+
+<p><img src="/images/gospers_glider_gun.gif" alt="Gosper's Glider Gun" /></p>
+
+<h3>Session One</h3>
+
+<p>For the first session, I worked with a pair to build up 'Cell' object using CoffeeScript and Jasmine. It went well, but about half way into the session, Corey Haines changed the requirements of the game to include zombie cells that come to life based on its own set of rules. We were asked about the impact of introducing these new requirements into our code. Now, we weren't hugely affected by the change due to not being very far into the implementation, but it was obvious to see how we could have been bitten by the change.</p>
+
+<p>We chose to deal with alive and dead cells through a boolean attribute on the Cell class. Had we fleshed out the game more, our logic and objects would be tightly bound to this concept and introducing a third state would require considerable time and effort.</p>
 ]]></content>
   </entry>
   
