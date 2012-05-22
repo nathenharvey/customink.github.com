@@ -4,7 +4,7 @@
   <title><![CDATA[Category: object oriented design | EngineerInk]]></title>
   <link href="http://technology.customink.com/blog/categories/object-oriented-design/atom.xml" rel="self"/>
   <link href="http://technology.customink.com/"/>
-  <updated>2012-05-21T16:40:59-04:00</updated>
+  <updated>2012-05-22T12:57:57-04:00</updated>
   <id>http://technology.customink.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
@@ -69,7 +69,7 @@
 
 <p>Without if statements, instead of a Cell class with a boolean state, we pushed the state logic into AliveCell and DeadCell classes. Our CellCollection class only needed to know about its Cell-like objects, specific behavior was encapsulated within each AliveCell or DeadCell.</p>
 
-<p>Having less than 3 lines of code per method encouraged a top-down approach to designing our game. With only two lines available to us per method, we were forced to continuously delgate behavior to new objects. The result was a healthy layer of abstractions above very specific implementing objects.</p>
+<p>Having less than 3 lines of code per method encouraged a top-down approach to designing our game. With only two lines available to us per method, we were forced to continuously delegate behavior to new objects. The result was a healthy layer of abstractions above very specific implementing objects.</p>
 
 <h3>Session Three</h3>
 

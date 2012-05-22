@@ -57,7 +57,7 @@ Immediately we were able to notice changes in our design:
 
 Without if statements, instead of a Cell class with a boolean state, we pushed the state logic into AliveCell and DeadCell classes. Our CellCollection class only needed to know about its Cell-like objects, specific behavior was encapsulated within each AliveCell or DeadCell.
 
-Having less than 3 lines of code per method encouraged a top-down approach to designing our game. With only two lines available to us per method, we were forced to continuously delgate behavior to new objects. The result was a healthy layer of abstractions above very specific implementing objects.
+Having less than 3 lines of code per method encouraged a top-down approach to designing our game. With only two lines available to us per method, we were forced to continuously delegate behavior to new objects. The result was a healthy layer of abstractions above very specific implementing objects.
 
 ### Session Three
 
