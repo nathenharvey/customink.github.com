@@ -4,7 +4,7 @@
   <title><![CDATA[Category: puppet | EngineerInk]]></title>
   <link href="http://technology.customink.com/blog/categories/puppet/atom.xml" rel="self"/>
   <link href="http://technology.customink.com/"/>
-  <updated>2012-05-22T12:57:57-04:00</updated>
+  <updated>2012-05-24T16:36:40-04:00</updated>
   <id>http://technology.customink.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
@@ -24,7 +24,9 @@
 
 <p>I think Mark Imbriaco summed it up quite nicely in 140 characters or less:</p>
 
-<p><blockquote><p>Pro-tip: Nobody gives a shit about your opinion of Chef vs. Puppet. Seriously. Just fucking stop it already. #usewhatworksforyou</p><footer><strong>@markimbriaco</strong> <cite><a href='https://twitter.com/markimbriaco/statuses/89180299824599041'>twitter.com/markimbriaco/&hellip;</a></cite></footer></blockquote></p>
+<p>{% blockquote @markimbriaco https://twitter.com/markimbriaco/statuses/89180299824599041 %}
+Pro-tip: Nobody gives a shit about your opinion of Chef vs. Puppet. Seriously. Just fucking stop it already. #usewhatworksforyou
+{% endblockquote %}</p>
 
 <p>As you consider which tool is right for you, you'll need to consider a number of questions. I think of these as the WIIFs, or "what's in it for..." questions:</p>
 
