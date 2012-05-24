@@ -23,7 +23,7 @@ Using some home grown capistrano scripts, any developer can easily create and ma
   >> git push origin new_feature
 ```
 
-Now that the a new feature branch is available in our remote repository, the developer can create and start their own Jenkins build:
+Now that a new feature branch is available in our remote repository, the developer can create and start their own Jenkins build:
 
 ```ruby
   >> cap jenkins:create

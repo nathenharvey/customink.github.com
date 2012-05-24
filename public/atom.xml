@@ -4,7 +4,7 @@
   <title><![CDATA[EngineerInk]]></title>
   <link href="http://technology.customink.com/atom.xml" rel="self"/>
   <link href="http://technology.customink.com/"/>
-  <updated>2012-05-24T16:41:49-04:00</updated>
+  <updated>2012-05-24T16:46:36-04:00</updated>
   <id>http://technology.customink.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
@@ -37,7 +37,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now that the a new feature branch is available in our remote repository, the developer can create and start their own Jenkins build:</p>
+<p>Now that a new feature branch is available in our remote repository, the developer can create and start their own Jenkins build:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>

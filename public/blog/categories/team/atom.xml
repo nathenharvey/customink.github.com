@@ -4,7 +4,7 @@
   <title><![CDATA[Category: team | EngineerInk]]></title>
   <link href="http://technology.customink.com/blog/categories/team/atom.xml" rel="self"/>
   <link href="http://technology.customink.com/"/>
-  <updated>2012-05-24T16:41:49-04:00</updated>
+  <updated>2012-05-24T16:46:36-04:00</updated>
   <id>http://technology.customink.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
@@ -33,7 +33,7 @@ git commit -m "added new feature"
 git push origin new_feature
 ```</p></blockquote></blockquote>
 
-<p>Now that the a new feature branch is available in our remote repository, the developer can create and start their own Jenkins build:</p>
+<p>Now that a new feature branch is available in our remote repository, the developer can create and start their own Jenkins build:</p>
 
 <p>```ruby</p>
 
