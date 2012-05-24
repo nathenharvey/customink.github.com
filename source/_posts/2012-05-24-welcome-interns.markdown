@@ -43,4 +43,4 @@ Now a build is running on our Jenkins server.  More importantly, Jenkins will us
   cap jenkins:status    # Gets the status of a job with name = rfe_[current_branch]
 ```
 
-Continuous deployment can't happen without automation.  I'd like to give a big shout out to our DevOps team for driving us down the automation super highway.  I'd also like to extend a warm welcome to Nolan and Seth, we look forward to seeing their builds pass all summer long.
+Continuous deployment can't happen without automation.  I'd like to give a big shout out to our Web Ops team for driving us down the automation super highway.  I'd also like to extend a warm welcome to Nolan and Seth, we look forward to seeing their builds pass all summer long.
