@@ -4,7 +4,7 @@
   <title><![CDATA[EngineerInk]]></title>
   <link href="http://technology.customink.com/atom.xml" rel="self"/>
   <link href="http://technology.customink.com/"/>
-  <updated>2012-05-24T16:35:26-04:00</updated>
+  <updated>2012-05-24T16:38:34-04:00</updated>
   <id>http://technology.customink.com/</id>
   <author>
     <name><![CDATA[CustomInk]]></name>
@@ -58,12 +58,12 @@
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:build</span>     <span class="c1"># Kicks off a build for the current branch...</span>
-</span><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:console</span>   <span class="c1"># Shows the job&#39;s console (override with J...</span>
-</span><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:create</span>    <span class="c1"># Create a job for the current branch (par...</span>
-</span><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:delete</span>    <span class="c1"># Deletes a job with name = rfe_[current_b...</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:build</span>     <span class="c1"># Kicks off a build for the current branch</span>
+</span><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:console</span>   <span class="c1"># Shows the job&#39;s console</span>
+</span><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:create</span>    <span class="c1"># Create a job for the current branch</span>
+</span><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:delete</span>    <span class="c1"># Deletes a job with name = rfe_[current_branch]</span>
 </span><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:list</span>      <span class="c1"># Lists all jobs in jenkins</span>
-</span><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:status</span>    <span class="c1"># Gets the status of a job with name = rfe...</span>
+</span><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:status</span>    <span class="c1"># Gets the status of a job with name = rfe_[current_branch]</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
