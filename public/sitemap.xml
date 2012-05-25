@@ -4,118 +4,138 @@
         <loc>
             http://technology.customink.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/
         </loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
     </url>
     <url>
         <loc>
             http://technology.customink.com/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/
         </loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/2012/01/02/green-screen/</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/2012/01/31/pagerduty/</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/2012/02/03/organizing-your-rails-models/</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/2012/03/02/simple-data-mapper/</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
     </url>
     <url>
         <loc>
             http://technology.customink.com/blog/2012/03/16/simple-garbage-collection-tuning-for-rails/
         </loc>
-        <lastmod>2012-03-26T14:48:18-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/2012/03/26/rubynation-2012/</loc>
-        <lastmod>2012-03-27T13:00:49-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/2012/04/27/critical-oversight-indexes/</loc>
-        <lastmod>2012-04-27T14:57:44-04:00</lastmod>
+        <lastmod>2012-05-16T15:45:31-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/2012/05/14/welcome-josh-born/</loc>
-        <lastmod>2012-05-14T13:34:47-04:00</lastmod>
+        <lastmod>2012-05-16T15:45:31-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/2012/05/16/coderetreat-floyd-2012/</loc>
-        <lastmod>2012-05-24T16:01:17-04:00</lastmod>
+        <lastmod>2012-05-22T12:57:31-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/2012/05/24/welcome-interns/</loc>
-        <lastmod>2012-05-24T16:46:26-04:00</lastmod>
+        <lastmod>2012-05-25T09:37:37-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/archives/</loc>
-        <lastmod>2012-05-24T16:46:26-04:00</lastmod>
+        <lastmod>2012-05-25T09:37:37-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/our-team/andrea-cardy.html</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/our-team/andrew-willis.html</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://technology.customink.com/blog/our-team/dan-hensgen.html</loc>
+        <lastmod>2012-05-25T09:37:37-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/our-team/dave-vanderson.html</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/our-team/</loc>
-        <lastmod>2012-05-24T16:46:26-04:00</lastmod>
+        <lastmod>2012-05-25T09:37:37-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/our-team/jake-vanderdray.html</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://technology.customink.com/blog/our-team/jason-gilbertson.html</loc>
+        <lastmod>2012-05-25T09:37:37-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/our-team/john-hall.html</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/our-team/jon-morton.html</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://technology.customink.com/blog/our-team/josh-born.html</loc>
+        <lastmod>2012-05-25T09:37:37-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/our-team/justin-molineaux.html</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/our-team/karle-durante.html</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/our-team/nathan-hessler.html</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/our-team/nathen-harvey.html</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://technology.customink.com/blog/our-team/nolan-carroll.html</loc>
+        <lastmod>2012-05-25T09:37:37-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/our-team/ramez-mourad.html</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://technology.customink.com/blog/our-team/seth-vargo.html</loc>
+        <lastmod>2012-05-25T09:37:37-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/our-team/stafford-brunk.html</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/blog/our-team/tien-nguyen.html</loc>
-        <lastmod>2012-03-26T13:35:46-04:00</lastmod>
+        <lastmod>2012-04-27T14:32:50-04:00</lastmod>
     </url>
     <url>
         <loc>http://technology.customink.com/</loc>
-        <lastmod>2012-05-24T16:46:26-04:00</lastmod>
+        <lastmod>2012-05-25T09:37:37-04:00</lastmod>
     </url>
 </urlset>
