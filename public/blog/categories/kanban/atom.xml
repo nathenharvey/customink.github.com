@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: kanban | EngineerInk]]></title>
+  <link href="http://technology.customink.com/blog/categories/kanban/atom.xml" rel="self"/>
+  <link href="http://technology.customink.com/"/>
+  <updated>2012-05-25T14:46:49-04:00</updated>
+  <id>http://technology.customink.com/</id>
+  <author>
+    <name><![CDATA[CustomInk]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Taming the Kraken - How Operations enables developer productivity]]></title>
+    <link href="http://technology.customink.com/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/"/>
+    <updated>2012-05-25T14:31:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity</id>
+    <content type="html"><![CDATA[<p>At <a href="http://railsconf2012.com/">RailsConf 2012</a>, I gave a presentation on how our web operations team enables developer productivity.</p>
+
+<p>There's always a bit of tension when getting features from idea to production. In this talk, I describe some of the changes CustomInk has made to reduce this friction and keep the new features coming. Gone are the days of bi-monthly deploys, office pools dedicated to guessing when this deploy will be rolled back, and the ceremony surrounding the deploy-rollback-fix-deploy cycle. Today, ideas flow from product managers to developers to production with ease thanks to a number of changes that we've made to our teams, processes and tools.</p>
+
+<p>Presenting at RailsConf was a really enjoyable experience and the presentation was well received.  There were lots of questions from the audience after the presentation.  Unfortunately, the Q &amp; A section was not captured in the video.  I'd really appreciate any questions or feedback you have, just drop a comment below.</p>
+
+<h3>Video</h3>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/5vzNzQzmAk0" frameborder="0" allowfullscreen></iframe>
+
+
+<h3>Slides</h3>
+
+<script async class="speakerdeck-embed" data-id="4f96da12947c45001f018683" data-ratio="1.2945638432364097" src="http://technology.customink.com//speakerdeck.com/assets/embed.js"></script>
+
+]]></content>
+  </entry>
+  
+</feed>
