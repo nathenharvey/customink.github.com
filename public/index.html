@@ -9,7 +9,7 @@
   <meta name="author" content="CustomInk">
 
   
-  <meta name="description" content="At RailsConf 2012, I gave a presentation on how our web operations team enables developer productivity. There&#8217;s always a bit of tension when &hellip;">
+  <meta name="description" content="You&#8217;ve heard of Chef, Puppet, and other frameworks that can help you build out your infrastructure. You&#8217;ve been meaning to play around &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +67,73 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/">The Joy of Cooking - Whip Up a Rails Environment With Chef</a></h1>
+    
+    
+      <p class="meta">
+        
+  
+
+
+<span class="byline author vcard">Posted by <span class="fn"><a href="/blog/our-team/nathen-harvey.html">Nathen Harvey</a></span></span>
+
+ - 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-25T14:59:00-04:00" pubdate data-updated="true">May 25<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>You&#8217;ve heard of Chef, Puppet, and other frameworks that can help you build out your infrastructure. You&#8217;ve been meaning to play around with one or more of them for some time now. Now&#8217;s your chance; Start cooking up on your own servers!</p>
+
+<p>In this presentation, I provide an introduction to Chef with a focus on what you&#8217;ll need to know to get a Rails application up and running.</p>
+
+<p>Topics include:
+  * Introduction to Chef
+  * Nodes, roles, environments, and other terminology
+  * Introduction to cookbooks
+  * Provisioning an environment for a Rails application
+  * Deploying with Capistrano</p>
+
+<p>You won&#8217;t be ready to compete in Iron Chef, but you will be ready to serve up your own Rails environment in no time.</p>
+
+<p>I gave slightly different versions of this presentation at <a href="http://www.rubynation.org/">RubyNation 2012</a> and <a href="http://chefconf.opscode.com">#ChefConf 2012</a>.</p>
+
+<p>I&#8217;d really appreciate any comments, questions, or feedback in the comments section below.</p>
+
+<h3>Video from ChefConf</h3>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/X1mmzERRkeI" frameborder="0" allowfullscreen></iframe>
+
+
+<h3>Slides</h3>
+
+<script async class="speakerdeck-embed" data-id="4fb421272cf6f5001f00ba85" data-ratio="1.2945638432364097" src="//speakerdeck.com/assets/embed.js"></script>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -966,58 +1033,6 @@ PassengerRuby /usr/local/bin/ruby_tuned
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/31/pagerduty/">PagerDuty, Nagios and Chef</a></h1>
-    
-    
-      <p class="meta">
-        
-  
-
-
-<span class="byline author vcard">Posted by <span class="fn"><a href="/blog/our-team/jake-vanderdray.html">Jake Vanderdray</a></span></span>
-
- - 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-31T10:14:00-05:00" pubdate data-updated="true">Jan 31<span>st</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Three Things that Work Great Together</h2>
-
-<p>If you use Chef and Nagios, you already know what a great combination they make.  As you build new servers they automatically start getting monitored by Nagios.  Without you having to do anything they&#8217;re grouped together based on role, so its easy to apply the same checks for all servers in a given role.  If you haven&#8217;t tried Nagios built with the chef cookbook its easy to get started with this <a href="http://wiki.opscode.com/display/chef/Nagios+Quick+Start">guide</a> from Opscode.</p>
-
-<p><a href="http://www.pagerduty.com/]">PagerDuty</a> is a service that manages your on-call alerting and escalation policies.  Its hard to love a service that wakes you up in the middle of the night telling you about problems with your servers (my wife is really not a fan), but PagerDuty is helpful.  We generally set it to send an email about a problem first, then send an SMS text and finally to actually make a phone call if no one has responded.  It will go through a rotating list of people on call and accepts alerts from a number of monitoring services including Nagios and AlertSite.</p>
-
-<p>Opscode recently accepted my addition of a PagerDuty recipe to the <a href="https://github.com/opscode/cookbooks/tree/master/nagios">Nagios cookbook</a> which makes it incredibly easy to connect your Nagios instance to PagerDuty.  You just add a PagerDuty API key as an attribute, apply the pagerduty recipe to your nagios server (see their <a href="http://www.pagerduty.com/docs/guides/nagios-integration-guide">guide</a> for instructions on getting your key) and you&#8217;re good to go.</p>
-
-<p>If you add the API key(s) to your Chef environments, you can tie each environment to a different escalation policy.  That way your staging environments just send email alerts while production actually texts and calls.</p>
-
-<p>One of the big wins of using the Nagios plugins is that if a service recovers the PagerDuty incident gets resolved automatically so it doesn&#8217;t continue to escalate the problem.  Also if you acknowledge a problem in Nagios the acknowledgment flows through to PagerDuty.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1033,6 +1048,10 @@ PassengerRuby /usr/local/bin/ruby_tuned
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/">The Joy of Cooking - Whip Up a Rails Environment with Chef</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/">Taming the Kraken - How Operations enables developer productivity</a>
       </li>
     
@@ -1046,10 +1065,6 @@ PassengerRuby /usr/local/bin/ruby_tuned
     
       <li class="post">
         <a href="/blog/2012/05/14/welcome-josh-born/">Welcome Josh Born!</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/27/critical-oversight-indexes/">Critical Oversight: Indexes</a>
       </li>
     
   </ul>
