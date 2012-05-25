@@ -4,6 +4,7 @@ title: "Taming the Kraken - How Operations enables developer productivity"
 date: 2012-05-25 14:31
 comments: true
 author: nathen-harvey
+published: true
 categories: 
   - RailsConf2012
   - RailsConf
