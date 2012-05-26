@@ -6,7 +6,7 @@ url: http://technology.customink.com
 title: EngineerInk
 title_head: Engineer
 title_tail: Ink
-subtitle: A CustomInk Technology Blog 
+subtitle: A CustomInk Technology Blog
 author: CustomInk
 simple_search: http://google.com/search
 description:
@@ -61,7 +61,7 @@ authors:
     display_name: Stafford Brunk
   tien-nguyen:
     display_name: Tien Nguyen
-    
+
 # ----------------------- #
 #    Jekyll & Plugins     #
 # ----------------------- #
