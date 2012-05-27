@@ -56,7 +56,7 @@ Usage
  5. Generate & Preview
 
  ```bash
- rake preview # Watches and mounts a webserver at http://0.0.0.0:4000
+ rake generate && rake preview # Watches and mounts a webserver at http://0.0.0.0:4000
  ```
 
 ### Publishing
