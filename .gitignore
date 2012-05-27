@@ -4,6 +4,7 @@
 .preview-mode
 .pygments-cache
 .sass-cache
+*.swp
 
 _deploy
 node_modules
