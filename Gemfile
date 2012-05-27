@@ -1,23 +1,18 @@
-source "http://rubygems.org"
+source :rubygems
 
-# We need these available in production so we can make use of
-# the generate task to publish content
-gem 'rake'
-gem 'rack'
-gem 'jekyll'
-gem 'rdiscount'
-gem 'pygments.rb'
-gem 'RedCloth'
-gem 'haml', '>= 3.1'
-gem 'compass', '>= 0.11'
-gem 'rubypants'
-gem 'stringex'
-gem 'liquid', '2.2.2'
-gem 'sinatra', '1.2.6'
+gem 'sinatra'
 
 group :development do
+  gem 'compass'
+  gem 'haml'
+  gem 'jekyll'
+  gem 'liquid'
+  gem 'pygments.rb'
+  gem 'rack'
+  gem 'rake'
   gem 'rb-fsevent'
-  gem 'heroku'
+  gem 'rdiscount'
+  gem 'RedCloth'
+  gem 'rubypants'
+  gem 'stringex'
 end
-
-
