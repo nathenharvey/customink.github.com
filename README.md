@@ -21,6 +21,7 @@ The EngineerInk Blog uses [Octopress](http://octopress.org/) and is hosted on gi
 git clone git@github.com:customink/customink.github.com.git blog
 cd blog
 bundle install
+rake bootstrap
 ```
 
 
@@ -34,6 +35,14 @@ Usage
 * Always work off the `source` branch
 
 ### Creating a new Post
+
+ 0. Make sure you have the most recent posts
+
+ ```bash
+ git pull
+ ```
+
+ **Note:** If this is your first post, you need to bootstrap by running `rake boostrap` or else your deploy will fail!
 
  1. Use the built-in Rake task to generate the necessary files:
 
@@ -58,6 +67,8 @@ Usage
  ```
 
 ### Publishing
+
+**Note:** If this is your first post, you need to bootstrap by running `rake boostrap` or else your deploy will fail!
 
 ```bash
 rake generate && rake deploy
