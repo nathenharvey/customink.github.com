@@ -5,6 +5,7 @@
 .pygments-cache
 .sass-cache
 *.swp
+.rvmrc
 
 _deploy
 node_modules
