@@ -17,6 +17,8 @@ categories:
 ---
 When I first started working with Chef, there were a couple of areas that I knew were going to be really awesome and helpful but I wasn't sure how to get started with them.  In this presentation, I'll provide a quick introduction to five things you've always wanted to know about Chef but were afraid to ask.  
 
+I gave this presentation at [#ChefConf 2012](http://chefconf.opscode.com).
+
 Level-up your Chef skills by learning about these areas of Chef: 
 
 * **Attribute Precedence** - Role, environment, cookbook, data bag? Which attribute value will be used in my chef run? 
