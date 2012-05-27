@@ -19,7 +19,7 @@ When I first started working with Chef, there were a couple of areas that I knew
 
 Level-up your Chef skills by learning about these areas of Chef: 
 
-* **Attribute Precedence** - Role, environment, cookbook, data bag? Which attribute value will be used in my chef run? Walk through an example that will show you which value gets applied in your chef run. 
+* **Attribute Precedence** - Role, environment, cookbook, data bag? Which attribute value will be used in my chef run? 
 * **Encrypted Databags** - Chef 0.10 brought us encrypted databags. We'll look at how to create and use databags and how to keep them up-to-date in your repository. 
 * **LWRP** - What is a LWRP? How and why do you create one? We'll look at a couple of sample LWRPs and learn how to build a simple one. 
 * **Error Handlers** - Demystify exception and report handlers by writing a simple one and seeing examples of how they work in the wild. 
