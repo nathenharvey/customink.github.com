@@ -25,6 +25,22 @@ Level-up your Chef skills by learning about these areas of Chef:
 * **Error Handlers** - Demystify exception and report handlers by writing a simple one and seeing examples of how they work in the wild. 
 * **Capistrano and Chef** - Take a quick look at why and how to integrate Chef search into your Capistrano configuration to make deploying your Rails apps even easier.
 
+One thing I didn't mention in the presentation was how to use the data from the encrypted data bag.  I've updated the slides to include this info but it won't appear in the video.  In any case, here's a quick demo of how you might use it:
+
+``` ruby
+creds = Chef::EncryptedDataBagItem.load("db", "creds")
+env_db_creds = db_creds[node["rails_env"]]
+
+template "#{app_dir}/shared/config/database.yml" do
+  source "database.yml.erb"
+  variables(
+    :rails_env => node["rails_env"],
+    :username => env_db_creds["username"],
+    :password => env_db_creds["password"]
+  )
+end
+```
+
 ### Video
 
 <iframe width="560" height="315" src="http://www.youtube.com/embed/uREL4FFPddo" frameborder="0" allowfullscreen></iframe>
