@@ -348,6 +348,32 @@ task :setup_github_pages, :repo do |t, args|
   puts "\n---\n## Now you can deploy to #{url} with `rake deploy` ##"
 end
 
+desc "Bootstrap the environment"
+task :bootstrap, :repo do |t, args|
+  repo_url = 'git@github.com:customink/customink.github.com.git'
+  user = repo_url.match(/:([^\/]+)/)[1]
+  branch = (repo_url.match(/\/[\w-]+.github.com/).nil?) ? 'gh-pages' : 'master'
+  project = (branch == 'gh-pages') ? repo_url.match(/\/([^\.]+)/)[1] : ''
+
+  rm_rf deploy_dir
+  mkdir deploy_dir
+  cd "#{deploy_dir}" do
+    system "git init"
+    system "touch .gitkeep"
+    system "git add ."
+    system "git commit -m \"initial commit\""
+    system "git remote add origin #{repo_url}"
+
+    rakefile = IO.read(__FILE__)
+    rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
+    rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push\\3")
+    File.open(__FILE__, 'w') do |f|
+      f.write rakefile
+    end
+  end
+  puts "\n---\n## Now you can deploy with `rake deploy` ##"
+end
+
 def ok_failed(condition)
   if (condition)
     puts "OK"

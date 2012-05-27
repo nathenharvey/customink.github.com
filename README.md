@@ -23,8 +23,6 @@ cd blog
 bundle install
 ```
 
-You might be prompted about the `rvmrc` file. Type `yes`.
-
 
 Usage
 -----
