@@ -17,6 +17,8 @@ If you have ever tried to follow the [Opscode Getting Started Guide for Chef](ht
 
 In Part 1 of this 2-part series, we will walk through setting up the Chef environment on your local machine. In Part 2, we will demonstrate how to provision your personal laptop using Chef.
 
+<!-- more -->
+
 What is Chef?
 ------------
 One of the best things about Chef is that it is idempotent. Unlike a simple bash script or complex startup script, Chef can be applied to the same machine hundreds of times. Only the "changes" will be executed on each of the clients. This makes deploying and updating thousands of machines as easy as baking a cake!
