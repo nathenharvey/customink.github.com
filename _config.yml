@@ -26,41 +26,91 @@ email:
 # ----------------------- #
 #        Authors          #
 # ----------------------- #
+
+# {first name}-{last name}:
+#   display_name: {your name}
+#   github: {github username}
+#   gravatar: {md5 hash}
+#   twitter: {twitter username}
+
 authors:
   andrea-cardy:
     display_name: Andrea Cardy
+    github: andreacardy
   andrew-willis:
     display_name: Andrew Willis
+    github: andrewwillis
+    gravatar: ba74d77921b4c3da06f27900c62dca32
+    twitter: andrewwillis
   dan-hensgen:
     display_name: Dan Hensgen
+    github: dmeiz
+    gravatar: 91e24d724bc6c6a648ed3601a9b12207
+    twitter: dmeiz
   jake-vanderdray:
     display_name: Jake Vanderdray
+    github: clumpidy
+    gravatar: 91add4ff5dc22b24fe8df41bbf3a26e7
+    twitter: clumpidy
   jason-gilbertson:
     display_name: Jason Gilbertson
+    github: jasgilbe
+    gravatar: 2c0ff0227b09c6bfbc210a1b14569b83
   john-hall:
     display_name: John Hall
+    github: johnbhall
+    gravatar: 64d4bf9eff3f2cd85fab1e9bef1683fa
+    twitter: johnbhall
   jon-morton:
     display_name: Jon Morton
+    github: jmorton
+    gravatar: 53d4ddc41d7cf45d2601c3afc736fc58
+    twitter: jmorton
   josh-born:
     display_name: Josh Born
+    github: joshuaborn
   justin-molineaux:
     display_name: Justin Molineaux
+    github: hellojustin
+    twitter: hello_justin
   karle-durante:
     display_name: Karle Durante
+    github: karledurante
+    twitter: karledurante
   nathan-hessler:
     display_name: Nathan Hessler
+    github: nhessler
+    gravatar: a311a2926f13168a39e6bd0d8d99aef4
+    twitter: spune
   nathen-harvey:
     display_name: Nathen Harvey
+    github: nathenharvey
+    gravatar: 11e71f6ebaccce4cf4ff5ccf6d3c5e44
+    twitter: nathenharvey
   nolan-carroll:
     display_name: Nolan Carroll
+    github: nolandc
+    gravatar: adbffbf924e6d8fc4c40228950bc90af
+    twitter: nolancarroll
   ramez-mourad:
     display_name: Ramez Mourad
+    github: ramezjm
+    twitter: ramezjm
   seth-vargo:
     display_name: Seth Vargo
+    github: sethvargo
+    gravatar: edba34509bbf91d0072c9c8a8f1886be
+    twitter: sethvargo
   stafford-brunk:
     display_name: Stafford Brunk
+    github: wingrunr21
+    gravatar: ef92744f7f3f9325a9fd645a5ffccc41
+    twitter: wingrunr21
   tien-nguyen:
     display_name: Tien Nguyen
+    github: nht007
+    gravatar: ac278aab807cdeacae2a3de708ff428c
+    twitter: nht007
 
 # ----------------------- #
 #    Jekyll & Plugins     #

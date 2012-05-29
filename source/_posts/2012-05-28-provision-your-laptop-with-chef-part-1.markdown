@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Provision your laptop with Chef - Part 1"
-date: 2012-05-29 9:50
+title: "Provision your laptop with Chef: Part 1"
+date: 2012-05-28 8:32pm
 comments: true
 categories:
   - chef
@@ -10,7 +10,7 @@ categories:
   - webops
   - tutorial
 author: seth-vargo
-published: false
+published: true
 ---
 
 If you have ever tried to follow the [Opscode Getting Started Guide for Chef](http://wiki.opscode.com/display/chef/Getting+Started), you'll quickly be overtaken by Chef jargon, confusing instructions, many assumptions, and no clear direction. Even the most experienced developers had a difficult time following the Opscode Wiki. While it serves as a great reference resource, you pretty much have to know Chef before it is of any use.
@@ -84,6 +84,11 @@ For example, mine would be:
     ci-validator.pem
     sethvargo.pem
     knife.rb
+
+Sometimes Opscode doesn't stream the correct files, so you may need to do some renaming:
+
+    _knife_config   #=> knife.rb
+    _regenerate_key #=> [your_organization_name]-validator.pem
 
 Install Ruby, Chef, and Git
 ---------------------------
@@ -289,7 +294,7 @@ Open up your `$HOME` directory and you should see a file named `hello-world.txt`
 
 You can delete that file or leave it around as a reminder of how awesome Chef is. We have one last thing to do before we are done with this tutorial.
 
-We don't want to add a getting started file on this workstation each time we run `chef-client`. Let's remove that recipe from the `run_list`:
+Let's remove that recipe from the `run_list`:
 
     knife node run_list remove NODE hello_world
 

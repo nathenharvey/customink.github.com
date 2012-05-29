@@ -3,6 +3,8 @@ layout: default
 single: true
 ---
 
+{% assign author = site.authors[page.author] %}
+
 <div>
 <article class="hentry" role="article">
   {% include article.html %}
