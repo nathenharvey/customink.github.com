@@ -67,11 +67,20 @@ Usage
 
 ### Publishing
 
-```bash
-rake deploy
-```
+  1. Add and push your changes to github
+  
+  ```bash
+  git add [your changes]
+  git push origin source
+  ```
 
-In a few moments, see your new article published on [the blog](http://technology.customink.com)!
+  2. Deploy your changes
+  
+  ```bash
+  rake deploy
+  ```
+
+  In a few moments, see your new article published on [the blog](http://technology.customink.com)!
 
 
 Resources
