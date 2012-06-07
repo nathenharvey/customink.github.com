@@ -104,7 +104,7 @@ gemfile:
 rvm:
   - 1.9.2
   - 1.9.3
-script: BUNDLE_GEMFILE=test/support/Gemfile bundle exec rake foodcritic
+script: bundle exec rake foodcritic
 ```
 
 This file tells Travis CI how to build your project.  We've specified the language (ruby) and the versions of ruby to use when testing this cookbook (1.9.2 and 1.9.3).  We've also specified a Gemfile and script to execute when testing this project.  Let's add a Gemfile to a new directory in our cookbook, `test/support`.
