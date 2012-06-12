@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: build monitoring | EngineerInk]]></title>
+  <link href="http://technology.customink.com/blog/categories/build-monitoring/atom.xml" rel="self"/>
+  <link href="http://technology.customink.com/"/>
+  <updated>2012-06-12T18:42:22-04:00</updated>
+  <id>http://technology.customink.com/</id>
+  <author>
+    <name><![CDATA[CustomInk]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Introducing Stoplight: Greenscreen 2.0]]></title>
+    <link href="http://technology.customink.com/blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0/"/>
+    <updated>2012-06-12T17:48:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0</id>
+    <content type="html"><![CDATA[<p><a href="http://technology.customink.com/images/stoplight.png"><img src="http://technology.customink.com/images/stoplight.png" width="300" style="float:right; margin:0 0 15px 15px;" /></a>
+At CustomInk, we use a variety of tools to monitor the status of our builds. One such tool was <a href="https://github.com/customink-webops/greenscreen">Greenscreen</a>. In fact, we even wrote <a href="http://technology.customink.com/blog/2012/01/02/green-screen/">a blog post about how we use Greenscreen at CustomInk</a> not too long ago.</p>
+
+<p>One of the biggest problems with Greenscreen was its extensibility. By default, Greenscreen only works with Hudson and Jenkins servers. With <a href="http://travis-ci.org">Travis CI</a> becoming quite popular in the open-source community, Greenscreen needed a major upgrade. Furthermore, Greenscreen was not very extensible.</p>
+
+<p>After some significant refactoring, Greenscreen evolved into <a href="https://github.com/customink/stoplight">Stoplight</a>...</p>
+
+<!-- more -->
+
+
+<h2>Significant Improvements</h2>
+
+<p>There are a number of improvements in Stoplight. These are the most critical or useful to the end-user:</p>
+
+<ul>
+<li>Support for multiple (any) continuous integration server</li>
+<li>Highly configurable yaml files</li>
+<li>Cross-browser beautiful UI</li>
+<li>More informative build statuses</li>
+<li>Extensibility</li>
+<li>Usability</li>
+<li>Full test suite</li>
+</ul>
+
+
+<h2>Refactoring</h2>
+
+<p>Originally, I was just going to add Travis CI support to Greenscreen. However, I quickly asked myself, "why stop at Travis CI?"; we should allow developers to connect Greenscreen to any continuous integration server. After cleaning up the code a bit, I introduced the concept of a <code>Provider</code>. Simply put, a <code>Provider</code> is an abstract Ruby class that maps server-data into Greenscreen data. It looks like this:</p>
+
+<p>```ruby</p>
+
+<h1>Provider is an abstract class that all providers inherit from. It requires that a specified format be returned. This way, stoplight</h1>
+
+<h1>doesn't care who it's talking to, as long as it guarantees certain information.</h1>
+
+<p>module Stoplight::Providers
+  class Provider</p>
+
+<pre><code>attr_reader :options, :response
+
+# Initializes a hash `@options` of default options
+def initialize(options = {})
+  ...
+end
+
+# `projects` must return an array of Stoplight::Project
+# see Stoplight::Project for more information on the spec
+def projects
+  ...
+end
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>On the front-end, now we don't have to worry about parsing different server responses; we know that any provider will respond to the <code>Provider#projects</code> instance method. This makes refactoring our front-end code much easier.</p>
+
+<p>The <code>Stoplight::Project</code> clearly defines a schema and method-set that must be adhered to. In the front-end, we can simply call <code>.projects</code> on any provider and know with 100% certainty that the given objects respond to a certain set of methods. Those methods are defined in the <code>Stoplight::Project</code> class:</p>
+
+<p>```ruby
+module Stoplight
+  class Project</p>
+
+<pre><code>attr_accessor :name, :build_url, :last_build_id, :last_build_time, :last_build_status, :current_status
+
+# Initialize (new) takes in a hash of options in the following format:
+#
+# {
+#   :name =&gt; 'my_project',
+#   :build_url =&gt; 'http://ci.jenkins.org/job/my_project',
+#   :web_url =&gt; 'http://github.com/username/my_project', # optional
+#   :last_build_id =&gt; '7',
+#   :last_build_time =&gt; '2012-05-24T03:19:53Z',
+#   :last_build_status =&gt; 0,
+#   :current_status =&gt; 1,
+# }
+#
+# - `name` - the name of this project
+# - `build_url` - the url where the build came from
+# - `build_id` - the unique build_id for this project
+# - `last_build_time` - last successful build
+# - `last_build_status` - integer representing the exit code of the last build:
+#   - -1: unknown
+#   -  0: passed (success)
+#   -  1: failed (error, failure)
+# - `current_status` - the current status of the build:
+#   - -1: unknwon
+#   -  0: done (sleeping, waiting)
+#   -  1: building (building, working, compiling)
+def initialize(options = {})
+  ...
+end
+</code></pre>
+
+<p>  end
+end
+<code>``
+This set of simple instructions tells a provider how it must format data. Essentially this makes</code>Provider` a micro-data-mapper, massaging data from remote APIs into a standard format. Stoplight then uses that standard format to create a unified user experience.</p>
+
+<h3>Adding Tests</h3>
+
+<p>Since Stoplight is destined to become an open-source project, it needs a comprehensive test suite. Furthermore, during our refactoring, it's important that we don't break existing functionality. As such, I added a full test suite with RSpec. To make development easier, I also use Spork, Guard, and Growl-Ruby to automatically run tests in the background while I'm coding. This makes TDD much more exciting.</p>
+
+<h3>Foreman</h3>
+
+<p>With all those dependencies, plus running the server, it only made sense to use <a href="https://github.com/ddollar/foreman">Foreman</a> to manage all those processes. What used to be (in three different terminal tabs):</p>
+
+<pre><code>bundle exec shotgun -p 4567
+bundle exec compass watch -c config/compass.rb
+bundle exec guard
+</code></pre>
+
+<p>simply became:</p>
+
+<pre><code>bundle exec foreman start
+</code></pre>
+
+<p>with a tiny <code>Procfile</code>:</p>
+
+<p><code>
+web:      shotgun -p 4567
+compass:  compass watch -c config/compass.rb
+guard:    guard
+</code></p>
+
+<h3>Compass</h3>
+
+<p>Under the hood, all the styles for Stoplight are generated by a framework called <a href="http://compass-style.org">Compass</a>. Compass allows us to leverage the power of SCSS and easily create a cross-browser compliant application. Stoplight uses Compass and SCSS for all it's styles. This ensures a consistent user experience.</p>
+
+<h3>ABAP Text</h3>
+
+<p>ABAP stands for "As Big As Possible". A tiny snippet of jQuery dynamically sizes text to fit in its bounds. Whether you're displaying on a 60" LED TV or a 13" Monitor, the text will be as big and clear as possible.</p>
+
+<h3>Adding Travis</h3>
+
+<p>Brace yourself for a meta-moment. Since I wanted Stoplight to become a popular open-source project, I added the build on Travis CI. With <a href="http://travis-ci.org/#!/customink/stoplight">Stoplight on Travis CI</a> we can use Stoplight to monitor the build status of Stoplight.</p>
+
+<h2>Conclusion</h2>
+
+<p>There you have it! What was once a very isolated and less-than-configurable tool is now highly extensible and open to contributions by the community. If you are currently using Greenscreen or another build monitoring alternative, give Stoplight a try.</p>
+
+<h2>I Want it!</h2>
+
+<p>Stoplight is available for <a href="https://github.com/customink/stoplight">download and forking on github</a>. Pull requests are greatly welcome! There is also a highly-configurable <a href="https://github.com/customink-webops/stoplight">chef cookbook for installing Stoplight</a> on Apache and Passenger on your own servers.</p>
+]]></content>
+  </entry>
+  
+</feed>
