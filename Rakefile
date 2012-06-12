@@ -396,13 +396,3 @@ task :list do
   puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
   puts "(type rake -T for more detail)\n\n"
 end
-
-# CustomInk Tasks for blog maintenance.
-namespace :blog do
-  desc "Deploy to Heroku. Pass APP=appname to deploy to a different app"
-  task :deploy do
-    `git push heroku master`
-    `heroku rake generate`
-    `heroku restart`
-  end
-end

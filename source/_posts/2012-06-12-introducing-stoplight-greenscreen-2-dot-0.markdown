@@ -3,7 +3,8 @@ layout: post
 title: "Introducing Stoplight: Greenscreen 2.0"
 date: 2012-06-12 17:48
 comments: true
-author: nathen-harvey
+author: seth-vargo
+published: true
 categories:
   - devops
   - build monitoring
