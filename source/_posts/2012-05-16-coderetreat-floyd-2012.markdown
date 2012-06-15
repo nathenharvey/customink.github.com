@@ -19,6 +19,8 @@ It's easy to get caught up in the whirlwind of projects and deadlines and forget
 
 It's useful to step away from the code you work on day-to-day to focus on honing your skills merely for the sake of improving as a developer. Corey Haines' [Coderetreat](http://coderetreat.org) format facilitates this by strongly suggesting its participants delete their code immediately after each session. By the end of the day, the value created is not the code that is written, but the skills and insights learned from writing that code.
 
+<!-- more -->
+
 The Coderetreat consisted of five 45 minute pairing sessions building [Conway's Game of Life](http://en.wikipedia.org/wiki/Conway's_Game_of_Life). The 'zero-player' game is a form of cellular automata that consists of a grid of dead or alive 'cells' represented by the squares in the grid. Based on a set of four simple rules, the grid comes to life with complex patterns and interactions between the cells.
 
 The rules are:
@@ -41,8 +43,6 @@ For the first session, I worked with another developer to build up 'Cell' object
 We chose to deal with alive and dead cells through a boolean attribute on the Cell class. Had we fleshed out the game more, our logic and objects would be tightly bound to this concept and introducing a third state would require considerable time and effort.
 
 Thus, the stage was set for the remaining sessions. We would learn how to better build software that can bend and mold to the often changing demands of the real world.
-
-<!-- more -->
 
 ### Session Two
 

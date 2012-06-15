@@ -23,6 +23,8 @@ Turn on collecting GC stats for New Relic (of course you're using [New Relic](ht
 
 `GC.enable_stats if defined?(GC) && GC.respond_to?(:enable_stats)`
 
+<!-- more -->
+
 ### Examine the Heap
 
 Once you've gathered enough data in NewRelic to be able to see a change, you'll want to see what the heap looks like in one of your passenger threads.  

@@ -15,6 +15,8 @@ One of the most common production issues I run into are missing indexes.  The ot
 
 We might use some rails generators to prototype some basic functionality.  Then we'll iterate over a set of stories incorporating new behavior.  Maybe we'll do some refactoring, scrap some features, pull out some dead code and "harden" some areas we've identified as brittle.  But we almost never analyze the "data model" before we deploy.
 
+<!-- more -->
+
 Have we considered our data access patterns?  Did we create foreign keys to enforce data integrity?  Do we have any idea how big these tables are going to grow?  We almost certainly don't need to shard them…do we?
 
 No, we almost never do this.  

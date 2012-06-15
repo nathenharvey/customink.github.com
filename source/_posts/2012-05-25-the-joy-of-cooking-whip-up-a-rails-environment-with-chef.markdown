@@ -28,7 +28,9 @@ Topics include:
   * Introduction to cookbooks 
   * Provisioning an environment for a Rails application 
   * Deploying with Capistrano 
-  
+
+<!-- more -->
+
 You won't be ready to compete in Iron Chef, but you will be ready to serve up your own Rails environment in no time.
 
 I gave slightly different versions of this presentation at [RubyNation 2012](http://www.rubynation.org/) and [#ChefConf 2012](http://chefconf.opscode.com).

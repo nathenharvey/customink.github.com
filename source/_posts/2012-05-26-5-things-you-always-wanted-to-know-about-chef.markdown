@@ -21,6 +21,8 @@ I gave this presentation at [#ChefConf 2012](http://chefconf.opscode.com).
 
 Level-up your Chef skills by learning about these areas of Chef: 
 
+<!-- more -->
+
 * **Attribute Precedence** - Role, environment, cookbook, data bag? Which attribute value will be used in my chef run? 
 * **Encrypted Databags** - Chef 0.10 brought us encrypted databags. We'll look at how to create and use databags and how to keep them up-to-date in your repository. 
 * **LWRP** - What is a LWRP? How and why do you create one? We'll look at a couple of sample LWRPs and learn how to build a simple one. 

@@ -28,6 +28,8 @@ One of the big themes that emerged during [#ChefConf](http://chefconf.opscode.co
 
 The idea of building automated tests for your infrastructure code has been getting a lot of traction lately.  When it comes to [Chef](http://www.opscode.com/chef/), many tools are starting to emerge.
 
+<!-- more -->
+
 The first tool in this area to get any significant traction, that I know of, was [cucumber-chef](http://www.cucumber-chef.org/).  I first learned of this tool when I saw a pre-release copy of [Test-Driven Infrastructure with Chef](http://shop.oreilly.com/product/0636920020042.do) at the O'Reilly booth at [Velocity Conf 2011](http://velocityconf.com/velocity2011).  [Stephen Nelson-Smith](http://twitter.com/lordcope), the book's author and framework's lead developer, proposes an outside-in approach to testing where your tests can also act as monitors that look after the health of your infrastructure.  I like the idea of this approach and feel it makes a lot of sense in a greenfield environment.  One benefit of this approach is that it blurs the line between testing and monitoring.  You can easily hook-up your monitoring system to your cucumber tests.
 
 [ChefSpec](https://github.com/acrmp/chefspec) is another tool for testing your Chef code.  It is a gem that makes it easy to write [RSpec](http://rspec.info/) examples for Chef cookbooks.  This style of testing allows you to execute your tests without needing to converge the node that your tests are running on.  In other words, you can execute your tests without needing to provision a server.  One huge appeal to this style of testing is that the feedback loop is very small.  You'll get feedback about your cookbook changes within seconds or a very few minutes of saving your changes.

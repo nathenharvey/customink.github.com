@@ -78,6 +78,8 @@ class Mapper
 end
 ```
 
+<!-- more -->
+
 Using the mapper is really simple.  Let's say my source model, LegacyCustomer, is based off of a legacy table from an older system and looks like:
 
 ```ruby

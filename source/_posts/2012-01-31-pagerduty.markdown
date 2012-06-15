@@ -18,6 +18,8 @@ If you use Chef and Nagios, you already know what a great combination they make.
 
 [PagerDuty](http://www.pagerduty.com/]) is a service that manages your on-call alerting and escalation policies.  Its hard to love a service that wakes you up in the middle of the night telling you about problems with your servers (my wife is really not a fan), but PagerDuty is helpful.  We generally set it to send an email about a problem first, then send an SMS text and finally to actually make a phone call if no one has responded.  It will go through a rotating list of people on call and accepts alerts from a number of monitoring services including Nagios and AlertSite.
 
+<!-- more -->
+
 Opscode recently accepted my addition of a PagerDuty recipe to the [Nagios cookbook](https://github.com/opscode/cookbooks/tree/master/nagios) which makes it incredibly easy to connect your Nagios instance to PagerDuty.  You just add a PagerDuty API key as an attribute, apply the pagerduty recipe to your nagios server (see their [guide](http://www.pagerduty.com/docs/guides/nagios-integration-guide) for instructions on getting your key) and you're good to go.
 
 If you add the API key(s) to your Chef environments, you can tie each environment to a different escalation policy.  That way your staging environments just send email alerts while production actually texts and calls.

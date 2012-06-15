@@ -15,6 +15,8 @@ published: true
 
 The other thing I love about RubyNation are all the great talks.  Even the bad talks are still good talks.  Even the terrible talks turn into great talks because when you step into the hallway, there are amazing people who showed up to RubyNation waiting to have a great talk with you.  Every year, without fail, I meet new people and learn new things.  I don't think you can put a price tag on that.
 
+<!-- more -->
+
 There were lots of highlights for me this year, and some surprises.  The first surprise should really have been no surprise at all, since it's a developing trend at all Ruby/Rails related events: JavaScript.  In his opening keynote, Justin Getland says something to the effect of "Adapt or die".  Justin's message was clear: wherever there is a gap, someone will be there to fill it.  There is a gap in JavaScript knowledge, so it's time to step in or someone else will.
 
 The first day at RubyNation had one track that was entirely JavaScript and View focused.  The second track was a grab bag of ruby related topics such as toolkits or programming approaches.  Some of the JS/View track presentations that stuck out to me were:

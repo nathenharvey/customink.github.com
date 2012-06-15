@@ -13,6 +13,8 @@ Last week the CustomInk Tech team welcomed two new interns, Nolan Carroll and Se
 
 Nolan and Seth wasted no time hopping on our [deploy train](/blog/2012/05/14/welcome-josh-born) last week, but they couldn't have done it without the help of our (semi) automated build process.  A while ago, Nathen Harvey talked about our [Green Screen](/blog/2012/01/02/green-screen/) build monitor.  While this serves as a great motivator for us to keep our builds passing, the ability for us to quickly create builds for any branch is what keeps us moving fast.
 
+<!-- more -->
+
 Using some home grown capistrano scripts, any developer can easily create and manage an automated Jenkins build, which will automatically be monitored by Green Screen.  A developer's typical workflow might look something like:
 
 ```ruby

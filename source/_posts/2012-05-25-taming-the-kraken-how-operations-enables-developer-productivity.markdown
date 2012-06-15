@@ -24,6 +24,8 @@ At [RailsConf 2012](http://railsconf2012.com/), I gave a presentation on how our
 
 There's always a bit of tension when getting features from idea to production. In this talk, I describe some of the changes CustomInk has made to reduce this friction and keep the new features coming. Gone are the days of bi-monthly deploys, office pools dedicated to guessing when this deploy will be rolled back, and the ceremony surrounding the deploy-rollback-fix-deploy cycle. Today, ideas flow from product managers to developers to production with ease thanks to a number of changes that we've made to our teams, processes and tools.
 
+<!-- more -->
+
 Presenting at RailsConf was a really enjoyable experience and the presentation was well received.  There were lots of questions from the audience after the presentation.  Unfortunately, the Q & A section was not captured in the video.  I'd really appreciate any questions or feedback you have, just drop a comment below.
 
 ### Video

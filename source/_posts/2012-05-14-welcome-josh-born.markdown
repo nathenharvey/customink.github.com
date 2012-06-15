@@ -13,6 +13,8 @@ The CustomInk technology team wants to extend a warm welcome to our newest membe
 
 At CustomInk we like to <a href="http://www.customink.com/designs/proofs/jub0-000p-fxs7/front.jpg" target="_new">continuously deploy</a> changes to our site.  This means no sprints, no iterations, no milestones.  We work, and when we are satisfied with our work, we deploy it.  On average, engineers deploy updates to our site about five to seven times a day.  
 
+<!-- more -->
+
 We like to manage our deployments in a very low fidelity way, which was inspired largely by the engineers at Etsy.  We call it the "deploy train" and it's nothing more then a virtual line managed by our campfire topic.  
 
 ![Campfire Deploy Train](/images/deploy_train.png)

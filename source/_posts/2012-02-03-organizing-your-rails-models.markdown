@@ -14,6 +14,8 @@ Like people, applications start out small.  Unlike people, applications do not a
 
 "We use Rails, the convention tells us how to organize our code".  Yes, but having 50 or more files in your app/models directory is hardly being organized.  
 
+<!-- more -->
+
 A simple thing I like to do is group related models into folders.  This allows you to organize the related models of a domain into a single location while any shared or stand alone models simply remain in the root directory.  For instance, my directory structure may look something like:
 
 ```
