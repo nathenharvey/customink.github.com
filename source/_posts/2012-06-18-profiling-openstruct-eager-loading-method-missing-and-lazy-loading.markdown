@@ -75,7 +75,7 @@ The Pure Hash is our baseline. This is without any magic. We are just using the 
 ```
 
 ### OpenStruct
-The [OpenStruct](http://ruby-doc.org/stdlib-1.9.3/libdoc/ostruct/rdoc/OpenStruct.html) is a Ruby 1.9 library that allows builds methods from a given hash.
+The [OpenStruct](http://ruby-doc.org/stdlib-1.9.3/libdoc/ostruct/rdoc/OpenStruct.html) is a Ruby library that allows builds methods from a given hash.
 
 `OpenStruct` certainly has advantages, being only two lines of code. It also returns `nil` instead of raising an exception when calling a "method" that doesn't exist.
 
