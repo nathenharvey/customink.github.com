@@ -10,17 +10,20 @@ var github = (function(){
   return {
     showRepos: function(options){
       $.ajax({
-          url: "http://github.com/api/v2/json/repos/show/"+options.user+"?callback=?"
-        , type: 'jsonp'
-        , error: function (err) { $(options.target + ' li.loading').addClass('error').text("Error loading feed"); }
-        , success: function(data) {
+        url: "https://api.github.com/orgs/"+options.user+"/repos?callback=?",
+        type: 'jsonp',
+        error: function (err) { $(options.target + ' li.loading').addClass('error').text("Error loading feed"); },
+        success: function(result) {
+          if(!result.data) { return; }
+
           var repos = [];
-          if (!data || !data.repositories) { return; }
-          for (var i = 0; i < data.repositories.length; i++) {
-            if (options.skip_forks && data.repositories[i].fork) { continue; }
-            repos.push(data.repositories[i]);
+
+          for(var i = 0; i < result.data.length; i++) {
+            if(options.skip_forks && result.data[i].fork) { continue; }
+            repos.push(result.data[i]);
           }
-          repos.sort(function(a, b) {
+
+          repos.sort(function(a,b) {
             var aDate = new Date(a.pushed_at).valueOf(),
                 bDate = new Date(b.pushed_at).valueOf();
 
@@ -28,7 +31,8 @@ var github = (function(){
             return aDate > bDate ? -1 : 1;
           });
 
-          if (options.count) { repos.splice(options.count); }
+          if(options.count) { repos.splice(options.count); }
+
           render(options.target, repos);
         }
       });
