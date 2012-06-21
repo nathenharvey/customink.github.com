@@ -8,8 +8,7 @@ author: nathen-harvey
 categories: 
   - RubyNation
   - RubyNation2012
-  - ChefConf
-  - ChefConf2012
+  - chefconf
   - apache
   - chef
   - conference

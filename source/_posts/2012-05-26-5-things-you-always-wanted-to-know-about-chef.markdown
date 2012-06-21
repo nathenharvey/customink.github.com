@@ -6,8 +6,7 @@ comments: true
 published: true
 author: nathen-harvey
 categories: 
-  - ChefConf
-  - ChefConf2012
+  - chefconf
   - chef
   - conference
   - devops

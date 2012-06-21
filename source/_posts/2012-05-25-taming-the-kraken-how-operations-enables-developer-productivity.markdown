@@ -6,7 +6,6 @@ comments: true
 author: nathen-harvey
 published: true
 categories: 
-  - RailsConf2012
   - RailsConf
   - chef
   - conference

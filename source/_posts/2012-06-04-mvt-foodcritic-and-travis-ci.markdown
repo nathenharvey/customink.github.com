@@ -8,7 +8,6 @@ published: true
 categories: 
   - chef
   - chefconf
-  - chefconf2012
   - customink
   - devops
   - foodcritic
