@@ -6,7 +6,7 @@ comments: true
 categories: 
   - ruby
   - conference
-  - RubyNation
+  - rubynation
 author: karle-durante
 published: true
 ---

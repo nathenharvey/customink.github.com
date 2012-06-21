@@ -6,8 +6,7 @@ comments: true
 published: true
 author: nathen-harvey
 categories: 
-  - RubyNation
-  - RubyNation2012
+  - rubynation
   - chefconf
   - apache
   - chef
