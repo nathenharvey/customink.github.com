@@ -288,7 +288,7 @@ These methods are purely for example and fails many edge cases.
 
 1. These methods require special cases when your object returns data that is actually `nil` or `null`. It could raise an exception instead of actually returning `nil` as expected.
 2. Allowing methods to by dynamically called opens you up to a world of hurt - especially if your data's keys correspond to existing Ruby methods. As an example, when writing this blog post, my original hash had a key named `fork`. When I was actually sending `fork`, it was calling the Ruby `Kernel.fork` method, which really threw me for a loop.
-3. I neglected many qualitative metrics, such as easy of use, implementation time, and readability, when conducting this study. Those metrics, by definition, are extremely difficult to measure.
+3. I neglected many qualitative metrics, such as ease of use, implementation time, and readability, when conducting this study. Those metrics, by definition, are extremely difficult to measure.
 
 <script type="text/javascript">
   google.load('visualization', '1', { packages:['corechart'] });

@@ -5,3 +5,6 @@ author: jon-morton
 footer: false
 ---
 
+{% assign author = site.authors[page.author] %}
+
+{{ author.bio }}

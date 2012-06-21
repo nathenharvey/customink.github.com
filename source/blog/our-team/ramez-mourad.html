@@ -5,3 +5,6 @@ author: ramez-mourad
 footer: false
 ---
 
+{% assign author = site.authors[page.author] %}
+
+{{ author.bio }}

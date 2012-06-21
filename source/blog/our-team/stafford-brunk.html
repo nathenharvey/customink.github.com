@@ -4,3 +4,7 @@ title: Stafford Brunk
 author: stafford-brunk
 footer: false
 ---
+
+{% assign author = site.authors[page.author] %}
+
+{{ author.bio }}

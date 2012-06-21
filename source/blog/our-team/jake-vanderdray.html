@@ -4,3 +4,7 @@ title: Jake Vanderdray
 author: jake-vanderdray
 footer: false
 ---
+
+{% assign author = site.authors[page.author] %}
+
+{{ author.bio }}

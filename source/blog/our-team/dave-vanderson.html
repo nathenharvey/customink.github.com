@@ -4,3 +4,7 @@ title: Dave Vanderson
 author: dave-vanderson
 footer: false
 ---
+
+{% assign author = site.authors[page.author] %}
+
+{{ author.bio }}

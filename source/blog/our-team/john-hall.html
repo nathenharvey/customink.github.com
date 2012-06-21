@@ -4,3 +4,7 @@ title: John Hall
 author: john-hall
 footer: false
 ---
+
+{% assign author = site.authors[page.author] %}
+
+{{ author.bio }}
