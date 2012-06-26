@@ -10,3 +10,4 @@ _deploy
 node_modules
 public
 vendor
+vendor/ruby
