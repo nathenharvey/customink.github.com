@@ -15,3 +15,5 @@ Ideas
 
 - Boyscout Code Principle
 - Provision your laptop with Chef (Part 2) [Seth]
+- SOLID Design in Dynamic Languages [Tien]
+- Rails 3 Upgrade
