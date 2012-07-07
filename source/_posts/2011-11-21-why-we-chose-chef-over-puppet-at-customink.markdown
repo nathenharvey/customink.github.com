@@ -2,6 +2,7 @@
 layout: post
 title: "Why we chose Chef over Puppet at CustomInk"
 date: 2011-11-21 03:29
+published: true
 comments: true
 author: nathen-harvey
 categories:

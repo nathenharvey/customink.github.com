@@ -2,6 +2,7 @@
 layout: post
 title: "Green Screen"
 date: 2012-01-02 14:17
+published: true
 comments: true
 author: nathen-harvey
 categories: 
