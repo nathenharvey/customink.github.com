@@ -182,6 +182,10 @@ More information on Foodcritic and Travis CI can be found here:
 * [Travis CI: Getting started guide](http://about.travis-ci.org/docs/user/getting-started/)
 * [Travis CI: Status Images](http://about.travis-ci.org/docs/user/status-images/)
 
+### Next Post
+
+Be sure to read the next post on this topic:  [MVT: knife test and Travis CI](http://technology.customink.com/blog/2012/07/06/mvt-knife-test-and-travisci/)
+ 
 ---
 <sub>Reposted from [Nathen Harvey's blog](http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/)<sub>
  
