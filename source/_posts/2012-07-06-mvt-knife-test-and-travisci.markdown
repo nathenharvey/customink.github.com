@@ -128,6 +128,14 @@ gem 'chef', '~> 10.12.0'
 
 That's it.  On your next `git push` Travis CI should run `knife cookbook test` on your cookbook.
 
+## Running locally
+
+To run the rake tasks locally, you'll need to tell bundler where the Gemfile is, or you'll need to move it to the root directory of your cookbook and update .travis.yml appropriately.  Use the following command to run your tests locally:
+
+`BUNDLE_GEMFILE=test/support/Gemfile rake knife`
+`BUNDLE_GEMFILE=test/support/Gemfile rake foodcritic`
+
+
 ## Full source code
 
 You can checkout this [Github compare view](https://github.com/customink-webops/percona-install/compare/03b9446e3f1e...e3f04d14b696) to see the changes made to the code from the [previous post](http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/).
