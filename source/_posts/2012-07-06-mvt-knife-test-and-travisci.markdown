@@ -83,7 +83,7 @@ task :knife do
 end
 
 task :prepare_sandbox do
-  files = %w{*.md *.rb attributes definitions files providers recipes resources templates}
+  files = %w{*.md *.rb attributes definitions files libraries providers recipes resources templates}
 
   rm_rf sandbox_path
   mkdir_p sandbox_path
@@ -138,7 +138,7 @@ To run the rake tasks locally, you'll need to tell bundler where the Gemfile is,
 
 ## Full source code
 
-You can checkout this [Github compare view](https://github.com/customink-webops/percona-install/compare/03b9446e3f1e...e3f04d14b696) to see the changes made to the code from the [previous post](http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/).
+You can checkout this [Github compare view](https://github.com/customink-webops/percona-install/compare/03b9446e3f1e...9f4132d) to see the changes made to the code from the [previous post](http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/).
 
 
 ``` ruby .chef/knife.rb
@@ -184,7 +184,7 @@ task :knife do
 end
 
 task :prepare_sandbox do
-  files = %w{*.md *.rb attributes definitions files providers recipes resources templates}
+  files = %w{*.md *.rb attributes definitions files libraries providers recipes resources templates}
 
   rm_rf sandbox_path
   mkdir_p sandbox_path
