@@ -1,0 +1,23 @@
+---
+layout: post
+title: "Stay Cool"
+date: 2012-07-10 19:15
+comments: true
+categories: 
+  - team
+author: karle-durante
+published: true
+---
+
+We had a fairly severe production issue the other day.  The kind of issue where you get sick to your stomach as you begin to realize what...just....happened......
+
+As the issue escalated, news spread and a core group of people took control to work towards resolution.  The questions were always "what's happening" and "what's changed recently" and "what kinds of things might cause this" and never "who deployed last" and "who worked on this code originally".  It says a lot about a person that can keep their cool and focus on issue resolution instead of blame assignment.  Even when your tired, punchy, and irritated because you can't figure out exactly what's going on, keeping your cool is ultimately the key to success.
+
+<!-- more -->
+It's really obvious that something is wrong when you see a group of people huddled together all staring intensely at a single monitor and not saying a word.  People instinctively want to ask "what's wrong?" and the follow up question is usually "do we know who did that?".  During our ordeal, teammate after teammate approached and offered simple words "Please let me know what I can do to help".  Developers, product managers, people from other teams - the skillet each person possessed was irrelevant, but the intent was uniform: help fix the problem in whatever way possible.  
+
+When something goes wrong, it doesn't matter who caused the problem.  Everyone is human, everyone is capable of making the same mistake.  All that matters is "what" is causing the problem.  It's much easier to find the "what" when your team is calm and working together.  Once you understand the cause of the problem it's easy to determine a clear plan of action.  With a clear plan of action and a blameless environment, problem resolution is imminent because everyone is ready to help (and not hide).
+
+We're not completely out of the weeds just yet, but we understand the issue and we our executing our plan of action.  Tomorrow we'll conduct a blameless postmortem to help us identify, and further prevent, the root cause of the issue.
+
+I'm proud to be apart of such a great support system.  I have no gripes about the 16 hours I spent at my computer yesterday because I was helping our customers.  More importantly, I was helping my friends.

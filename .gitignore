@@ -3,6 +3,7 @@
 .gist-cache
 .preview-mode
 .pygments-cache
+.rvmrc
 .sass-cache
 *.swp
 
