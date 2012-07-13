@@ -65,9 +65,9 @@ OK, it should now be obvious that `knife cookbook test` should be included as pa
 
 To get Travis CI running `knife cookbook test` for us, we'll need to add or update the following files:
 
-* .chef/knife.rb
 * .travis.yml
 * Rakefile
+* test/.chef/knife.rb
 * test/support/Gemfile
 
 Of course, this assumes you've configured your cookbook as described in the [previous post](http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/).  Let's start with the Rakefile.
@@ -79,7 +79,7 @@ desc "Runs knife cookbook test"
 task :knife do
   Rake::Task[:prepare_sandbox].execute
 
-  sh "bundle exec knife cookbook test cookbook -o #{sandbox_path}/../"
+  sh "bundle exec knife cookbook test cookbook -c test/.chef/knife.rb -o #{sandbox_path}/../"
 end
 
 task :prepare_sandbox do
@@ -112,7 +112,7 @@ script:
 ```
 To successfully run the knife command, Travis CI will need a very minimal Chef configuration.
 
-``` ruby .chef/knife.rb
+``` ruby test/.chef/knife.rb
 cache_type 'BasicFile'
 cache_options(:path => "#{ENV['HOME']}/.chef/checksums")
 ```
@@ -138,10 +138,10 @@ To run the rake tasks locally, you'll need to tell bundler where the Gemfile is,
 
 ## Full source code
 
-You can checkout this [Github compare view](https://github.com/customink-webops/percona-install/compare/03b9446e3f1e...9f4132d) to see the changes made to the code from the [previous post](http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/).
+You can checkout this [Github compare view](https://github.com/customink-webops/percona-install/compare/03b9446...d423b14) to see the changes made to the code from the [previous post](http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/).
 
 
-``` ruby .chef/knife.rb
+``` ruby test/.chef/knife.rb
 cache_type 'BasicFile'
 cache_options(:path => "#{ENV['HOME']}/.chef/checksums")
 ```
@@ -180,7 +180,7 @@ desc "Runs knife cookbook test"
 task :knife do
   Rake::Task[:prepare_sandbox].execute
 
-  sh "bundle exec knife cookbook test cookbook -o #{sandbox_path}/../"
+  sh "bundle exec knife cookbook test cookbook -c test/.chef/knife.rb -o #{sandbox_path}/../"
 end
 
 task :prepare_sandbox do
