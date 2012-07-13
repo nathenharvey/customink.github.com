@@ -1,0 +1,799 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>EngineerInk</title>
+  <meta name="author" content="CustomInk">
+
+  
+  <meta name="description" content="At RailsConf 2012, I gave a presentation on how our web operations team enables developer productivity. There&#8217;s always a bit of tension when &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://technology.customink.com/blog/page/2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="EngineerInk" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://use.typekit.com/qsb1gwk.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Engineer<span id="tail">Ink</span></a></h1>
+  
+    <h2>A CustomInk Technology Blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:technology.customink.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/our-team">Our Team</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/">Taming the Kraken - How Operations Enables Developer Productivity</a></h1>
+    
+    
+      <p class="meta">
+        Posted on 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-05-25T14:31:00-04:00" pubdate data-updated="true">May 25<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>At <a href="http://railsconf2012.com/">RailsConf 2012</a>, I gave a presentation on how our web operations team enables developer productivity.</p>
+
+<p>There&#8217;s always a bit of tension when getting features from idea to production. In this talk, I describe some of the changes CustomInk has made to reduce this friction and keep the new features coming. Gone are the days of bi-monthly deploys, office pools dedicated to guessing when this deploy will be rolled back, and the ceremony surrounding the deploy-rollback-fix-deploy cycle. Today, ideas flow from product managers to developers to production with ease thanks to a number of changes that we&#8217;ve made to our teams, processes and tools.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/05/24/welcome-interns/">Welcome Interns!</a></h1>
+    
+    
+      <p class="meta">
+        Posted on 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-05-24T16:01:00-04:00" pubdate data-updated="true">May 24<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Last week the CustomInk Tech team welcomed two new interns, Nolan Carroll and Seth Vargo.  Nolan and Seth are joining us for the summer from Carnegie Mellon University where they are both majoring in Information Systems.</p>
+
+<p>Nolan and Seth wasted no time hopping on our <a href="/blog/2012/05/14/welcome-josh-born">deploy train</a> last week, but they couldn&#8217;t have done it without the help of our (semi) automated build process.  A while ago, Nathen Harvey talked about our <a href="/blog/2012/01/02/green-screen/">Green Screen</a> build monitor.  While this serves as a great motivator for us to keep our builds passing, the ability for us to quickly create builds for any branch is what keeps us moving fast.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/05/24/welcome-interns/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/05/16/coderetreat-floyd-2012/">Coderetreat Floyd 2012</a></h1>
+    
+    
+      <p class="meta">
+        Posted on 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-05-16T15:27:00-04:00" pubdate data-updated="true">May 16<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>One Saturday dedicated to honing your craft</h2>
+
+<p>It&#8217;s easy to get caught up in the whirlwind of projects and deadlines and forget that software development is very much a craft that needs to be practiced. The complex requirements and external pressures of a production application often cloud our judgement, forcing us to forgo the fundamental concepts that create great software.</p>
+
+<p>It&#8217;s useful to step away from the code you work on day-to-day to focus on honing your skills merely for the sake of improving as a developer. Corey Haines&#8217; <a href="http://coderetreat.org">Coderetreat</a> format facilitates this by strongly suggesting its participants delete their code immediately after each session. By the end of the day, the value created is not the code that is written, but the skills and insights learned from writing that code.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/05/16/coderetreat-floyd-2012/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/05/14/welcome-josh-born/">Welcome Josh Born!</a></h1>
+    
+    
+      <p class="meta">
+        Posted on 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-05-14T13:17:00-04:00" pubdate data-updated="true">May 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The CustomInk technology team wants to extend a warm welcome to our newest member, Josh Born.  Josh wasted no time and hopped onto the deploy train today for his first production release.</p>
+
+<p>At CustomInk we like to <a href="http://www.customink.com/designs/proofs/jub0-000p-fxs7/front.jpg" target="_new">continuously deploy</a> changes to our site.  This means no sprints, no iterations, no milestones.  We work, and when we are satisfied with our work, we deploy it.  On average, engineers deploy updates to our site about five to seven times a day.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/05/14/welcome-josh-born/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/27/critical-oversight-indexes/">Critical Oversight: Indexes</a></h1>
+    
+    
+      <p class="meta">
+        Posted on 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-04-27T11:48:00-04:00" pubdate data-updated="true">Apr 27<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>One of the most common production issues I run into are missing indexes.  The other day I got to thinking that they are usually missing because of the evolution of the software.</p>
+
+<p>We might use some rails generators to prototype some basic functionality.  Then we&#8217;ll iterate over a set of stories incorporating new behavior.  Maybe we&#8217;ll do some refactoring, scrap some features, pull out some dead code and &#8220;harden&#8221; some areas we&#8217;ve identified as brittle.  But we almost never analyze the &#8220;data model&#8221; before we deploy.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/04/27/critical-oversight-indexes/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/26/rubynation-2012/">RubyNation 2012</a></h1>
+    
+    
+      <p class="meta">
+        Posted on 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-03-26T13:36:00-04:00" pubdate data-updated="true">Mar 26<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.rubynation.org/">RubyNation</a> is awesome.  Most ruby events are awesome, but in particular I enjoy RubyNation because it&#8217;s local to me.  It&#8217;s not that I don&#8217;t like traveling to other conferences or that I think Washington DC is the best possible place for a conference.  What I love about RubyNation being local is having 200+ ruby developers from my immediate locale in one single place, at one single time.  Of course, it doesn&#8217;t hurt to have <a href="http://onestepback.org">Jim Weirich</a> and <a href="http://coreyhaines.com/">Corey Haines</a> show up, either.</p>
+
+<p>The other thing I love about RubyNation are all the great talks.  Even the bad talks are still good talks.  Even the terrible talks turn into great talks because when you step into the hallway, there are amazing people who showed up to RubyNation waiting to have a great talk with you.  Every year, without fail, I meet new people and learn new things.  I don&#8217;t think you can put a price tag on that.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/26/rubynation-2012/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/16/simple-garbage-collection-tuning-for-rails/">Simple Garbage Collection Tuning for Rails</a></h1>
+    
+    
+      <p class="meta">
+        Posted on 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-03-16T08:07:00-04:00" pubdate data-updated="true">Mar 16<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Ruby is known for being bad at garbage collection.  The truth is that the default GC settings aren&#8217;t very good for a Rails application so if you run a Rails app you really should do some tuning (this requires either Ruby Enterprise or Ruby 1.9.2).  Here&#8217;s a streamlined process for getting started:</p>
+
+<h3>Get a Baseline</h3>
+
+<p>Turn on collecting GC stats for New Relic (of course you&#8217;re using <a href="http://newrelic.com/">New Relic</a>).  You want to know what you&#8217;re fixing and this will probably show you that about &#8531; of the &#8220;Ruby&#8221; portion of your app response time is really garbage collection.  Just add the following line to your <code>environment.rb</code> file:</p>
+
+<p><code>GC.enable_stats if defined?(GC) &amp;&amp; GC.respond_to?(:enable_stats)</code></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/16/simple-garbage-collection-tuning-for-rails/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/02/simple-data-mapper/">Simple Data Mapper</a></h1>
+    
+    
+      <p class="meta">
+        Posted on 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-03-02T15:35:00-05:00" pubdate data-updated="true">Mar 2<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I recently tackled a pretty typical data migration task where some source model had to be transformed into some target model.  About 80% of the elements were mapped field for field, and the other 20% had to be mutated in some way.  Tired of writing one off rake tasks to pull and transform data, I came up with a little data mapper class that I cold reuse in the future.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Mapper</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:source_model</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:mappings</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">AttributeMapping</span><span class="p">;</span><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">ListMapping</span> <span class="o">&lt;</span> <span class="no">AttributeMapping</span>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:fields</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># fields - array of field symbols we want to map data into</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="n">fields</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">source_obj</span><span class="p">,</span> <span class="n">source_attribute</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">{}</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">values</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">fields</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">field</span><span class="o">|</span>
+</span><span class='line'>          <span class="n">values</span><span class="o">[</span><span class="n">field</span><span class="o">]</span> <span class="o">=</span> <span class="n">source_obj</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">source_attribute</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">ComplexMapping</span> <span class="o">&lt;</span> <span class="no">AttributeMapping</span>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:field</span>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:instruction</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># field       - field symbol we want to map data into</span>
+</span><span class='line'>    <span class="c1"># instruction - lambda which accepts source object and source attribute. </span>
+</span><span class='line'>    <span class="c1">#               expected to return value to be mapped to field (on target obj)</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">instruction</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">field</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">instruction</span> <span class="o">=</span> <span class="n">instruction</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">source_obj</span><span class="p">,</span> <span class="n">source_attribute</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">{</span> <span class="n">field</span> <span class="o">=&gt;</span> <span class="n">instruction</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">source_obj</span><span class="p">,</span> <span class="n">source_attribute</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">source_model</span><span class="p">,</span> <span class="n">mappings</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">source_model</span> <span class="o">=</span> <span class="n">source_model</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">mappings</span> <span class="o">=</span> <span class="n">mappings</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">conjure</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">values</span> <span class="o">=</span> <span class="n">map_values_for</span><span class="p">(</span> <span class="nb">self</span><span class="o">.</span><span class="n">source_model</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">mappings</span> <span class="p">)</span>
+</span><span class='line'>    <span class="n">model</span><span class="o">.</span><span class="n">to_s</span><span class="o">.</span><span class="n">camelize</span><span class="o">.</span><span class="n">constantize</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">map_values_for</span><span class="p">(</span><span class="n">source_model</span><span class="p">,</span> <span class="n">mappings</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{}</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">values</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">mappings</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="kp">attr</span><span class="p">,</span> <span class="n">mapping</span><span class="o">|</span>
+</span><span class='line'>        <span class="k">if</span> <span class="no">AttributeMapping</span> <span class="o">===</span> <span class="n">mapping</span>
+</span><span class='line'>          <span class="n">values</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">mapping</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">source_model</span><span class="p">,</span> <span class="kp">attr</span><span class="p">))</span>
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>          <span class="n">values</span><span class="o">[</span><span class="n">mapping</span><span class="o">]</span> <span class="o">=</span> <span class="n">source_model</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="kp">attr</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/02/simple-data-mapper/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/03/organizing-your-rails-models/">Organizing Your Rails Models</a></h1>
+    
+    
+      <p class="meta">
+        Posted on 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-02-03T15:38:00-05:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Like people, applications start out small.  Unlike people, applications do not always have a predictable growth pattern.  Sometimes they grow really big, and sometimes not at all.  When applications grow large, organization becomes important because it is no longer possible to remember every detail about your application without consulting the source code.</p>
+
+<p>&#8220;We use Rails, the convention tells us how to organize our code&#8221;.  Yes, but having 50 or more files in your app/models directory is hardly being organized.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/03/organizing-your-rails-models/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/31/pagerduty/">PagerDuty, Nagios and Chef</a></h1>
+    
+    
+      <p class="meta">
+        Posted on 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-01-31T10:14:00-05:00" pubdate data-updated="true">Jan 31<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Three Things that Work Great Together</h2>
+
+<p>If you use Chef and Nagios, you already know what a great combination they make.  As you build new servers they automatically start getting monitored by Nagios.  Without you having to do anything they&#8217;re grouped together based on role, so its easy to apply the same checks for all servers in a given role.  If you haven&#8217;t tried Nagios built with the chef cookbook its easy to get started with this <a href="http://wiki.opscode.com/display/chef/Nagios+Quick+Start">guide</a> from Opscode.</p>
+
+<p><a href="http://www.pagerduty.com/]">PagerDuty</a> is a service that manages your on-call alerting and escalation policies.  Its hard to love a service that wakes you up in the middle of the night telling you about problems with your servers (my wife is really not a fan), but PagerDuty is helpful.  We generally set it to send an email about a problem first, then send an SMS text and finally to actually make a phone call if no one has responded.  It will go through a rotating list of people on call and accepts alerts from a number of monitoring services including Nagios and AlertSite.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/01/31/pagerduty/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/3/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/07/10/stay-cool/">Stay Cool</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/06/mvt-knife-test-and-travisci/">MVT: knife test and TravisCI</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/27/welcome-dan-hensgen/">Welcome, Dan Hensgen</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/18/profiling-openstruct-eager-loading-method-missing-and-lazy-loading/">Profiling OpenStruct, Eager Loading, Method Missing, and Lazy Loading</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/15/welcome-jason-gilbertson/">Welcome Jason Gilbertson!</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/customink">@customink</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'customink',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("CustomInkTech", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/CustomInkTech" class="twitter-follow-button" data-show-count="false">Follow @CustomInkTech</a>
+  
+</section>
+
+
+
+
+<section>
+  <h1>Top Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/devops'>devops (10)</a></li><li><a href='/blog/categories/web-operations'>web operations (8)</a></li><li><a href='/blog/categories/chef'>chef (8)</a></li><li><a href='/blog/categories/team'>team (6)</a></li><li><a href='/blog/categories/rails'>rails (6)</a></li><li><a href='/blog/categories/sysadmin'>sysadmin (6)</a></li><li><a href='/blog/categories/testing'>testing (5)</a></li><li><a href='/blog/categories/ruby'>ruby (4)</a></li><li><a href='/blog/categories/conference'>conference (4)</a></li><li><a href='/blog/categories/apache'>apache (3)</a></li></ul>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - CustomInk -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'custominktechnologyblog';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

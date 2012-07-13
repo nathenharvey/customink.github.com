@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: team | EngineerInk]]></title>
+  <link href="http://technology.customink.com/blog/categories/team/atom.xml" rel="self"/>
+  <link href="http://technology.customink.com/"/>
+  <updated>2012-07-13T15:48:57-04:00</updated>
+  <id>http://technology.customink.com/</id>
+  <author>
+    <name><![CDATA[CustomInk]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Stay Cool]]></title>
+    <link href="http://technology.customink.com/blog/2012/07/10/stay-cool/"/>
+    <updated>2012-07-10T19:15:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/07/10/stay-cool</id>
+    <content type="html"><![CDATA[<p>We had a fairly severe production issue the other day.  The kind of issue where you get sick to your stomach as you begin to realize what...just....happened......</p>
+
+<p>As the issue escalated, news spread and a core group of people took control to work towards a resolution.  The questions were always "what's happening" and "what's changed recently" and "what kinds of things might cause this" and never "who deployed last" and "who worked on this code originally".  It says a lot about a person that can keep their cool and focus on issue resolution instead of blame assignment.  Even when your tired, punchy, and irritated because you can't figure out exactly what's going on, keeping your cool is ultimately the key to success.</p>
+
+<!-- more -->
+
+
+<p>It's really obvious that something is wrong when you see a group of people huddled together all staring intensely at a single monitor and not saying a word.  People instinctively want to ask "what's wrong?" and the follow up question is usually "do we know who did that?".  During our ordeal, teammate after teammate approached and offered simple words "Please let me know what I can do to help".  Developers, product managers, people from other teams - the skillset each person possessed was irrelevant, but the intent was uniform: help fix the problem in whatever way possible.</p>
+
+<p>When something goes wrong, it doesn't matter who caused the problem.  Everyone is human, everyone is capable of making the same mistake.  All that matters is "what" is causing the problem.  It's much easier to find the "what" when your team is calm and working together.  Once you understand the cause of the problem it's easy to determine a clear plan of action.  With a clear plan of action and a blameless environment, problem resolution is imminent because everyone is ready to help (and not hide).</p>
+
+<p>We're not completely out of the weeds just yet, but we understand the issue and we our executing our plan of action.  Tomorrow we'll conduct a blameless postmortem to help us identify, and further prevent, the root cause of the issue.</p>
+
+<p>I'm proud to be apart of such a great support system.  I have no gripes about the 16 hours I spent at my computer yesterday because I was helping our customers.  More importantly, I was helping my friends.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Welcome, Dan Hensgen]]></title>
+    <link href="http://technology.customink.com/blog/2012/06/27/welcome-dan-hensgen/"/>
+    <updated>2012-06-27T16:00:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/06/27/welcome-dan-hensgen</id>
+    <content type="html"><![CDATA[<p>Let me start off by apologizing to Dan for such a belated welcome post. It is belated for good reason though. Normally we mark our new engineer's first deploy. Today does not mark Dan's first deploy to production. But today's deploy is the culmination of many deploys. And, it has been the one I've been waiting for.</p>
+
+<p><img src="/images/dan_hensgen_the_new_hotness.jpg" alt="Long Day at Work" /></p>
+
+<!-- more -->
+
+
+<p>Dan actually started in the middle of May, and we immediately began working on a maintenance project. We would be replacing a reliable, but old application running ruby 1.8.3 and rails 1.2.6 to a new app using ruby 1.9.x and rails 3.2.x. We'll call the old app OldNotBusted and the new app TheNewHottness. Along with this update we would decouple TheNewHottness from the couplings of OldNotBusted to allow for new needs within the company. This update and decoupling also meant updating code in other apps that communicate with OldNotBusted to communicate with TheNewHotness.</p>
+
+<p>Remember how I said this is not Dan's first deploy. Well, first off TheNewHottness is new so it had nothing talking to it and could go to production very easily. And, in the other applications we have been doing what I will call "preploys". We have, at proper milestones, merged our code in the other applications and tested it, staged it, and deployed it. We did not remove any of the old code and the code we wrote was not being exercised in the other apps. But, the "preploys" allowed us to test the code in those environments and kick off calls to TheNewHottness manually using rails console and such. Also, we could verify our changes were not breaking other parts of those apps in unexpected ways. And Finally, "preploys" allowed us to make the final deploy very undramatic. It was a flip of the switch so to speak and now TheNewHotness is running and accepting calls that OldNotBusted used to take. The next deploy will by my favorite. Legacy code removal.</p>
+
+<p>I'll finish by saying it has been a joy to work with Dan on TheNewHotness. And, I'm looking forward to working with him on future projects. Glad to have you aboard at CustomInk.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Welcome Jason Gilbertson!]]></title>
+    <link href="http://technology.customink.com/blog/2012/06/15/welcome-jason-gilbertson/"/>
+    <updated>2012-06-15T10:47:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/06/15/welcome-jason-gilbertson</id>
+    <content type="html"><![CDATA[<p>The CustomInk technology team would like welcome Jason Gilbertson.  Jason, a native of Iowa and a graduate of the Georgia Institute of Technology, has relocated himself to McLean, VA to join our team and we couldn't be more excited.</p>
+
+<p><img src="/images/jason_gilbertson.jpg" alt="Jason Gilbertson" /></p>
+
+<p>Like everyone on the CustomInk technology team, Jason was quick to create a <a href="/blog/2012/05/24/welcome-interns/">feature branch</a> and then <a href="/blog/2012/05/14/welcome-josh-born/">deploy his first feature</a> to production.  But there is another important aspect of our continuous deployment strategy that Jason participated in: feature verification.</p>
+
+<!-- more -->
+
+
+<p>When engineers think they are done with the feature, they need to show it to the feature owners.  For internal features, the people who care are our internal business owners.  For customer facing features, our product managers take ownership.  The best way to show a feature to someone is to let them use it.  And the best way to let someone use a feature is to put it on an easily accessible "production like" environment (aka a 'Staging Environment').</p>
+
+<p>Thanks to the power of <a href="/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/">Web Ops</a> we can easily <a href="/blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/">whip up a rails environment</a> any time and any where we please.  With our Chef recipes, we can make use of Amazon Web Services to spin up temporary staging environments and give them friendly URL's that are easy for our feature owners to remember.  For instance, if feature branch is named "color_picker", the URL for the staging server would be "color-picker.staging.ci.com".</p>
+
+<p>When a feature is "done", we stage it, drop a note in the ticket's comments indicating the staged URL, and then move on to the next ticket.  If there is feedback about the feature, we can easily make the changes and redeploy the branch to the staging environment.  Once the ticket is verified, we tear down the staging environment and deploy the feature to production.</p>
+
+<p>Putting the new feature in a staging environment lets us do a few things.  First, it makes us more confident that our code can be deployed in a repeatable fashion (no surprises when we go to production).  Second, it let's more than one person use the feature at a time.  Lastly, it removes the necessity for people to "get together" to review changes.</p>
+
+<p>Since we work on tickets one at a time, we can follow a simple process to continuously deploy new features to our site and tools:  Branch, build, verify, deploy.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Taming the Kraken - How Operations enables developer productivity]]></title>
+    <link href="http://technology.customink.com/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/"/>
+    <updated>2012-05-25T14:31:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity</id>
+    <content type="html"><![CDATA[<p>At <a href="http://railsconf2012.com/">RailsConf 2012</a>, I gave a presentation on how our web operations team enables developer productivity.</p>
+
+<p>There's always a bit of tension when getting features from idea to production. In this talk, I describe some of the changes CustomInk has made to reduce this friction and keep the new features coming. Gone are the days of bi-monthly deploys, office pools dedicated to guessing when this deploy will be rolled back, and the ceremony surrounding the deploy-rollback-fix-deploy cycle. Today, ideas flow from product managers to developers to production with ease thanks to a number of changes that we've made to our teams, processes and tools.</p>
+
+<!-- more -->
+
+
+<p>Presenting at RailsConf was a really enjoyable experience and the presentation was well received.  There were lots of questions from the audience after the presentation.  Unfortunately, the Q &amp; A section was not captured in the video.  I'd really appreciate any questions or feedback you have, just drop a comment below.</p>
+
+<h3>Video</h3>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/5vzNzQzmAk0" frameborder="0" allowfullscreen></iframe>
+
+
+<h3>Slides</h3>
+
+<script async class="speakerdeck-embed" data-id="4f96da12947c45001f018683" data-ratio="1.2945638432364097" src="http://technology.customink.com//speakerdeck.com/assets/embed.js"></script>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Welcome Interns!]]></title>
+    <link href="http://technology.customink.com/blog/2012/05/24/welcome-interns/"/>
+    <updated>2012-05-24T16:01:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/05/24/welcome-interns</id>
+    <content type="html"><![CDATA[<p>Last week the CustomInk Tech team welcomed two new interns, Nolan Carroll and Seth Vargo.  Nolan and Seth are joining us for the summer from Carnegie Mellon University where they are both majoring in Information Systems.</p>
+
+<p>Nolan and Seth wasted no time hopping on our <a href="/blog/2012/05/14/welcome-josh-born">deploy train</a> last week, but they couldn't have done it without the help of our (semi) automated build process.  A while ago, Nathen Harvey talked about our <a href="/blog/2012/01/02/green-screen/">Green Screen</a> build monitor.  While this serves as a great motivator for us to keep our builds passing, the ability for us to quickly create builds for any branch is what keeps us moving fast.</p>
+
+<!-- more -->
+
+
+<p>Using some home grown capistrano scripts, any developer can easily create and manage an automated Jenkins build, which will automatically be monitored by Green Screen.  A developer's typical workflow might look something like:</p>
+
+<p>```ruby</p>
+
+<blockquote><blockquote><p>git branch new_feature
+git checkout new_feature
+  .... code changes...
+git commit -m "added new feature"
+git push origin new_feature
+```</p></blockquote></blockquote>
+
+<p>Now that a new feature branch is available in our remote repository, the developer can create and start their own Jenkins build:</p>
+
+<p>```ruby</p>
+
+<blockquote><blockquote><p>cap jenkins:create
+  "I've created rfe_new_feature."
+cap jenkins:build
+  "I've found rfe_new_feature and it's building now."
+```</p></blockquote></blockquote>
+
+<p>Now a build is running on our Jenkins server.  More importantly, Jenkins will use it's Jedi powers to detect any changes to the remote branch and automatically kick off a new build.  When builds fail, the entire team is notified and Green Screen turns red.  We have a handful of other useful Jenkins tasks as well:</p>
+
+<p><code>ruby
+  cap jenkins:build     # Kicks off a build for the current branch
+  cap jenkins:console   # Shows the job's console
+  cap jenkins:create    # Create a job for the current branch
+  cap jenkins:delete    # Deletes a job with name = rfe_[current_branch]
+  cap jenkins:list      # Lists all jobs in jenkins
+  cap jenkins:status    # Gets the status of a job with name = rfe_[current_branch]
+</code></p>
+
+<p>Continuous deployment can't happen without automation.  I'd like to give a big shout out to our Web Ops team for driving us down the automation super highway.  I'd also like to extend a warm welcome to Nolan and Seth, we look forward to seeing their builds pass all summer long.</p>
+]]></content>
+  </entry>
+  
+</feed>

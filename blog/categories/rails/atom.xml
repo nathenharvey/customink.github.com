@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: rails | EngineerInk]]></title>
+  <link href="http://technology.customink.com/blog/categories/rails/atom.xml" rel="self"/>
+  <link href="http://technology.customink.com/"/>
+  <updated>2012-07-13T15:48:57-04:00</updated>
+  <id>http://technology.customink.com/</id>
+  <author>
+    <name><![CDATA[CustomInk]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[5 Things You Always Wanted to Know About Chef]]></title>
+    <link href="http://technology.customink.com/blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef/"/>
+    <updated>2012-05-26T21:51:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef</id>
+    <content type="html"><![CDATA[<p>When I first started working with Chef, there were a couple of areas that I knew were going to be really awesome and helpful but I wasn't sure how to get started with them.  In this presentation, I'll provide a quick introduction to five things you've always wanted to know about Chef but were afraid to ask.</p>
+
+<p>I gave this presentation at <a href="http://chefconf.opscode.com">#ChefConf 2012</a>.</p>
+
+<p>Level-up your Chef skills by learning about these areas of Chef:</p>
+
+<!-- more -->
+
+
+<ul>
+<li><strong>Attribute Precedence</strong> - Role, environment, cookbook, data bag? Which attribute value will be used in my chef run?</li>
+<li><strong>Encrypted Databags</strong> - Chef 0.10 brought us encrypted databags. We'll look at how to create and use databags and how to keep them up-to-date in your repository.</li>
+<li><strong>LWRP</strong> - What is a LWRP? How and why do you create one? We'll look at a couple of sample LWRPs and learn how to build a simple one.</li>
+<li><strong>Error Handlers</strong> - Demystify exception and report handlers by writing a simple one and seeing examples of how they work in the wild.</li>
+<li><strong>Capistrano and Chef</strong> - Take a quick look at why and how to integrate Chef search into your Capistrano configuration to make deploying your Rails apps even easier.</li>
+</ul>
+
+
+<p>One thing I didn't mention in the presentation was how to use the data from the encrypted data bag.  I've updated the slides to include this info but it doesn't appear in the video.  In any case, here's a quick demo of how you might use it:</p>
+
+<p>``` ruby
+creds = Chef::EncryptedDataBagItem.load("db", "creds")
+env_db_creds = db_creds[node["rails_env"]]</p>
+
+<p>template "#{app_dir}/shared/config/database.yml" do
+  source "database.yml.erb"
+  variables(</p>
+
+<pre><code>:rails_env =&gt; node["rails_env"],
+:username =&gt; env_db_creds["username"],
+:password =&gt; env_db_creds["password"]
+</code></pre>
+
+<p>  )
+end
+```</p>
+
+<h3>Video</h3>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/uREL4FFPddo" frameborder="0" allowfullscreen></iframe>
+
+
+<h3>Slides</h3>
+
+<script async class="speakerdeck-embed" data-id="4fb532f2850667001f0008f8" data-ratio="1.2945638432364097" src="http://technology.customink.com//speakerdeck.com/assets/embed.js"></script>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Joy of Cooking - Whip Up a Rails Environment with Chef]]></title>
+    <link href="http://technology.customink.com/blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/"/>
+    <updated>2012-05-25T14:59:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef</id>
+    <content type="html"><![CDATA[<p>You've heard of Chef, Puppet, and other frameworks that can help you build out your infrastructure. You've been meaning to play around with one or more of them for some time now. Now's your chance; Start cooking up on your own servers!</p>
+
+<p>In this presentation, I provide an introduction to Chef with a focus on what you'll need to know to get a Rails application up and running.</p>
+
+<p>Topics include:
+  * Introduction to Chef
+  * Nodes, roles, environments, and other terminology
+  * Introduction to cookbooks
+  * Provisioning an environment for a Rails application
+  * Deploying with Capistrano</p>
+
+<!-- more -->
+
+
+<p>You won't be ready to compete in Iron Chef, but you will be ready to serve up your own Rails environment in no time.</p>
+
+<p>I gave slightly different versions of this presentation at <a href="http://www.rubynation.org/">RubyNation 2012</a> and <a href="http://chefconf.opscode.com">#ChefConf 2012</a>.</p>
+
+<p>I'd really appreciate any comments, questions, or feedback in the comments section below.</p>
+
+<h3>Video from ChefConf</h3>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/X1mmzERRkeI" frameborder="0" allowfullscreen></iframe>
+
+
+<h3>Slides</h3>
+
+<script async class="speakerdeck-embed" data-id="4fb421272cf6f5001f00ba85" data-ratio="1.2945638432364097" src="http://technology.customink.com//speakerdeck.com/assets/embed.js"></script>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Taming the Kraken - How Operations enables developer productivity]]></title>
+    <link href="http://technology.customink.com/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/"/>
+    <updated>2012-05-25T14:31:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity</id>
+    <content type="html"><![CDATA[<p>At <a href="http://railsconf2012.com/">RailsConf 2012</a>, I gave a presentation on how our web operations team enables developer productivity.</p>
+
+<p>There's always a bit of tension when getting features from idea to production. In this talk, I describe some of the changes CustomInk has made to reduce this friction and keep the new features coming. Gone are the days of bi-monthly deploys, office pools dedicated to guessing when this deploy will be rolled back, and the ceremony surrounding the deploy-rollback-fix-deploy cycle. Today, ideas flow from product managers to developers to production with ease thanks to a number of changes that we've made to our teams, processes and tools.</p>
+
+<!-- more -->
+
+
+<p>Presenting at RailsConf was a really enjoyable experience and the presentation was well received.  There were lots of questions from the audience after the presentation.  Unfortunately, the Q &amp; A section was not captured in the video.  I'd really appreciate any questions or feedback you have, just drop a comment below.</p>
+
+<h3>Video</h3>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/5vzNzQzmAk0" frameborder="0" allowfullscreen></iframe>
+
+
+<h3>Slides</h3>
+
+<script async class="speakerdeck-embed" data-id="4f96da12947c45001f018683" data-ratio="1.2945638432364097" src="http://technology.customink.com//speakerdeck.com/assets/embed.js"></script>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Critical Oversight: Indexes]]></title>
+    <link href="http://technology.customink.com/blog/2012/04/27/critical-oversight-indexes/"/>
+    <updated>2012-04-27T11:48:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/04/27/critical-oversight-indexes</id>
+    <content type="html"><![CDATA[<p>One of the most common production issues I run into are missing indexes.  The other day I got to thinking that they are usually missing because of the evolution of the software.</p>
+
+<p>We might use some rails generators to prototype some basic functionality.  Then we'll iterate over a set of stories incorporating new behavior.  Maybe we'll do some refactoring, scrap some features, pull out some dead code and "harden" some areas we've identified as brittle.  But we almost never analyze the "data model" before we deploy.</p>
+
+<!-- more -->
+
+
+<p>Have we considered our data access patterns?  Did we create foreign keys to enforce data integrity?  Do we have any idea how big these tables are going to grow?  We almost certainly don't need to shard them…do we?</p>
+
+<p>No, we almost never do this.</p>
+
+<p>Instead we race to ship.  "<a href="http://www.customink.com/lab/?cid=jub0-000p-fxs7#shared">Deploy early, deploy often</a>" is our motto, and we love it.  Deploying code is awesome, it means people are going to use it.  People using our code makes us happy because it means we didn't waste our time today.  We did something real that people got to use.</p>
+
+<p>A few months down the road comes the tipping point.  One of your tables amasses a few hundred thousand rows.  Your pages start to take seconds to load because your queries take seconds to run.  Your database connections are tied up, and when your site gets enough traffic, things start to fall over.</p>
+
+<p>This literally just happened to us.  Again.  We missed one little index on one little foreign key in one little table.  And then one of our database servers stopped responding.   Spiked CPU, connections maxed out, alerts firing, then fail over.</p>
+
+<p>While Rails makes it really easy to create models without even thinking about the database, Rails also makes it very easy to deal with the database.  In James Edward Gray's talk <a href="http://speakerdeck.com/u/jeg2/p/10-things-you-didnt-know-rails-could-do?utm_source=rubyweekly&amp;utm_medium=email">10 Things You Didn't Know Rails Could Do</a> he shows you how to use rails migration generators to create your table AND index your fields.</p>
+
+<p>If you don't like generators, you can simply use the 'add_index' method in the migration itself:</p>
+
+<p>```ruby
+class CreateFoo &lt; ActiveRecord::Migration
+  self.up</p>
+
+<pre><code>create_table :foos do |t|
+  t.integer :foreign_key
+  t.string  :other_valuable_data
+end
+
+add_index(:foos, :foreign_key, :name =&gt; 'foos_foreign_key')
+</code></pre>
+
+<p>  end
+end
+```
+Of course, if you don't think to add the index when you created the table, you can always create a migration just to add the index.  The key is adding a checkpoint to your development process in which you analyze your data structures for completeness.  Adding this checkpoint gives you a chance to add any missing database constructs before it's too late.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Simple Data Mapper]]></title>
+    <link href="http://technology.customink.com/blog/2012/03/02/simple-data-mapper/"/>
+    <updated>2012-03-02T15:35:00-05:00</updated>
+    <id>http://technology.customink.com/blog/2012/03/02/simple-data-mapper</id>
+    <content type="html"><![CDATA[<p>I recently tackled a pretty typical data migration task where some source model had to be transformed into some target model.  About 80% of the elements were mapped field for field, and the other 20% had to be mutated in some way.  Tired of writing one off rake tasks to pull and transform data, I came up with a little data mapper class that I cold reuse in the future.</p>
+
+<p>```ruby
+class Mapper
+  attr_accessor :source_model
+  attr_accessor :mappings</p>
+
+<p>  class AttributeMapping;end</p>
+
+<p>  class ListMapping &lt; AttributeMapping</p>
+
+<pre><code>attr_accessor :fields
+
+# fields - array of field symbols we want to map data into
+def initialize(fields)
+  self.fields = fields
+end
+
+def transform(source_obj, source_attribute)
+  {}.tap do |values|
+    fields.each do |field|
+      values[field] = source_obj.send(source_attribute)
+    end
+  end
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  class ComplexMapping &lt; AttributeMapping</p>
+
+<pre><code>attr_accessor :field
+attr_accessor :instruction
+
+# field       - field symbol we want to map data into
+# instruction - lambda which accepts source object and source attribute. 
+#               expected to return value to be mapped to field (on target obj)
+def initialize(field, instruction)
+  self.field = field
+  self.instruction = instruction
+end
+
+def transform(source_obj, source_attribute)
+  { field =&gt; instruction.call(source_obj, source_attribute) }
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  def initialize(source_model, mappings)</p>
+
+<pre><code>self.source_model = source_model
+self.mappings = mappings
+</code></pre>
+
+<p>  end</p>
+
+<p>  def conjure(model)</p>
+
+<pre><code>values = map_values_for( self.source_model, self.mappings )
+model.to_s.camelize.constantize.new(values)
+</code></pre>
+
+<p>  end</p>
+
+<p>  def map_values_for(source_model, mappings)</p>
+
+<pre><code>{}.tap do |values|
+  mappings.each do |attr, mapping|
+    if AttributeMapping === mapping
+      values.update(mapping.transform(source_model, attr))
+    else
+      values[mapping] = source_model.send(attr)
+    end
+  end
+end
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<!-- more -->
+
+
+<p>Using the mapper is really simple.  Let's say my source model, LegacyCustomer, is based off of a legacy table from an older system and looks like:</p>
+
+<p>```ruby
+LegacyCustomer(
+  userid: integer,        # primary key
+  creationdate: datetime, # date record was created
+  accountnum: string      # customer number. it's prefixed with</p>
+
+<pre><code>                      # "LGCY-" string that we no longer need!
+</code></pre>
+
+<p>)
+```</p>
+
+<p>And we want to migrate the LegacyCustomer data to a new Customer model that looks like:
+<code>ruby
+Customer(
+  id: integer,
+  created_at: datetime,
+  updated_at: datetime,
+  account_number: string
+)
+</code></p>
+
+<p>My rake task to run the migration would look like:
+```ruby
+namespace :migrate do
+  task :legacy_customers do</p>
+
+<pre><code>field_mappings = {
+  :userid         =&gt; :id,
+  :creation_date  =&gt; Mapper::ListMapping.new(
+                      [:created_at, :update_at]
+                     ),
+  :user_data      =&gt; Mapper::ComplexMapping.new(
+                      :account_number, 
+                      lambda {|obj, attr| obj.send(attr).gsub('LGCY-','')}
+                     )
+}
+
+LegacyCustomer.all.each do |legacy_customer|
+  mapper = Mapper.new(legacy_customer, field_mappings)
+  customer = mapper.conjure(:customer)
+  customer.save!
+end
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>As my migration marched on 'one off' data errors would pop up causing the script to fail.  This is what ultimately led me to create the ComplexMapping class.  Every time some white space, funny character, or field split requirement bombed my script I was able to add some code to my ComplexMapping requirement to solve it.</p>
+
+<p>I wanted to share this experience for two reasons:</p>
+
+<p>Ruby is awesome.  Metaprogramming and Procs made this mapper possible.  When I first started programming with Ruby, these were the two hardest concepts for me to wrap my head around.  Investing time into learning these aspects of ruby have made me such a better ruby programmer.</p>
+
+<p>The second reason is to reinforce the lesson that doing things the lazy (comfortable) way will rarely ever benefit you.  This mapper class not only made writing and maintaining my migration script easier.  It has also found it's way into some production code.</p>
+
+<p>Abstracting concepts (or remembering the <a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">single responsibility principle</a>) will always benefit you in the future.</p>
+]]></content>
+  </entry>
+  
+</feed>

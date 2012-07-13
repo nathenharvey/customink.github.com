@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Welcome Jason Gilbertson! - EngineerInk</title>
+  <meta name="author" content="CustomInk">
+
+  
+  <meta name="description" content="The CustomInk technology team would like welcome Jason Gilbertson. Jason, a native of Iowa and a graduate of the Georgia Institute of Technology, has &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://technology.customink.com/blog/2012/06/15/welcome-jason-gilbertson">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="EngineerInk" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://use.typekit.com/qsb1gwk.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Engineer<span id="tail">Ink</span></a></h1>
+  
+    <h2>A CustomInk Technology Blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:technology.customink.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/our-team">Our Team</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      
+
+<div>
+  <article class="hentry" role="article">
+    
+  <header>
+    
+      <h1 class="entry-title">Welcome Jason Gilbertson!</h1>
+    
+    
+      <p class="meta">
+        Posted on 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-06-15T10:47:00-04:00" pubdate data-updated="true">Jun 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>The CustomInk technology team would like welcome Jason Gilbertson.  Jason, a native of Iowa and a graduate of the Georgia Institute of Technology, has relocated himself to McLean, VA to join our team and we couldn&#8217;t be more excited.</p>
+
+<p><img src="/images/jason_gilbertson.jpg" alt="Jason Gilbertson" /></p>
+
+<p>Like everyone on the CustomInk technology team, Jason was quick to create a <a href="/blog/2012/05/24/welcome-interns/">feature branch</a> and then <a href="/blog/2012/05/14/welcome-josh-born/">deploy his first feature</a> to production.  But there is another important aspect of our continuous deployment strategy that Jason participated in: feature verification.</p>
+
+<!-- more -->
+
+
+<p>When engineers think they are done with the feature, they need to show it to the feature owners.  For internal features, the people who care are our internal business owners.  For customer facing features, our product managers take ownership.  The best way to show a feature to someone is to let them use it.  And the best way to let someone use a feature is to put it on an easily accessible &#8220;production like&#8221; environment (aka a &#8216;Staging Environment&#8217;).</p>
+
+<p>Thanks to the power of <a href="/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/">Web Ops</a> we can easily <a href="/blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/">whip up a rails environment</a> any time and any where we please.  With our Chef recipes, we can make use of Amazon Web Services to spin up temporary staging environments and give them friendly URL&#8217;s that are easy for our feature owners to remember.  For instance, if feature branch is named &#8220;color_picker&#8221;, the URL for the staging server would be &#8220;color-picker.staging.ci.com&#8221;.</p>
+
+<p>When a feature is &#8220;done&#8221;, we stage it, drop a note in the ticket&#8217;s comments indicating the staged URL, and then move on to the next ticket.  If there is feedback about the feature, we can easily make the changes and redeploy the branch to the staging environment.  Once the ticket is verified, we tear down the staging environment and deploy the feature to production.</p>
+
+<p>Putting the new feature in a staging environment lets us do a few things.  First, it makes us more confident that our code can be deployed in a repeatable fashion (no surprises when we go to production).  Second, it let&#8217;s more than one person use the feature at a time.  Lastly, it removes the necessity for people to &#8220;get together&#8221; to review changes.</p>
+
+<p>Since we work on tickets one at a time, we can follow a simple process to continuously deploy new features to our site and tools:  Branch, build, verify, deploy.</p>
+</div>
+
+
+    <footer>
+      <p class="meta">
+        Posted in: 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/team/'>team</a>
+  
+</span>
+
+
+      </p>
+
+      <p class="meta">
+        
+        <h2>About the Author - <a href="/blog/our-team/karle-durante.html">Karle Durante</a></h2>
+        
+
+<!-- <div>Posted by <a href="/blog/our-team/{"display_name"=>"Karle Durante", "github"=>"karledurante", "gravatar"=>"41e75ca920386f6949e2f9cc1714d71f", "twitter"=>"karledurante", "bio"=>"Karle, a lover of Ruby, Rails, Skateboards and Scotch, is an Engineer at CustomInk."}.html">Karle Durante</a></div> -->
+
+<div id="author-top-links" style="margin:-10px 0 8px 0;">
+  
+    <iframe src="http://markdotto.github.com/github-buttons/github-btn.html?user=karledurante&type=follow&count=true"
+  allowtransparency="true" frameborder="0" scrolling="0" width="165px" height="20px"></iframe>
+  
+
+  
+    <a href="https://twitter.com/karledurante" class="twitter-follow-button" data-show-count="false">Follow @karledurante</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  
+</div>
+
+<img alt="Karle Durante" src="http://gravatar.com/avatar/41e75ca920386f6949e2f9cc1714d71f?s=200" width="200" height="200" style="float:left; margin-right: 1.5em;" />
+
+<div style="padding:0 0 10px 0;">
+  Karle, a lover of Ruby, Rails, Skateboards and Scotch, is an Engineer at CustomInk.
+  <div style="clear:both;"></div>
+</div>
+
+      </p>
+      <p class="meta">
+        
+          <a class="basic-alignment left" href="/blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0/" title="Previous Post: Introducing Stoplight: Greenscreen 2.0">&laquo; Introducing Stoplight: Greenscreen 2.0</a>
+        
+        
+          <a class="basic-alignment right" href="/blog/2012/06/18/profiling-openstruct-eager-loading-method-missing-and-lazy-loading/" title="next Post: Profiling OpenStruct, Eager Loading, Method Missing, and Lazy Loading">Profiling OpenStruct, Eager Loading, Method Missing, and Lazy Loading &raquo;</a>
+        
+      </p>
+    </footer>
+  </article>
+  
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </section>
+  
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/07/10/stay-cool/">Stay Cool</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/06/mvt-knife-test-and-travisci/">MVT: knife test and TravisCI</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/27/welcome-dan-hensgen/">Welcome, Dan Hensgen</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/18/profiling-openstruct-eager-loading-method-missing-and-lazy-loading/">Profiling OpenStruct, Eager Loading, Method Missing, and Lazy Loading</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/15/welcome-jason-gilbertson/">Welcome Jason Gilbertson!</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/customink">@customink</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'customink',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("CustomInkTech", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/CustomInkTech" class="twitter-follow-button" data-show-count="false">Follow @CustomInkTech</a>
+  
+</section>
+
+
+
+
+<section>
+  <h1>Top Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/devops'>devops (10)</a></li><li><a href='/blog/categories/web-operations'>web operations (8)</a></li><li><a href='/blog/categories/chef'>chef (8)</a></li><li><a href='/blog/categories/team'>team (6)</a></li><li><a href='/blog/categories/rails'>rails (6)</a></li><li><a href='/blog/categories/sysadmin'>sysadmin (6)</a></li><li><a href='/blog/categories/testing'>testing (5)</a></li><li><a href='/blog/categories/ruby'>ruby (4)</a></li><li><a href='/blog/categories/conference'>conference (4)</a></li><li><a href='/blog/categories/apache'>apache (3)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - CustomInk -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'custominktechnologyblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://technology.customink.com/blog/2012/06/15/welcome-jason-gilbertson/';
+        var disqus_url = 'http://technology.customink.com/blog/2012/06/15/welcome-jason-gilbertson/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

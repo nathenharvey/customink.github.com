@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: testing | EngineerInk]]></title>
+  <link href="http://technology.customink.com/blog/categories/testing/atom.xml" rel="self"/>
+  <link href="http://technology.customink.com/"/>
+  <updated>2012-07-13T15:48:57-04:00</updated>
+  <id>http://technology.customink.com/</id>
+  <author>
+    <name><![CDATA[CustomInk]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MVT: knife test and TravisCI]]></title>
+    <link href="http://technology.customink.com/blog/2012/07/06/mvt-knife-test-and-travisci/"/>
+    <updated>2012-07-06T22:52:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/07/06/mvt-knife-test-and-travisci</id>
+    <content type="html"><![CDATA[<p>In my last post, <a href="http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/">MVT: Foodcritic and Travis CI</a> I described the process for having Travis CI look after your cookbooks and run Foodcritic, the cookbook lint tool, on your cookbook after each <code>git push</code>.  In this post, we'll iterate on the "Minimum Viable Test" idea by adding in support for knife's cookbook testing.</p>
+
+<p>Wait, I'm already running foodcritic, do I really need to run <code>knife cookbook test</code>, too?</p>
+
+<p>I'll use a very simple example to demonstrate that you do.</p>
+
+<p>Let's create a very basic cookbook:</p>
+
+<p><code>sh
+knife cookbook create very_basic
+** Creating cookbook very_basic
+** Creating README for cookbook: very_basic
+** Creating metadata for cookbook: very_basic
+</code>
+Next, we'll write a flawed recipe:</p>
+
+<p><code>ruby cookbooks/very_basic/recipes/default.rb
+package "flawed" do
+  action :nothing
+end
+end
+</code></p>
+
+<p>Now, run foodcritic on this cookbook:</p>
+
+<p><code>sh
+foodcritic cookbooks/very_basic
+</code></p>
+
+<p>Foodcritic doesn't throw any errors or find any problem with the cookbook.</p>
+
+<p>Let's try testing it with knife:</p>
+
+<p><code>sh
+knife cookbook test very_basic
+checking very_basic
+Running syntax check on very_basic
+Validating ruby files
+FATAL: Cookbook file recipes/default.rb has a ruby syntax error:
+FATAL: /Users/nharvey/projects/chef-hosted/.chef/../cookbooks/very_basic/recipes/default.rb:22: syntax error, unexpected keyword_end, expecting $end
+</code></p>
+
+<p>OK, it should now be obvious that <code>knife cookbook test</code> should be included as part of our MVT.</p>
+
+<!-- more -->
+
+
+<p>To get Travis CI running <code>knife cookbook test</code> for us, we'll need to add or update the following files:</p>
+
+<ul>
+<li>.travis.yml</li>
+<li>Rakefile</li>
+<li>test/.chef/knife.rb</li>
+<li>test/support/Gemfile</li>
+</ul>
+
+
+<p>Of course, this assumes you've configured your cookbook as described in the <a href="http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/">previous post</a>.  Let's start with the Rakefile.</p>
+
+<p>``` ruby Rakefile</p>
+
+<h1>!/usr/bin/env rake</h1>
+
+<p>desc "Runs knife cookbook test"
+task :knife do
+  Rake::Task[:prepare_sandbox].execute</p>
+
+<p>  sh "bundle exec knife cookbook test cookbook -c test/.chef/knife.rb -o #{sandbox_path}/../"
+end</p>
+
+<p>task :prepare_sandbox do
+  files = %w{<em>.md </em>.rb attributes definitions files libraries providers recipes resources templates}</p>
+
+<p>  rm_rf sandbox_path
+  mkdir_p sandbox_path
+   cp_r Dir.glob("{#{files.join(',')}}"), sandbox_path
+end</p>
+
+<p>private
+def sandbox_path
+  File.join(File.dirname(<strong>FILE</strong>), %w(tmp cookbooks cookbook))
+end
+```</p>
+
+<p>In the file snippet above, I've only included the parts that are relevant for getting knife working.  I'll include the full source of the Rakefile at the end of the article.</p>
+
+<p>Next, let's add this rake task to our .travis.yml file.</p>
+
+<p><code>ruby .travis.yml
+language: ruby
+gemfile:
+   - test/support/Gemfile
+rvm:
+  - 1.9.2
+  - 1.9.3
+script:
+  - bundle exec rake knife
+</code>
+To successfully run the knife command, Travis CI will need a very minimal Chef configuration.</p>
+
+<p><code>ruby test/.chef/knife.rb
+cache_type 'BasicFile'
+cache_options(:path =&gt; "#{ENV['HOME']}/.chef/checksums")
+</code></p>
+
+<p>And, of course, we'll need to add Chef to our Gemfile.  Be sure to specify a modern version as Travis CI will use 0.8.10 by default (at the time of this writing).</p>
+
+<p>``` ruby test/support/Gemfile
+source "https://rubygems.org"</p>
+
+<p>gem 'rake'
+gem 'chef', '~> 10.12.0'
+```</p>
+
+<p>That's it.  On your next <code>git push</code> Travis CI should run <code>knife cookbook test</code> on your cookbook.</p>
+
+<h2>Running locally</h2>
+
+<p>To run the rake tasks locally, you'll need to tell bundler where the Gemfile is, or you'll need to move it to the root directory of your cookbook and update .travis.yml appropriately.  Use the following command to run your tests locally:</p>
+
+<p><code>BUNDLE_GEMFILE=test/support/Gemfile rake knife</code>
+<code>BUNDLE_GEMFILE=test/support/Gemfile rake foodcritic</code></p>
+
+<h2>Full source code</h2>
+
+<p>You can checkout this <a href="https://github.com/customink-webops/percona-install/compare/03b9446...d423b14">Github compare view</a> to see the changes made to the code from the <a href="http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/">previous post</a>.</p>
+
+<p><code>ruby test/.chef/knife.rb
+cache_type 'BasicFile'
+cache_options(:path =&gt; "#{ENV['HOME']}/.chef/checksums")
+</code></p>
+
+<p><code>ruby .travis.yml
+language: ruby
+gemfile:
+   - test/support/Gemfile
+rvm:
+  - 1.9.2
+  - 1.9.3
+script:
+  - bundle exec rake knife
+  - bundle exec rake foodcritic
+</code></p>
+
+<p>The Rakefile was refactored a bit since the previous post:</p>
+
+<p>``` ruby Rakefile</p>
+
+<h1>!/usr/bin/env rake</h1>
+
+<p>task :default => 'foodcritic'</p>
+
+<p>desc "Runs foodcritic linter"
+task :foodcritic do
+  Rake::Task[:prepare_sandbox].execute</p>
+
+<p>  if Gem::Version.new("1.9.2") &lt;= Gem::Version.new(RUBY_VERSION.dup)</p>
+
+<pre><code>sh "foodcritic -f any #{sandbox_path}"
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>puts "WARN: foodcritic run is skipped as Ruby #{RUBY_VERSION} is &lt; 1.9.2."
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>desc "Runs knife cookbook test"
+task :knife do
+  Rake::Task[:prepare_sandbox].execute</p>
+
+<p>  sh "bundle exec knife cookbook test cookbook -c test/.chef/knife.rb -o #{sandbox_path}/../"
+end</p>
+
+<p>task :prepare_sandbox do
+  files = %w{<em>.md </em>.rb attributes definitions files libraries providers recipes resources templates}</p>
+
+<p>  rm_rf sandbox_path
+  mkdir_p sandbox_path
+  cp_r Dir.glob("{#{files.join(',')}}"), sandbox_path
+end</p>
+
+<p>private
+def sandbox_path
+  File.join(File.dirname(<strong>FILE</strong>), %w(tmp cookbooks cookbook))
+end
+```</p>
+
+<p>``` ruby test/support/Gemfile
+source "https://rubygems.org"</p>
+
+<p>gem 'rake'
+gem 'foodcritic'
+gem 'chef', '~> 10.12.0'
+```</p>
+
+<h3>Credit</h3>
+
+<p>A big "Thank You!" shout-out to <a href="http://technology.customink.com/blog/our-team/seth-vargo.html">Seth Vargo</a> for writing most of the code used in this post!</p>
+
+<hr />
+
+<p><sub>Reposted from <a href="http://nathenharvey.com/blog/2012/07/06/mvt-knife-test-and-travisci/">Nathen Harvey's blog</a><sub></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Introducing Stoplight: Greenscreen 2.0]]></title>
+    <link href="http://technology.customink.com/blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0/"/>
+    <updated>2012-06-12T17:48:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0</id>
+    <content type="html"><![CDATA[<p><a href="http://technology.customink.com/images/stoplight.png"><img src="http://technology.customink.com/images/stoplight.png" width="300" style="float:right; margin:0 0 15px 15px;" /></a>
+At CustomInk, we use a variety of tools to monitor the status of our builds. One such tool was <a href="https://github.com/customink-webops/greenscreen">Greenscreen</a>. In fact, we even wrote <a href="http://technology.customink.com/blog/2012/01/02/green-screen/">a blog post about how we use Greenscreen at CustomInk</a> not too long ago.</p>
+
+<p>One of the biggest problems with Greenscreen was its extensibility. By default, Greenscreen only works with Hudson and Jenkins servers. With <a href="http://travis-ci.org">Travis CI</a> becoming quite popular in the open-source community, Greenscreen needed a major upgrade. Furthermore, Greenscreen was not very extensible.</p>
+
+<p>After some significant refactoring, Greenscreen evolved into <a href="https://github.com/customink/stoplight">Stoplight</a>...</p>
+
+<!-- more -->
+
+
+<h2>Significant Improvements</h2>
+
+<p>There are a number of improvements in Stoplight. These are the most critical or useful to the end-user:</p>
+
+<ul>
+<li>Support for multiple (any) continuous integration server</li>
+<li>Highly configurable yaml files</li>
+<li>Cross-browser beautiful UI</li>
+<li>More informative build statuses</li>
+<li>Extensibility</li>
+<li>Usability</li>
+<li>Full test suite</li>
+</ul>
+
+
+<h2>Refactoring</h2>
+
+<p>Originally, I was just going to add Travis CI support to Greenscreen. However, I quickly asked myself, "why stop at Travis CI?"; we should allow developers to connect Greenscreen to any continuous integration server. After cleaning up the code a bit, I introduced the concept of a <code>Provider</code>. Simply put, a <code>Provider</code> is an abstract Ruby class that maps server-data into Greenscreen data. It looks like this:</p>
+
+<p>```ruby</p>
+
+<h1>Provider is an abstract class that all providers inherit from. It requires that a specified format be returned. This way, stoplight</h1>
+
+<h1>doesn't care who it's talking to, as long as it guarantees certain information.</h1>
+
+<p>module Stoplight::Providers
+  class Provider</p>
+
+<pre><code>attr_reader :options, :response
+
+# Initializes a hash `@options` of default options
+def initialize(options = {})
+  ...
+end
+
+# `projects` must return an array of Stoplight::Project
+# see Stoplight::Project for more information on the spec
+def projects
+  ...
+end
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>On the front-end, now we don't have to worry about parsing different server responses; we know that any provider will respond to the <code>Provider#projects</code> instance method. This makes refactoring our front-end code much easier.</p>
+
+<p>The <code>Stoplight::Project</code> clearly defines a schema and method-set that must be adhered to. In the front-end, we can simply call <code>.projects</code> on any provider and know with 100% certainty that the given objects respond to a certain set of methods. Those methods are defined in the <code>Stoplight::Project</code> class:</p>
+
+<p>```ruby
+module Stoplight
+  class Project</p>
+
+<pre><code>attr_accessor :name, :build_url, :last_build_id, :last_build_time, :last_build_status, :current_status
+
+# Initialize (new) takes in a hash of options in the following format:
+#
+# {
+#   :name =&gt; 'my_project',
+#   :build_url =&gt; 'http://ci.jenkins.org/job/my_project',
+#   :web_url =&gt; 'http://github.com/username/my_project', # optional
+#   :last_build_id =&gt; '7',
+#   :last_build_time =&gt; '2012-05-24T03:19:53Z',
+#   :last_build_status =&gt; 0,
+#   :current_status =&gt; 1,
+# }
+#
+# - `name` - the name of this project
+# - `build_url` - the url where the build came from
+# - `build_id` - the unique build_id for this project
+# - `last_build_time` - last successful build
+# - `last_build_status` - integer representing the exit code of the last build:
+#   - -1: unknown
+#   -  0: passed (success)
+#   -  1: failed (error, failure)
+# - `current_status` - the current status of the build:
+#   - -1: unknwon
+#   -  0: done (sleeping, waiting)
+#   -  1: building (building, working, compiling)
+def initialize(options = {})
+  ...
+end
+</code></pre>
+
+<p>  end
+end
+<code>``
+This set of simple instructions tells a provider how it must format data. Essentially this makes</code>Provider` a micro-data-mapper, massaging data from remote APIs into a standard format. Stoplight then uses that standard format to create a unified user experience.</p>
+
+<h3>Adding Tests</h3>
+
+<p>Since Stoplight is destined to become an open-source project, it needs a comprehensive test suite. Furthermore, during our refactoring, it's important that we don't break existing functionality. As such, I added a full test suite with RSpec. To make development easier, I also use Spork, Guard, and Growl-Ruby to automatically run tests in the background while I'm coding. This makes TDD much more exciting.</p>
+
+<h3>Foreman</h3>
+
+<p>With all those dependencies, plus running the server, it only made sense to use <a href="https://github.com/ddollar/foreman">Foreman</a> to manage all those processes. What used to be (in three different terminal tabs):</p>
+
+<pre><code>bundle exec shotgun -p 4567
+bundle exec compass watch -c config/compass.rb
+bundle exec guard
+</code></pre>
+
+<p>simply became:</p>
+
+<pre><code>bundle exec foreman start
+</code></pre>
+
+<p>with a tiny <code>Procfile</code>:</p>
+
+<p><code>
+web:      shotgun -p 4567
+compass:  compass watch -c config/compass.rb
+guard:    guard
+</code></p>
+
+<h3>Compass</h3>
+
+<p>Under the hood, all the styles for Stoplight are generated by a framework called <a href="http://compass-style.org">Compass</a>. Compass allows us to leverage the power of SCSS and easily create a cross-browser compliant application. Stoplight uses Compass and SCSS for all it's styles. This ensures a consistent user experience.</p>
+
+<h3>ABAP Text</h3>
+
+<p>ABAP stands for "As Big As Possible". A tiny snippet of jQuery dynamically sizes text to fit in its bounds. Whether you're displaying on a 60" LED TV or a 13" Monitor, the text will be as big and clear as possible.</p>
+
+<h3>Adding Travis</h3>
+
+<p>Brace yourself for a meta-moment. Since I wanted Stoplight to become a popular open-source project, I added the build on Travis CI. With <a href="http://travis-ci.org/#!/customink/stoplight">Stoplight on Travis CI</a> we can use Stoplight to monitor the build status of Stoplight.</p>
+
+<h2>Conclusion</h2>
+
+<p>There you have it! What was once a very isolated and less-than-configurable tool is now highly extensible and open to contributions by the community. If you are currently using Greenscreen or another build monitoring alternative, give Stoplight a try.</p>
+
+<h2>I Want it!</h2>
+
+<p>Stoplight is available for <a href="https://github.com/customink/stoplight">download and forking on github</a>. Pull requests are greatly welcome! There is also a highly-configurable <a href="https://github.com/customink-webops/stoplight">chef cookbook for installing Stoplight</a> on Apache and Passenger on your own servers.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MVT:  Foodcritic and Travis CI]]></title>
+    <link href="http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/"/>
+    <updated>2012-06-04T13:45:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci</id>
+    <content type="html"><![CDATA[<p>One of the big themes that emerged during <a href="http://chefconf.opscode.com/">#ChefConf</a> was that we should be testing our infrastructure code.  Software engineers have been practicing test-driven development, behavior-driven development, continuous integration, and many other testing-related practices for a long time.  It's becoming more important for the infrastructure engineers to learn from and apply these practices to our day-to-day workflow.  When it comes to testing Chef-driven infrastructure automation, there are a number of tools and practices that are starting to emerge.  In this article I'll look at a "minimum viable testing" (MVT) approach to this problem using <a href="http://acrmp.github.com/foodcritic/">Foodcritic</a> and <a href="http://travis-ci.org/">Travis CI</a>.  <a href="http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/#steps">Follow the steps in this article</a> to get your public cookbooks tested after every <code>git push</code>.</p>
+
+<h3>Testing with Chef</h3>
+
+<p>The idea of building automated tests for your infrastructure code has been getting a lot of traction lately.  When it comes to <a href="http://www.opscode.com/chef/">Chef</a>, many tools are starting to emerge.</p>
+
+<!-- more -->
+
+
+<p>The first tool in this area to get any significant traction, that I know of, was <a href="http://www.cucumber-chef.org/">cucumber-chef</a>.  I first learned of this tool when I saw a pre-release copy of <a href="http://shop.oreilly.com/product/0636920020042.do">Test-Driven Infrastructure with Chef</a> at the O'Reilly booth at <a href="http://velocityconf.com/velocity2011">Velocity Conf 2011</a>.  <a href="http://twitter.com/lordcope">Stephen Nelson-Smith</a>, the book's author and framework's lead developer, proposes an outside-in approach to testing where your tests can also act as monitors that look after the health of your infrastructure.  I like the idea of this approach and feel it makes a lot of sense in a greenfield environment.  One benefit of this approach is that it blurs the line between testing and monitoring.  You can easily hook-up your monitoring system to your cucumber tests.</p>
+
+<p><a href="https://github.com/acrmp/chefspec">ChefSpec</a> is another tool for testing your Chef code.  It is a gem that makes it easy to write <a href="http://rspec.info/">RSpec</a> examples for Chef cookbooks.  This style of testing allows you to execute your tests without needing to converge the node that your tests are running on.  In other words, you can execute your tests without needing to provision a server.  One huge appeal to this style of testing is that the feedback loop is very small.  You'll get feedback about your cookbook changes within seconds or a very few minutes of saving your changes.</p>
+
+<p><a href="https://github.com/calavera/minitest-chef-handler">Minitest Chef Handler</a> is yet another tool for testing with Chef.  This runs a suite of <a href="https://github.com/seattlerb/minitest">minitest</a> tests as a report handler in your Chef-managed nodes.  As you may know, report handlers are run at the end of each <a href="http://wiki.opscode.com/display/chef/Anatomy+of+a+Chef+Run">chef run, or convergence</a>.</p>
+
+<h3>Testing at ChefConf</h3>
+
+<p>At the inaugural <a href="http://chefconf.opscode.com">#ChefConf</a> there were many sessions that included information about many companies' approach to testing.  Here's a quick list of some of the sessions:</p>
+
+<ul>
+<li><p><a href="http://www.foodfightshow.org/2012/04/episode-10-testallthethings-testing.html">Food Fight Show Episode #10 - TESTALLTHETHINGS</a> -- This wasn't actually part of #ChefConf but is 'required listening' for anyone interested in learning more about this space.</p></li>
+<li><p><a href="http://chefconf2012.sched.org/event/bfe13edac99e2b4d8582f0cd1005ee73?iframe=no&amp;w=700&amp;sidebar=no&amp;bg=no">#ChefConf Pre-event Hackday: TEST ALL THE THINGS!!!</a></p></li>
+<li><p><a href="https://github.com/atomic-penguin/ntp">NTP Cookbook with tests</a> - tests were added to this cookbook as part of the hackday event.</p></li>
+<li><p><a href="http://www.youtube.com/watch?v=o2e0aZUAVGw">Test-driven Development for Chef Practitioners</a> (video)</p></li>
+<li><p><a href="http://www.youtube.com/watch?v=dPaYfAIvqxw">Test Driven Development Roundtable</a> (video)</p></li>
+</ul>
+
+
+<!--more-->
+
+
+<h3>Foodcritic</h3>
+
+<p><a href="http://acrmp.github.com/foodcritic/">Foodcritic</a> is a lint tool for your Chef cookbooks.</p>
+
+<p><blockquote><p></p></p><p><p>Foodcritic has two goals:</p></p><p><ul><br/><li><p>To make it easier to flag problems in your Chef cookbooks that will cause Chef to blow up when you attempt to converge. This is about faster feedback. If you automate checks for common problems you can save a lot of time.</p></li><br/><li><p>To encourage discussion within the Chef community on the more subjective stuff - what does a good cookbook look like? Opscode have avoided being overly prescriptive which by and large I think is a good thing. Having a set of rules to base discussion on helps drive out what we as a community think is good style.</p></blockquote></p></li>
+</ul>
+
+
+<h4>Why start with Foodcritic?</h4>
+
+<p>Given the plethora of options available, why should you start with Foodcritic?  Well, you have to start somewhere.  We felt Foodcritic was a good choice because it was easy to get started with, the tests ran quickly, and we are working under the assumption that once we started some automated testing, we'll start layering on more and more pieces as we go.  After some initial experiments, we found that we could get Foodcritic looking after our each cookbook in a matter of minutes and local tests running in seconds.</p>
+
+<p>The pseudo-converge approaches (like ChefSpec) initially feel like we'll need to do a lot of mocking that will take some time to get correct.  The post-converge approaches (like cucumber-chef and minitest) will take longer to run and are a bit more complex.</p>
+
+<p>One benefit of the post-converge approach is the ability to use your tests as health monitors.  We already have monitoring in place and use it as an indicator that a node is fully provisioned.  We call this "monitor-driven development."  Given that, it was better for us to get started with something that runs without requiring a full converge.  Foodcritic fit the bill quite nicely.</p>
+
+<h3>Travis CI</h3>
+
+<p>Travis CI is:</p>
+
+<p><blockquote><p>A hosted continuous integration service for the open source community.</p></blockquote></p>
+
+<p>Using Travis CI in conjunction with Foodcritic, we'd have a basic automated test foundation to build on.</p>
+
+<h3>Automated Foodcritic tests with Travis CI <a name="steps"></a></h3>
+
+<p>Using Foodcritic and Travis CI, you can quickly set-up a "minimum viable testing" (MVT) environment.  The idea is that once you have some sort of tests running against your cookbooks, you'll want to add more and doing so will be easy.  Let's look at how to add Foodcritic and Travis CI to your cookbook workflow.</p>
+
+<h4>Initial set-up</h4>
+
+<p>Follow these steps to get everything set-up and ready for your first tests:</p>
+
+<ol>
+<li><code>gem install foodcritic</code></li>
+<li>Go to <a href="http://travis-ci.org/">Travis CI</a> and follow the Sign In link at the top.</li>
+<li>Activate the GitHub Service Hook for your cookbook's repository from your TravisCI profile page.  Each of your cookbooks has its own repository, right?!</li>
+</ol>
+
+
+<h4>Configure your project</h4>
+
+<p>The next step is to add a .travis.yml file to your project.</p>
+
+<p><code>ruby .travis.yml
+language: ruby
+gemfile:
+   - test/support/Gemfile
+rvm:
+  - 1.9.2
+  - 1.9.3
+script: bundle exec rake foodcritic
+</code></p>
+
+<p>This file tells Travis CI how to build your project.  We've specified the language (ruby) and the versions of ruby to use when testing this cookbook (1.9.2 and 1.9.3).  We've also specified a Gemfile and script to execute when testing this project.  Let's add a Gemfile to a new directory in our cookbook, <code>test/support</code>.</p>
+
+<p><code>sh
+mkdir -p test/support
+touch test/support/Gemfile
+</code></p>
+
+<p>Our Gemfile is pretty simple, just include <code>rake</code> and <code>foodcritic</code>.</p>
+
+<p>``` ruby Gemfile
+source "https://rubygems.org"</p>
+
+<p>gem 'rake'
+gem 'foodcritic'
+```</p>
+
+<p>Finally, we'll need to add a Rake file that will be run each time Travis builds our project.</p>
+
+<p>``` ruby Rakefile</p>
+
+<h1>!/usr/bin/env rake</h1>
+
+<p>desc "Runs foodcritic linter"
+task :foodcritic do
+  if Gem::Version.new("1.9.2") &lt;= Gem::Version.new(RUBY_VERSION.dup)</p>
+
+<pre><code>sandbox = File.join(File.dirname(__FILE__), %w{tmp foodcritic cookbook})
+prepare_foodcritic_sandbox(sandbox)
+
+sh "foodcritic --epic-fail any #{File.dirname(sandbox)}"
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>puts "WARN: foodcritic run is skipped as Ruby #{RUBY_VERSION} is &lt; 1.9.2."
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>task :default => 'foodcritic'</p>
+
+<p>private</p>
+
+<p>def prepare_foodcritic_sandbox(sandbox)
+  files = %w{<em>.md </em>.rb attributes definitions files libraries providers
+recipes resources templates}</p>
+
+<p>  rm_rf sandbox
+  mkdir_p sandbox
+  cp_r Dir.glob("{#{files.join(',')}}"), sandbox
+  puts "\n\n"
+end</p>
+
+<p>```</p>
+
+<p>This Rakefile will copy the contents of our cookbook to a temporary directory and run the foodcritic tests on the temporary directory.  Note the <code>--epic-fail</code> tag is used to fail the build (return a non-zero exit code) on <code>any</code> rule that does not pass.</p>
+
+<p>That's it!  When you push your commit to github, you should see Travis CI pick-up the changes, run your build, and report on status.</p>
+
+<h3>Share Your Build Status</h3>
+
+<p>One final step that you may consider is adding a build status indicator to your README.  This simple line in your README will let others know what the current build status is for your cookbook.</p>
+
+<p>``` sh</p>
+
+<p><a href="http://travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME]"><img src="https://secure.travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME].png" alt="Build Status" /></a></p>
+
+<p>```</p>
+
+<h3>Thanks &amp; Additional Resources</h3>
+
+<p>A big "Thank You!" shout-out to <a href="https://twitter.com/fnichol">Fletcher Nichol</a> and <a href="https://twitter.com/atomic_penguin">Eric G. Wolfe</a> from whom I 'borrowed' the <code>Rakefile</code> and <code>.travis.yml</code> used in this post.</p>
+
+<p>More information on Foodcritic and Travis CI can be found here:</p>
+
+<ul>
+<li><a href="http://acrmp.github.com/foodcritic/">Foodcritic</a></li>
+<li><a href="http://about.travis-ci.org/docs/user/getting-started/">Travis CI: Getting started guide</a></li>
+<li><a href="http://about.travis-ci.org/docs/user/status-images/">Travis CI: Status Images</a></li>
+</ul>
+
+
+<h3>Next Post</h3>
+
+<p>Be sure to read the next post on this topic:  <a href="http://technology.customink.com/blog/2012/07/06/mvt-knife-test-and-travisci/">MVT: knife test and Travis CI</a></p>
+
+<hr />
+
+<p><sub>Reposted from <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">Nathen Harvey's blog</a><sub></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Green Screen]]></title>
+    <link href="http://technology.customink.com/blog/2012/01/02/green-screen/"/>
+    <updated>2012-01-02T14:17:00-05:00</updated>
+    <id>http://technology.customink.com/blog/2012/01/02/green-screen</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/customink/greenscreen">Green Screen</a> is a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area. It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room.</p>
+
+<p><img class="right" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/greenscreen.jpg" width="300" height="225" title="Green Screen Monitor" alt="Green Screen Monitor">
+We use Green Screen at <a href="http://www.customink.com">CustomInk</a> to look after our continuous integration servers, currently 3 Hudson servers and one Jenkins cluster. We have a monitor mounted in the engineering office that makes it easy for everyone to quickly assess the build status.</p>
+
+<p>Green Screen is a simple Sinatra application that is <a href="http://nathenharvey.com/blog/2012/01/02/deploying-green-screen">easy to configure and deploy</a>.  It works well with any continuous integration server that conforms to the <a href="http://confluence.public.thoughtworks.org/display/CI/Multiple+Project+Summary+Reporting+Standard">multiple project summary reporting standard</a>.</p>
+
+<p>You can see a sample Green Screen app running at <a href="http://greenscreenapp.com">http://greenscreenapp.com</a>.  Be forewarned, this sample Green Screen looks at all of the builds currently running on <a href="http://ci.jenkins-ci.org">http://ci.jenkins-ci.org</a>.  This is fine for demo purposes but you may find it to be a bit overwhelming since it's <strong>over 300 builds</strong> at the time of this writing.</p>
+
+<!--more-->
+
+
+<h2>History</h2>
+
+<p>Green Screen was originally implemented by <a href="https://github.com/martinjandrews">Marty Andrews</a> and <a href="http://blog.martyandrews.net/2009/08/greenscreen-build-monitor-bvc.html">announced on his blog in 2009</a>. In the original version, a build that was in progress would blink on the screen.
+<a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4565_building.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4565_building.jpg" width="208" height="145" title="martinjandrews Green Screen" alt="martinjandrews Green Screen"></a></p>
+
+<p><a href="https://github.com/rsutphin">Rhett Sutphin</a> improved the layout of green screen and introduced a new color, yellow, for builds that are in progress.
+<a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4566-building.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4566-building.jpg" width="207" height="145" title="rsutphin Green Screen" alt="rsutphin Green Screen"></a></p>
+
+<p>After using these versions for a while at CustomInk, we decided that the most important thing to know was which builds were failing. Once you get past a handful of builds, it's no longer very interesting to see every build. We forked Rhett's version and created a <a href="https://github.com/customink/greenscreen">new layout for Green Screen</a>.</p>
+
+<p>If everything is passing, the screen is basically one giant checkmark.</p>
+
+<p><a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/green.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/green.jpg" width="210" height="119" title="customink Green Screen" alt="customink Green Screen"></a></p>
+
+<p>If there are any failing builds, they're shown in the main area while all others are displayed on the right.</p>
+
+<p><a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4567.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4567.jpg" width="210" height="121" title="customink failed build" alt="customink failed build"></a></p>
+
+<p>Finally, a build that previously failed will be shown in yellow while it's rebuilding.</p>
+
+<p><a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4567_building.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4567_building.jpg" width="210" height="121" title="customink building" alt="customink building">
+</a>
+We've also added support for controlling which builds are displayed from each CI server. So that you can explicitly include or exclude builds or just go with the default behavior of showing all builds on the server.</p>
+
+<hr />
+
+<p><sub>Reposted from <a href="http://nathenharvey.com/blog/2012/01/02/green-screen/">Nathen Harvey's blog</a>.</sub></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Testing mod_rewrite and apache redirects]]></title>
+    <link href="http://technology.customink.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/"/>
+    <updated>2010-07-16T09:00:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects</id>
+    <content type="html"><![CDATA[<p>At <a href="http://www.customink.com">CustomInk</a>, we recently migrated from mongrel to Passenger for our Ruby on Rails website. This migration included a full rewrite of our apache configuration files.</p>
+
+<p>With over 500 redirect and rewrite rules in place I needed a way to ensure my copy-n-paste skills were up to snuff and that we didn't loose any redirects along the way.</p>
+
+<p>In my search for help, I found a <a href="http://www.viget.com/extend/test-drive-mod-rewrite-rules-with-testunit/">blog post by Patrick Reagan from Viget labs</a> that described a method for writing tests that will verify all the rewrite rules and redirects. Patrick's ideas were packaged up into a gem and available on <a href="http://github.com/eightbitraptor/http_redirect_test">github</a>.</p>
+
+<p>I can now write up tests like:</p>
+
+<p><code>ruby
+should_redirect "/cink/ideas/ideas.jsp", :to =&gt; "/inspiration/"
+</code></p>
+
+<p>So now I can to some TDC (test-driven configuration) whenever I get a request for a new redirect.</p>
+
+<p>What other methods have you used to test your rewrite rules?</p>
+
+<hr />
+
+<p><sub>Reposted from <a href="http://nathenharvey.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/">Nathen Harvey's blog</a>.</sub></p>
+]]></content>
+  </entry>
+  
+</feed>

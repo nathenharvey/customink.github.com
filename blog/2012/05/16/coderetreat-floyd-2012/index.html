@@ -1,0 +1,404 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Coderetreat Floyd 2012 - EngineerInk</title>
+  <meta name="author" content="CustomInk">
+
+  
+  <meta name="description" content="One Saturday dedicated to honing your craft It&#8217;s easy to get caught up in the whirlwind of projects and deadlines and forget that software &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://technology.customink.com/blog/2012/05/16/coderetreat-floyd-2012">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="EngineerInk" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://use.typekit.com/qsb1gwk.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Engineer<span id="tail">Ink</span></a></h1>
+  
+    <h2>A CustomInk Technology Blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:technology.customink.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/our-team">Our Team</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      
+
+<div>
+  <article class="hentry" role="article">
+    
+  <header>
+    
+      <h1 class="entry-title">Coderetreat Floyd 2012</h1>
+    
+    
+      <p class="meta">
+        Posted on 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2012-05-16T15:27:00-04:00" pubdate data-updated="true">May 16<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>One Saturday dedicated to honing your craft</h2>
+
+<p>It&#8217;s easy to get caught up in the whirlwind of projects and deadlines and forget that software development is very much a craft that needs to be practiced. The complex requirements and external pressures of a production application often cloud our judgement, forcing us to forgo the fundamental concepts that create great software.</p>
+
+<p>It&#8217;s useful to step away from the code you work on day-to-day to focus on honing your skills merely for the sake of improving as a developer. Corey Haines&#8217; <a href="http://coderetreat.org">Coderetreat</a> format facilitates this by strongly suggesting its participants delete their code immediately after each session. By the end of the day, the value created is not the code that is written, but the skills and insights learned from writing that code.</p>
+
+<!-- more -->
+
+
+<p>The Coderetreat consisted of five 45 minute pairing sessions building <a href="http://en.wikipedia.org/wiki/Conway's_Game_of_Life">Conway&#8217;s Game of Life</a>. The &#8216;zero-player&#8217; game is a form of cellular automata that consists of a grid of dead or alive &#8216;cells&#8217; represented by the squares in the grid. Based on a set of four simple rules, the grid comes to life with complex patterns and interactions between the cells.</p>
+
+<p>The rules are:</p>
+
+<ol>
+<li>Any live cell with fewer than two live neighbours dies, as if caused by under-population.</li>
+<li>Any live cell with two or three live neighbours lives on to the next generation.</li>
+<li>Any live cell with more than three live neighbours dies, as if by overcrowding.</li>
+<li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
+</ol>
+
+
+<p>With just a simple initial configuration of cells, patterns like Gosper&#8217;s Glider Gun can be made:</p>
+
+<p><img src="/images/gospers_glider_gun.gif" alt="Gosper's Glider Gun" /></p>
+
+<p>Rules and image taken from <a href="http://en.wikipedia.org/wiki/Conway's_Game_of_Life">Conway&#8217;s Game of Life Wikipedia Article</a></p>
+
+<h3>Session One</h3>
+
+<p>For the first session, I worked with another developer to build up &#8216;Cell&#8217; object using CoffeeScript and Jasmine. It went well, but about half way into the session, the requirements of the game were changed to include zombie cells that come to life based on its own set of rules. We were asked about the impact of introducing these new requirements into our code. We were largely unaffected by the change due to not being very far into the implementation, but it was obvious to see how we could have been bitten by the change.</p>
+
+<p>We chose to deal with alive and dead cells through a boolean attribute on the Cell class. Had we fleshed out the game more, our logic and objects would be tightly bound to this concept and introducing a third state would require considerable time and effort.</p>
+
+<p>Thus, the stage was set for the remaining sessions. We would learn how to better build software that can bend and mold to the often changing demands of the real world.</p>
+
+<h3>Session Two</h3>
+
+<p>In Session Two, we were introduced to a set of constraints:</p>
+
+<ul>
+<li>No primitives across method boundaries</li>
+<li>Less than 3 lines of code per method</li>
+<li>No if statements</li>
+<li>No explicit loops</li>
+</ul>
+
+
+<p>Immediately we were able to notice changes in our design:</p>
+
+<p>Without if statements, instead of a Cell class with a boolean state, we pushed the state logic into AliveCell and DeadCell classes. Our CellCollection class only needed to know about its Cell-like objects, specific behavior was encapsulated within each AliveCell or DeadCell.</p>
+
+<p>Having less than 3 lines of code per method encouraged a top-down approach to designing our game. With only two lines available to us per method, we were forced to continuously delegate behavior to new objects. The result was a healthy layer of abstractions above very specific implementing objects.</p>
+
+<h3>Session Three</h3>
+
+<p>Session Three lifted the constraints from Session Two, but introduced the mute session:</p>
+
+<p>Each pair would have one test writer and one code writer. Adhering to TDD, the test writer would write a test that defined the desired behavior of an object. The code writer would write the code to match that test with two caveats:</p>
+
+<ol>
+<li>Neither the test writer nor the code writer could speak to each other</li>
+<li>The code writer was instructed to be an &#8216;Evil Coder&#8217; by only writing enough (likely wrong) code to get the corresponding test to pass</li>
+</ol>
+
+
+<p>We found that the top-down abstraction-building method learned in the previous session was helpful in avoiding the obstacle that was the Evil Coder. It was easy to write specs of objects merely calling methods on other objects. By not testing the result state of some combination of logic, the Evil Coder was forced to implement exactly the behaviors defined by the test writer.</p>
+
+<p>At the detail layer, proper use of stubs and mocks prevented the Evil Coder from purposefully implementing the wrong code.</p>
+
+<h3>Session Four</h3>
+
+<p>Session Four again dropped all previous constraints but required a 2-minute green-to-green cycle:</p>
+
+<p>At the start of writing a test, we would start a timer for 2 minutes. If by the end of those 2 minutes we did not have that test passing, we would delete our changes for that cycle and start over. Between each cycle, we would have 2 minutes to refactor what we had.</p>
+
+<p>After several minutes the entire room rang with alarms. We found ourselves trying to test too much at once. In order to fit within the 2 minutes cycles, it was often helpful to initially use a naïve approach to get our test passing and refactor later.</p>
+
+<p>By taking the next simplest step in every cycle, we ere able to have completely working code every 2 minutes.</p>
+
+<h3>Session Five</h3>
+
+<p>Session Five removed all constraints and allowed us to use what we learned in the previous sessions freely.</p>
+
+<p>Interestingly enough, although Session Five had the same lack of constraints as Session One, the code we wrote was remarkably different and incorporated many of the ideas from the previous sessions.</p>
+
+<h3>Wrapping Up</h3>
+
+<p>At the end of the day, all of the participants grouped up and discussed what they had discovered in during the retreat.</p>
+
+<p>Session Two showed us how encapsulating behaviors into objects can dramatically reduce the impact of changes to your system. Session Three reinforced the idea of Tests as Documentation and revealed an approach that allows for a high degree of unit test coverage. Session Four encouraged us to work in smaller batches, allowing constant verification of working code and reducing the need to debug larger chunks of code at infrequent intervals.</p>
+
+<p>These concepts are not new. They are fundamental aspects of object oriented design and test driven development that have been practiced successfully for years. The Coderetreat is a great way to expose these concepts to those who have never heard of them, and to reinforce the concepts to those who have merely forgotten.</p>
+
+<p>It&#8217;s also a great way of keeping in touch with the developer community, with more relaxed gathering and discussion before and after the actual event. I had a great weekend in Floyd and I would recommend a Coderetreat for anyone interested a weekend of practice and reflection.</p>
+
+<p>I hope to see you at one some day!</p>
+</div>
+
+
+    <footer>
+      <p class="meta">
+        Posted in: 
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/coderetreat/'>coderetreat</a>, <a class='category' href='/blog/categories/craftsmanship/'>craftsmanship</a>, <a class='category' href='/blog/categories/object-oriented-design/'>object oriented design</a>, <a class='category' href='/blog/categories/test-driven-development/'>test driven development</a>
+  
+</span>
+
+
+      </p>
+
+      <p class="meta">
+        
+        <h2>About the Author - <a href="/blog/our-team/tien-nguyen.html">Tien Nguyen</a></h2>
+        
+
+<!-- <div>Posted by <a href="/blog/our-team/{"display_name"=>"Tien Nguyen", "github"=>"nht007", "gravatar"=>"ac278aab807cdeacae2a3de708ff428c", "twitter"=>"nht007", "bio"=>"Tien is a Software Engineer for <a href=\"http://www.customink.com\">CustomInk</a>. Tien is an adherent of Software Craftsmanship and has particular interest in principles and practices that facilitate the growth of object oriented software. Tien considers himself language agnostic and is a fan of Ruby, JavaScript, Java, Clojure, and Smalltalk. In his spare time, Tien enjoys rock climbing, cycling, and playing computer games."}.html">Tien Nguyen</a></div> -->
+
+<div id="author-top-links" style="margin:-10px 0 8px 0;">
+  
+    <iframe src="http://markdotto.github.com/github-buttons/github-btn.html?user=nht007&type=follow&count=true"
+  allowtransparency="true" frameborder="0" scrolling="0" width="165px" height="20px"></iframe>
+  
+
+  
+    <a href="https://twitter.com/nht007" class="twitter-follow-button" data-show-count="false">Follow @nht007</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  
+</div>
+
+<img alt="Tien Nguyen" src="http://gravatar.com/avatar/ac278aab807cdeacae2a3de708ff428c?s=200" width="200" height="200" style="float:left; margin-right: 1.5em;" />
+
+<div style="padding:0 0 10px 0;">
+  Tien is a Software Engineer for <a href="http://www.customink.com">CustomInk</a>. Tien is an adherent of Software Craftsmanship and has particular interest in principles and practices that facilitate the growth of object oriented software. Tien considers himself language agnostic and is a fan of Ruby, JavaScript, Java, Clojure, and Smalltalk. In his spare time, Tien enjoys rock climbing, cycling, and playing computer games.
+  <div style="clear:both;"></div>
+</div>
+
+      </p>
+      <p class="meta">
+        
+          <a class="basic-alignment left" href="/blog/2012/05/14/welcome-josh-born/" title="Previous Post: Welcome Josh Born!">&laquo; Welcome Josh Born!</a>
+        
+        
+          <a class="basic-alignment right" href="/blog/2012/05/24/welcome-interns/" title="next Post: Welcome Interns!">Welcome Interns! &raquo;</a>
+        
+      </p>
+    </footer>
+  </article>
+  
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </section>
+  
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/07/10/stay-cool/">Stay Cool</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/06/mvt-knife-test-and-travisci/">MVT: knife test and TravisCI</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/27/welcome-dan-hensgen/">Welcome, Dan Hensgen</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/18/profiling-openstruct-eager-loading-method-missing-and-lazy-loading/">Profiling OpenStruct, Eager Loading, Method Missing, and Lazy Loading</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/15/welcome-jason-gilbertson/">Welcome Jason Gilbertson!</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/customink">@customink</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'customink',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("CustomInkTech", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/CustomInkTech" class="twitter-follow-button" data-show-count="false">Follow @CustomInkTech</a>
+  
+</section>
+
+
+
+
+<section>
+  <h1>Top Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/devops'>devops (10)</a></li><li><a href='/blog/categories/web-operations'>web operations (8)</a></li><li><a href='/blog/categories/chef'>chef (8)</a></li><li><a href='/blog/categories/team'>team (6)</a></li><li><a href='/blog/categories/rails'>rails (6)</a></li><li><a href='/blog/categories/sysadmin'>sysadmin (6)</a></li><li><a href='/blog/categories/testing'>testing (5)</a></li><li><a href='/blog/categories/ruby'>ruby (4)</a></li><li><a href='/blog/categories/conference'>conference (4)</a></li><li><a href='/blog/categories/apache'>apache (3)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - CustomInk -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'custominktechnologyblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://technology.customink.com/blog/2012/05/16/coderetreat-floyd-2012/';
+        var disqus_url = 'http://technology.customink.com/blog/2012/05/16/coderetreat-floyd-2012/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

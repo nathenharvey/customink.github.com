@@ -1,0 +1,2455 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[EngineerInk]]></title>
+  <link href="http://technology.customink.com/atom.xml" rel="self"/>
+  <link href="http://technology.customink.com/"/>
+  <updated>2012-07-13T15:48:57-04:00</updated>
+  <id>http://technology.customink.com/</id>
+  <author>
+    <name><![CDATA[CustomInk]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Stay Cool]]></title>
+    <link href="http://technology.customink.com/blog/2012/07/10/stay-cool/"/>
+    <updated>2012-07-10T19:15:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/07/10/stay-cool</id>
+    <content type="html"><![CDATA[<p>We had a fairly severe production issue the other day.  The kind of issue where you get sick to your stomach as you begin to realize what&#8230;just&#8230;.happened&#8230;&#8230;</p>
+
+<p>As the issue escalated, news spread and a core group of people took control to work towards a resolution.  The questions were always &#8220;what&#8217;s happening&#8221; and &#8220;what&#8217;s changed recently&#8221; and &#8220;what kinds of things might cause this&#8221; and never &#8220;who deployed last&#8221; and &#8220;who worked on this code originally&#8221;.  It says a lot about a person that can keep their cool and focus on issue resolution instead of blame assignment.  Even when your tired, punchy, and irritated because you can&#8217;t figure out exactly what&#8217;s going on, keeping your cool is ultimately the key to success.</p>
+
+<!-- more -->
+
+
+<p>It&#8217;s really obvious that something is wrong when you see a group of people huddled together all staring intensely at a single monitor and not saying a word.  People instinctively want to ask &#8220;what&#8217;s wrong?&#8221; and the follow up question is usually &#8220;do we know who did that?&#8221;.  During our ordeal, teammate after teammate approached and offered simple words &#8220;Please let me know what I can do to help&#8221;.  Developers, product managers, people from other teams - the skillset each person possessed was irrelevant, but the intent was uniform: help fix the problem in whatever way possible.</p>
+
+<p>When something goes wrong, it doesn&#8217;t matter who caused the problem.  Everyone is human, everyone is capable of making the same mistake.  All that matters is &#8220;what&#8221; is causing the problem.  It&#8217;s much easier to find the &#8220;what&#8221; when your team is calm and working together.  Once you understand the cause of the problem it&#8217;s easy to determine a clear plan of action.  With a clear plan of action and a blameless environment, problem resolution is imminent because everyone is ready to help (and not hide).</p>
+
+<p>We&#8217;re not completely out of the weeds just yet, but we understand the issue and we our executing our plan of action.  Tomorrow we&#8217;ll conduct a blameless postmortem to help us identify, and further prevent, the root cause of the issue.</p>
+
+<p>I&#8217;m proud to be apart of such a great support system.  I have no gripes about the 16 hours I spent at my computer yesterday because I was helping our customers.  More importantly, I was helping my friends.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MVT: knife test and TravisCI]]></title>
+    <link href="http://technology.customink.com/blog/2012/07/06/mvt-knife-test-and-travisci/"/>
+    <updated>2012-07-06T22:52:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/07/06/mvt-knife-test-and-travisci</id>
+    <content type="html"><![CDATA[<p>In my last post, <a href="http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/">MVT: Foodcritic and Travis CI</a> I described the process for having Travis CI look after your cookbooks and run Foodcritic, the cookbook lint tool, on your cookbook after each <code>git push</code>.  In this post, we&#8217;ll iterate on the &#8220;Minimum Viable Test&#8221; idea by adding in support for knife&#8217;s cookbook testing.</p>
+
+<p>Wait, I&#8217;m already running foodcritic, do I really need to run <code>knife cookbook test</code>, too?</p>
+
+<p>I&#8217;ll use a very simple example to demonstrate that you do.</p>
+
+<p>Let&#8217;s create a very basic cookbook:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>knife cookbook create very_basic
+</span><span class='line'>** Creating cookbook very_basic
+</span><span class='line'>** Creating README <span class="k">for </span>cookbook: very_basic
+</span><span class='line'>** Creating metadata <span class="k">for </span>cookbook: very_basic
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next, we&#8217;ll write a flawed recipe:</p>
+
+<figure class='code'><figcaption><span>cookbooks/very_basic/recipes/default.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">package</span> <span class="s2">&quot;flawed&quot;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">action</span> <span class="ss">:nothing</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, run foodcritic on this cookbook:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>foodcritic cookbooks/very_basic
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Foodcritic doesn&#8217;t throw any errors or find any problem with the cookbook.</p>
+
+<p>Let&#8217;s try testing it with knife:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>knife cookbook <span class="nb">test </span>very_basic
+</span><span class='line'>checking very_basic
+</span><span class='line'>Running syntax check on very_basic
+</span><span class='line'>Validating ruby files
+</span><span class='line'>FATAL: Cookbook file recipes/default.rb has a ruby syntax error:
+</span><span class='line'>FATAL: /Users/nharvey/projects/chef-hosted/.chef/../cookbooks/very_basic/recipes/default.rb:22: syntax error, unexpected keyword_end, expecting <span class="nv">$end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>OK, it should now be obvious that <code>knife cookbook test</code> should be included as part of our MVT.</p>
+
+<!-- more -->
+
+
+<p>To get Travis CI running <code>knife cookbook test</code> for us, we&#8217;ll need to add or update the following files:</p>
+
+<ul>
+<li>.travis.yml</li>
+<li>Rakefile</li>
+<li>test/.chef/knife.rb</li>
+<li>test/support/Gemfile</li>
+</ul>
+
+
+<p>Of course, this assumes you&#8217;ve configured your cookbook as described in the <a href="http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/">previous post</a>.  Let&#8217;s start with the Rakefile.</p>
+
+<figure class='code'><figcaption><span>Rakefile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env rake</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">desc</span> <span class="s2">&quot;Runs knife cookbook test&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="ss">:knife</span> <span class="k">do</span>
+</span><span class='line'>  <span class="no">Rake</span><span class="o">::</span><span class="no">Task</span><span class="o">[</span><span class="ss">:prepare_sandbox</span><span class="o">].</span><span class="n">execute</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">sh</span> <span class="s2">&quot;bundle exec knife cookbook test cookbook -c test/.chef/knife.rb -o </span><span class="si">#{</span><span class="n">sandbox_path</span><span class="si">}</span><span class="s2">/../&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">task</span> <span class="ss">:prepare_sandbox</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">files</span> <span class="o">=</span> <span class="sx">%w{*.md *.rb attributes definitions files libraries providers recipes resources templates}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">rm_rf</span> <span class="n">sandbox_path</span>
+</span><span class='line'>  <span class="n">mkdir_p</span> <span class="n">sandbox_path</span>
+</span><span class='line'>   <span class="n">cp_r</span> <span class="no">Dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;{</span><span class="si">#{</span><span class="n">files</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">}&quot;</span><span class="p">),</span> <span class="n">sandbox_path</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="kp">private</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">sandbox_path</span>
+</span><span class='line'>  <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">),</span> <span class="sx">%w(tmp cookbooks cookbook)</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the file snippet above, I&#8217;ve only included the parts that are relevant for getting knife working.  I&#8217;ll include the full source of the Rakefile at the end of the article.</p>
+
+<p>Next, let&#8217;s add this rake task to our .travis.yml file.</p>
+
+<figure class='code'><figcaption><span>.travis.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">language</span><span class="p">:</span> <span class="n">ruby</span>
+</span><span class='line'><span class="n">gemfile</span><span class="p">:</span>
+</span><span class='line'>   <span class="o">-</span> <span class="nb">test</span><span class="o">/</span><span class="n">support</span><span class="o">/</span><span class="no">Gemfile</span>
+</span><span class='line'><span class="n">rvm</span><span class="p">:</span>
+</span><span class='line'>  <span class="o">-</span> <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">2</span>
+</span><span class='line'>  <span class="o">-</span> <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span>
+</span><span class='line'><span class="n">script</span><span class="p">:</span>
+</span><span class='line'>  <span class="o">-</span> <span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="n">knife</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To successfully run the knife command, Travis CI will need a very minimal Chef configuration.</p>
+
+<figure class='code'><figcaption><span>test/.chef/knife.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">cache_type</span> <span class="s1">&#39;BasicFile&#39;</span>
+</span><span class='line'><span class="n">cache_options</span><span class="p">(</span><span class="ss">:path</span> <span class="o">=&gt;</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;HOME&#39;</span><span class="o">]</span><span class="si">}</span><span class="s2">/.chef/checksums&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And, of course, we&#8217;ll need to add Chef to our Gemfile.  Be sure to specify a modern version as Travis CI will use 0.8.10 by default (at the time of this writing).</p>
+
+<figure class='code'><figcaption><span>test/support/Gemfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">source</span> <span class="s2">&quot;https://rubygems.org&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;rake&#39;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;chef&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 10.12.0&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s it.  On your next <code>git push</code> Travis CI should run <code>knife cookbook test</code> on your cookbook.</p>
+
+<h2>Running locally</h2>
+
+<p>To run the rake tasks locally, you&#8217;ll need to tell bundler where the Gemfile is, or you&#8217;ll need to move it to the root directory of your cookbook and update .travis.yml appropriately.  Use the following command to run your tests locally:</p>
+
+<p><code>BUNDLE_GEMFILE=test/support/Gemfile rake knife</code>
+<code>BUNDLE_GEMFILE=test/support/Gemfile rake foodcritic</code></p>
+
+<h2>Full source code</h2>
+
+<p>You can checkout this <a href="https://github.com/customink-webops/percona-install/compare/03b9446...d423b14">Github compare view</a> to see the changes made to the code from the <a href="http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/">previous post</a>.</p>
+
+<figure class='code'><figcaption><span>test/.chef/knife.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">cache_type</span> <span class="s1">&#39;BasicFile&#39;</span>
+</span><span class='line'><span class="n">cache_options</span><span class="p">(</span><span class="ss">:path</span> <span class="o">=&gt;</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;HOME&#39;</span><span class="o">]</span><span class="si">}</span><span class="s2">/.chef/checksums&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>.travis.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">language</span><span class="p">:</span> <span class="n">ruby</span>
+</span><span class='line'><span class="n">gemfile</span><span class="p">:</span>
+</span><span class='line'>   <span class="o">-</span> <span class="nb">test</span><span class="o">/</span><span class="n">support</span><span class="o">/</span><span class="no">Gemfile</span>
+</span><span class='line'><span class="n">rvm</span><span class="p">:</span>
+</span><span class='line'>  <span class="o">-</span> <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">2</span>
+</span><span class='line'>  <span class="o">-</span> <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span>
+</span><span class='line'><span class="n">script</span><span class="p">:</span>
+</span><span class='line'>  <span class="o">-</span> <span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="n">knife</span>
+</span><span class='line'>  <span class="o">-</span> <span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="n">foodcritic</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The Rakefile was refactored a bit since the previous post:</p>
+
+<figure class='code'><figcaption><span>Rakefile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env rake</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">task</span> <span class="ss">:default</span> <span class="o">=&gt;</span> <span class="s1">&#39;foodcritic&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">desc</span> <span class="s2">&quot;Runs foodcritic linter&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="ss">:foodcritic</span> <span class="k">do</span>
+</span><span class='line'>  <span class="no">Rake</span><span class="o">::</span><span class="no">Task</span><span class="o">[</span><span class="ss">:prepare_sandbox</span><span class="o">].</span><span class="n">execute</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="no">Gem</span><span class="o">::</span><span class="no">Version</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;1.9.2&quot;</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="no">Gem</span><span class="o">::</span><span class="no">Version</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">RUBY_VERSION</span><span class="o">.</span><span class="n">dup</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">sh</span> <span class="s2">&quot;foodcritic -f any </span><span class="si">#{</span><span class="n">sandbox_path</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;WARN: foodcritic run is skipped as Ruby </span><span class="si">#{</span><span class="no">RUBY_VERSION</span><span class="si">}</span><span class="s2"> is &lt; 1.9.2.&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">desc</span> <span class="s2">&quot;Runs knife cookbook test&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="ss">:knife</span> <span class="k">do</span>
+</span><span class='line'>  <span class="no">Rake</span><span class="o">::</span><span class="no">Task</span><span class="o">[</span><span class="ss">:prepare_sandbox</span><span class="o">].</span><span class="n">execute</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">sh</span> <span class="s2">&quot;bundle exec knife cookbook test cookbook -c test/.chef/knife.rb -o </span><span class="si">#{</span><span class="n">sandbox_path</span><span class="si">}</span><span class="s2">/../&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">task</span> <span class="ss">:prepare_sandbox</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">files</span> <span class="o">=</span> <span class="sx">%w{*.md *.rb attributes definitions files libraries providers recipes resources templates}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">rm_rf</span> <span class="n">sandbox_path</span>
+</span><span class='line'>  <span class="n">mkdir_p</span> <span class="n">sandbox_path</span>
+</span><span class='line'>  <span class="n">cp_r</span> <span class="no">Dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;{</span><span class="si">#{</span><span class="n">files</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">}&quot;</span><span class="p">),</span> <span class="n">sandbox_path</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="kp">private</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">sandbox_path</span>
+</span><span class='line'>  <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">),</span> <span class="sx">%w(tmp cookbooks cookbook)</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>test/support/Gemfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">source</span> <span class="s2">&quot;https://rubygems.org&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;rake&#39;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;foodcritic&#39;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;chef&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 10.12.0&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Credit</h3>
+
+<p>A big &#8220;Thank You!&#8221; shout-out to <a href="http://technology.customink.com/blog/our-team/seth-vargo.html">Seth Vargo</a> for writing most of the code used in this post!</p>
+
+<hr />
+
+<p><sub>Reposted from <a href="http://nathenharvey.com/blog/2012/07/06/mvt-knife-test-and-travisci/">Nathen Harvey&#8217;s blog</a><sub></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Welcome, Dan Hensgen]]></title>
+    <link href="http://technology.customink.com/blog/2012/06/27/welcome-dan-hensgen/"/>
+    <updated>2012-06-27T16:00:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/06/27/welcome-dan-hensgen</id>
+    <content type="html"><![CDATA[<p>Let me start off by apologizing to Dan for such a belated welcome post. It is belated for good reason though. Normally we mark our new engineer&#8217;s first deploy. Today does not mark Dan&#8217;s first deploy to production. But today&#8217;s deploy is the culmination of many deploys. And, it has been the one I&#8217;ve been waiting for.</p>
+
+<p><img src="http://technology.customink.com/images/dan_hensgen_the_new_hotness.jpg" alt="Long Day at Work" /></p>
+
+<!-- more -->
+
+
+<p>Dan actually started in the middle of May, and we immediately began working on a maintenance project. We would be replacing a reliable, but old application running ruby 1.8.3 and rails 1.2.6 to a new app using ruby 1.9.x and rails 3.2.x. We&#8217;ll call the old app OldNotBusted and the new app TheNewHottness. Along with this update we would decouple TheNewHottness from the couplings of OldNotBusted to allow for new needs within the company. This update and decoupling also meant updating code in other apps that communicate with OldNotBusted to communicate with TheNewHotness.</p>
+
+<p>Remember how I said this is not Dan&#8217;s first deploy. Well, first off TheNewHottness is new so it had nothing talking to it and could go to production very easily. And, in the other applications we have been doing what I will call &#8220;preploys&#8221;. We have, at proper milestones, merged our code in the other applications and tested it, staged it, and deployed it. We did not remove any of the old code and the code we wrote was not being exercised in the other apps. But, the &#8220;preploys&#8221; allowed us to test the code in those environments and kick off calls to TheNewHottness manually using rails console and such. Also, we could verify our changes were not breaking other parts of those apps in unexpected ways. And Finally, &#8220;preploys&#8221; allowed us to make the final deploy very undramatic. It was a flip of the switch so to speak and now TheNewHotness is running and accepting calls that OldNotBusted used to take. The next deploy will by my favorite. Legacy code removal.</p>
+
+<p>I&#8217;ll finish by saying it has been a joy to work with Dan on TheNewHotness. And, I&#8217;m looking forward to working with him on future projects. Glad to have you aboard at CustomInk.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Profiling OpenStruct, Eager Loading, Method Missing, and Lazy Loading]]></title>
+    <link href="http://technology.customink.com/blog/2012/06/18/profiling-openstruct-eager-loading-method-missing-and-lazy-loading/"/>
+    <updated>2012-06-18T21:32:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/06/18/profiling-openstruct-eager-loading-method-missing-and-lazy-loading</id>
+    <content type="html"><![CDATA[<p>I was recently working on a gem that involved marshaling data from a remote API. I really wanted the gem to behave like a native Ruby object, but they methods would vary depending on the response. Since the data was dynamic, it would have been counter-productive and not scalable to define each of the methods individually.</p>
+
+<p>As such, I thought of a few different ways to get the result I wanted, but that just raised more questions, mainly <strong>performance</strong>. How would each of these methods perform? This was especially important given the large number of queries I would be making. In this blog post, I detail the exploration of these different methods and arrive at some pretty cool conclusions.</p>
+
+<!-- more -->
+
+
+<h2>The Scenario</h2>
+
+<p>In this scenario, we will be using the result of a <a href="https://api.github.com/users/sethvargo/repos">Github API call to my profile</a>. The hash (as follows) will be stored and referenced in the <code>@store</code> variable:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="s1">&#39;has_wiki&#39;</span> <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;has_issues&#39;</span> <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;forks&#39;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;open_issues&#39;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;language&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Ruby&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;A distributed build system for the open source community.&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;svn_url&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://github.com/sethvargo/travis-ci&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;pushed_at&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;2012-06-16T17:32:35Z&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;full_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;sethvargo/travis-ci&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;git_url&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;git://github.com/sethvargo/travis-ci.git&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;2012-06-16T17:00:29Z&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;url&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://api.github.com/repos/sethvargo/travis-ci&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;has_downloads&#39;</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;watchers&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;size&#39;</span> <span class="o">=&gt;</span> <span class="mi">188</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;homepage&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://travis-ci.org&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;clone_url&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://github.com/sethvargo/travis-ci.git&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;ssh_url&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;git@github.com:sethvargo/travis-ci.git&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;html_url&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://github.com/sethvargo/travis-ci&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;2012-06-16T17:32:35Z&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s1">&#39;owner&#39;</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="s1">&#39;avatar_url&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://secure.gravatar.com/avatar/87f282c6c2cdad13100dffe8c1daf77d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;login&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;sethvargo&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;gravatar_id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;87f282c6c2cdad13100dffe8c1daf77d&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;url&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://api.github.com/users/sethvargo&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">408570</span>
+</span><span class='line'>  <span class="p">},</span>
+</span><span class='line'>  <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;travis-ci&#39;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>The Metrics</h3>
+
+<p>Because of the nature of my curiosity, we will measure on three different metrics:</p>
+
+<ul>
+<li>creating the object</li>
+<li>initial request time</li>
+<li>average request time for requests (2-100)</li>
+</ul>
+
+
+<h3>Pure Hash</h3>
+
+<p>The Pure Hash is our baseline. This is without any magic. We are just using the straight-forward bracket-notation for accessing a value in the hash:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@store</span><span class="o">[</span><span class="n">key</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>OpenStruct</h3>
+
+<p>The <a href="http://ruby-doc.org/stdlib-1.9.3/libdoc/ostruct/rdoc/OpenStruct.html">OpenStruct</a> is a Ruby library that allows builds methods from a given hash.</p>
+
+<p><code>OpenStruct</code> certainly has advantages, being only two lines of code. It also returns <code>nil</code> instead of raising an exception when calling a &#8220;method&#8221; that doesn&#8217;t exist.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;ostruct&#39;</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">FiddleOpenStruct</span> <span class="o">&lt;</span> <span class="no">OpenStruct</span><span class="p">;</span> <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Eager Loading</h3>
+
+<p>With Eager Loading, we parse the data on initial object creation and define methods for each of the objects in the hash. This is obviously expensive on the object creation, but should be faster for subsequent calls.</p>
+
+<p>Eager Loading will raise an exception when calling a method that does not exist, although this could be overridden with <code>method_missing</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">FiddleEagerLoading</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">hash</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">hash</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">define_singleton_method</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">to_s</span><span class="p">){</span> <span class="nb">hash</span><span class="o">[</span><span class="n">key</span><span class="o">]</span> <span class="p">}</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>method_missing</h3>
+
+<p>Using <code>method_missing</code>, we &#8220;proxy&#8221; the requests to their associated keys in the hash store. The biggest problem with <code>method_missing</code> is performance, and that fact is very well-documented. Every call must go through the entire object stack before it hits <code>method_missing</code>, so we can except this method to not perform well.</p>
+
+<p>With <code>method_missing</code>, we can either call <code>super</code> (raise an exception) or end with <code>nil</code> and any non-existent methods will return <code>nil</code>, just like <code>OpenStruct</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">FiddleMethodMissing</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">hash</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@hash</span> <span class="o">=</span> <span class="nb">hash</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">method_missing</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@hash</span><span class="o">[</span><span class="n">m</span><span class="o">.</span><span class="n">to_s</span><span class="o">].</span><span class="n">nil?</span> <span class="p">?</span> <span class="k">super</span> <span class="p">:</span> <span class="vi">@hash</span><span class="o">[</span><span class="n">m</span><span class="o">.</span><span class="n">to_s</span><span class="o">]</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Lazy Loading</h3>
+
+<p>A hybrid of <code>Eager Loading</code> and <code>method_missing</code>, in Lazy Loading, we dynamically create methods as they are requested in <code>method_missing</code>. On an initial request, no methods exist, so we hit <code>method_missing</code>. However, <code>method_missing</code> defines a method. On a subsequent call, we don&#8217;t execute the entire stack and call the newly created method (meta-programming for the win)!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">FiddleLazyLoading</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">hash</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@hash</span> <span class="o">=</span> <span class="nb">hash</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">method_missing</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">unless</span> <span class="vi">@hash</span><span class="o">[</span><span class="n">m</span><span class="o">.</span><span class="n">to_s</span><span class="o">].</span><span class="n">nil?</span>
+</span><span class='line'>      <span class="n">value</span> <span class="o">=</span> <span class="vi">@hash</span><span class="o">[</span><span class="n">m</span><span class="o">.</span><span class="n">to_s</span><span class="o">]</span>
+</span><span class='line'>      <span class="n">define_singleton_method</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">to_s</span><span class="p">){</span> <span class="n">value</span> <span class="p">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">value</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="k">super</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>The Test Suite</h2>
+
+<p>This test suite is very simplistic, coming in under 50 lines of code. You can see we are testing the three different metrics with appropriate <code>puts</code> statements to differentiate the output:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@methods</span> <span class="o">=</span> <span class="vi">@store</span><span class="o">.</span><span class="n">keys</span>
+</span><span class='line'><span class="vi">@n</span> <span class="o">=</span> <span class="mi">10000</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s1">&#39;Creating the Object&#39;</span>
+</span><span class='line'><span class="no">Benchmark</span><span class="o">.</span><span class="n">bm</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s1">&#39;pure hash:&#39;</span><span class="p">)</span>      <span class="p">{</span> <span class="vi">@n</span><span class="o">.</span><span class="n">times</span><span class="p">{</span> <span class="vi">@store</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s1">&#39;open struct:&#39;</span><span class="p">)</span>    <span class="p">{</span> <span class="vi">@n</span><span class="o">.</span><span class="n">times</span><span class="p">{</span> <span class="no">FiddleOpenStruct</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@store</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s1">&#39;eager loading:&#39;</span><span class="p">)</span>  <span class="p">{</span> <span class="vi">@n</span><span class="o">.</span><span class="n">times</span><span class="p">{</span> <span class="no">FiddleEagerLoading</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@store</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s1">&#39;method_missing:&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="vi">@n</span><span class="o">.</span><span class="n">times</span><span class="p">{</span> <span class="no">FiddleMethodMissing</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@store</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s1">&#39;lazy loading:&#39;</span><span class="p">)</span>   <span class="p">{</span> <span class="vi">@n</span><span class="o">.</span><span class="n">times</span><span class="p">{</span> <span class="no">FiddleLazyLoading</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@store</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s1">&#39;First method call&#39;</span>
+</span><span class='line'><span class="no">Benchmark</span><span class="o">.</span><span class="n">bm</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s1">&#39;pure hash:&#39;</span><span class="p">)</span>      <span class="p">{</span> <span class="vi">@n</span><span class="o">.</span><span class="n">times</span><span class="p">{</span> <span class="vi">@methods</span><span class="o">.</span><span class="n">each</span><span class="p">{</span><span class="o">|</span><span class="n">m</span><span class="o">|</span> <span class="vi">@store</span><span class="o">[</span><span class="n">m</span><span class="o">]</span> <span class="p">}</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s1">&#39;open struct:&#39;</span><span class="p">)</span>    <span class="p">{</span> <span class="vi">@n</span><span class="o">.</span><span class="n">times</span><span class="p">{</span> <span class="vi">@methods</span><span class="o">.</span><span class="n">each</span><span class="p">{</span><span class="o">|</span><span class="n">m</span><span class="o">|</span> <span class="no">FiddleOpenStruct</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@store</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">to_sym</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s1">&#39;eager loading:&#39;</span><span class="p">)</span>  <span class="p">{</span> <span class="vi">@n</span><span class="o">.</span><span class="n">times</span><span class="p">{</span> <span class="vi">@methods</span><span class="o">.</span><span class="n">each</span><span class="p">{</span><span class="o">|</span><span class="n">m</span><span class="o">|</span> <span class="no">FiddleEagerLoading</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@store</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">to_sym</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s1">&#39;method_missing:&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="vi">@n</span><span class="o">.</span><span class="n">times</span><span class="p">{</span> <span class="vi">@methods</span><span class="o">.</span><span class="n">each</span><span class="p">{</span><span class="o">|</span><span class="n">m</span><span class="o">|</span> <span class="no">FiddleMethodMissing</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@store</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">to_sym</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s1">&#39;lazy loading:&#39;</span><span class="p">)</span>   <span class="p">{</span> <span class="vi">@n</span><span class="o">.</span><span class="n">times</span><span class="p">{</span> <span class="vi">@methods</span><span class="o">.</span><span class="n">each</span><span class="p">{</span><span class="o">|</span><span class="n">m</span><span class="o">|</span> <span class="no">FiddleLazyLoading</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@store</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">to_sym</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;[2..</span><span class="si">#{</span><span class="vi">@n</span><span class="si">}</span><span class="s2">] times&quot;</span>
+</span><span class='line'><span class="vi">@fiddle_open_struct</span> <span class="o">=</span> <span class="no">FiddleOpenStruct</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@store</span><span class="p">)</span>
+</span><span class='line'><span class="vi">@fiddle_eager_loading</span> <span class="o">=</span> <span class="no">FiddleEagerLoading</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@store</span><span class="p">)</span>
+</span><span class='line'><span class="vi">@fiddle_method_missing</span> <span class="o">=</span> <span class="no">FiddleMethodMissing</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@store</span><span class="p">)</span>
+</span><span class='line'><span class="vi">@fiddle_lazy_loading</span> <span class="o">=</span> <span class="no">FiddleLazyLoading</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@store</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="vi">@methods</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">m</span><span class="o">|</span>
+</span><span class='line'>  <span class="vi">@store</span><span class="o">[</span><span class="n">m</span><span class="o">]</span>
+</span><span class='line'>  <span class="vi">@fiddle_open_struct</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">to_sym</span><span class="p">)</span>
+</span><span class='line'>  <span class="vi">@fiddle_eager_loading</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">to_sym</span><span class="p">)</span>
+</span><span class='line'>  <span class="vi">@fiddle_method_missing</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">to_sym</span><span class="p">)</span>
+</span><span class='line'>  <span class="vi">@fiddle_lazy_loading</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">to_sym</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Benchmark</span><span class="o">.</span><span class="n">bm</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s1">&#39;pure hash:&#39;</span><span class="p">)</span>      <span class="p">{</span> <span class="vi">@n</span><span class="o">.</span><span class="n">times</span><span class="p">{</span> <span class="vi">@methods</span><span class="o">.</span><span class="n">each</span><span class="p">{</span><span class="o">|</span><span class="n">m</span><span class="o">|</span> <span class="vi">@store</span><span class="o">[</span><span class="n">m</span><span class="o">]</span> <span class="p">}</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s1">&#39;open struct:&#39;</span><span class="p">)</span>    <span class="p">{</span> <span class="vi">@n</span><span class="o">.</span><span class="n">times</span><span class="p">{</span> <span class="vi">@methods</span><span class="o">.</span><span class="n">each</span><span class="p">{</span><span class="o">|</span><span class="n">m</span><span class="o">|</span> <span class="vi">@fiddle_open_struct</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">to_sym</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s1">&#39;eager loading:&#39;</span><span class="p">)</span>  <span class="p">{</span> <span class="vi">@n</span><span class="o">.</span><span class="n">times</span><span class="p">{</span> <span class="vi">@methods</span><span class="o">.</span><span class="n">each</span><span class="p">{</span><span class="o">|</span><span class="n">m</span><span class="o">|</span> <span class="vi">@fiddle_eager_loading</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">to_sym</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s1">&#39;method_missing:&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="vi">@n</span><span class="o">.</span><span class="n">times</span><span class="p">{</span> <span class="vi">@methods</span><span class="o">.</span><span class="n">each</span><span class="p">{</span><span class="o">|</span><span class="n">m</span><span class="o">|</span> <span class="vi">@fiddle_method_missing</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">to_sym</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="s1">&#39;lazy loading:&#39;</span><span class="p">)</span>   <span class="p">{</span> <span class="vi">@n</span><span class="o">.</span><span class="n">times</span><span class="p">{</span> <span class="vi">@methods</span><span class="o">.</span><span class="n">each</span><span class="p">{</span><span class="o">|</span><span class="n">m</span><span class="o">|</span> <span class="vi">@fiddle_lazy_loading</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">to_sym</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Results</h2>
+
+<p>And the moment you have been waiting for - the results:</p>
+
+<pre><code>Creating the Object
+                      user     system      total        real
+pure hash:        0.000000   0.000000   0.000000 (  0.000515)
+open struct:      1.440000   0.000000   1.440000 (  1.440354)
+eager loading:    0.470000   0.000000   0.470000 (  0.468859)
+method_missing:   0.000000   0.000000   0.000000 (  0.003673)
+lazy loading:     0.000000   0.000000   0.000000 (  0.002815)
+
+
+First method call
+                      user     system      total        real
+pure hash:        0.030000   0.000000   0.030000 (  0.021060)
+open struct:     32.720000   0.010000  32.730000 ( 32.740407)
+eager loading:   10.470000   0.030000  10.500000 ( 10.496159)
+method_missing:   0.270000   0.000000   0.270000 (  0.261547)
+lazy loading:     0.970000   0.000000   0.970000 (  0.976031)
+
+
+[2..10000] times
+                      user     system      total        real
+pure hash:        0.020000   0.000000   0.020000 (  0.021658)
+open struct:      0.080000   0.000000   0.080000 (  0.077467)
+eager loading:    0.080000   0.000000   0.080000 (  0.081599)
+method_missing:   0.190000   0.000000   0.190000 (  0.191151)
+lazy loading:     0.080000   0.000000   0.080000 (  0.071562)
+</code></pre>
+
+<p>As expected, the pure hash (base) out-performed all other methods. In creating the initial object, the <code>OpenStruct</code> performed very poorly at over a second. Furthermore, as you might expect, eager loading took about half a second. The rest of the methods had negligible results. On the first method call, the <code>OpenStruct</code> took over 30 seconds, and eager loading took about 10 seconds. We also see that lazy loading began pulling ahead of <code>method_missing</code>. Finally, in subsequent requests (after initial object creation and first method call), <code>method_missing</code> performed the poorest.</p>
+
+<p>Here are some observations to help you visualize the results:</p>
+
+<h3>Creating Initial Object</h3>
+
+<pre><code>                       0        10       100      1000     10000
+pure hash       0.000007  0.000003  0.000008  0.000052  0.000514
+open struct     0.000002  0.001660  0.014470  0.147943  1.507701
+eager loading   0.000002  0.000406  0.004800  0.046868  0.482254
+method_missing  0.000003  0.000007  0.000029  0.000269  0.003883
+lazy loading    0.000002  0.000007  0.000029  0.000535  0.002656
+</code></pre>
+
+<div id="chart_creating_initial_object" style="width:100%; height:500px; min-width:600px;"></div>
+
+
+<br />
+
+
+<p>Clearly the <code>OpenStruct</code> took a significant amount of time, measuring over 4x its closest competitor. Ignoring the <code>OpenStruct</code> outlier, eager loading, as expected, took longer than all other methods. This is because it generates all those methods on each object creation. Comparing the other results, we can conclude the following:</p>
+
+<ul>
+<li><strong>Don&#8217;t use OpenStruct</strong></li>
+<li><strong>If you are creating a lot of objects, avoid Eager Loading (for now)</strong></li>
+</ul>
+
+
+<h3>First Method Call</h3>
+
+<pre><code>                       0        10       100      1000      10000
+pure hash       0.000008  0.000026  0.000236  0.002248  0.0210930
+open struct     0.000002  0.032629  0.328859  3.340419  33.446652
+eager loading   0.000003  0.011754  0.103952  1.072228  10.856142
+method_missing  0.000002  0.000329  0.003961  0.027261  0.2574720
+lazy loading    0.000002  0.000968  0.009337  0.100895  1.0136820
+</code></pre>
+
+<div id="chart_first_method_call" style="width:100%; height:500px; min-width:600px;"></div>
+
+
+<br />
+
+
+<p>Again we see that <code>OpenStruct</code> performs poorly, taking over 30 seconds to process 10,000 first method calls. <code>method_missing</code> surprisingly performed very well. Lazy loading doesn&#8217;t have a chance to shine here because we are only calling the method once (thus essentially using <code>method_missing</code>). The extra time is from actually defining the method. With this data, we can conclude the following:</p>
+
+<ul>
+<li><strong>Don&#8217;t use OpenStruct</strong></li>
+<li><strong><code>method_missing</code> wins when only calling a few methods</strong></li>
+</ul>
+
+
+<h3>Subsequent Method Calls</h3>
+
+<pre><code>                       0        10       100      1000     10000    100000    1000000    10000000
+pure hash       0.000008  0.000027  0.000229  0.002292  0.021919  0.210670  2.1555960   21.669286
+open struct     0.000003  0.000090  0.000825  0.008313  0.078974  0.781603  7.9774830   76.648551
+eager loading   0.000002  0.000093  0.000878  0.008558  0.084123  0.839965  8.5130510   80.623932
+method_missing  0.000002  0.000217  0.001972  0.020136  0.186405  1.916927  19.288969  188.095461
+lazy loading    0.000002  0.000081  0.000754  0.007333  0.072564  0.737112  7.4007320   72.202056
+</code></pre>
+
+<div id="subsequent_method_calls" style="width:100%; height:500px; min-width:600px;"></div>
+
+
+<br />
+
+
+<p>In drawing conclusions from this data, it&#8217;s more important to look at <em>how</em> the data is scaling, rather than the factors themselves. In the long run, lazy loading performed the best, but OpenStruct is a close second. It turns out OpenStruct isn&#8217;t that bad when making a lot of queries. <code>method_missing</code> performed very poorly.</p>
+
+<h2>Final Conclusions</h2>
+
+<p>Each of the methods we analyzed provide different benefits under different circumstances. It&#8217;s impossible to say &#8220;use method x, because it&#8217;s better&#8221;. One of the reasons I chose to analyze multiple use cases is because it illustrates the fact that there is no &#8220;silver bullet&#8221; answer to this common problem.</p>
+
+<p>If you&#8217;re in <code>irb</code> and need to marshall a hash into an object, <code>OpenStruct</code> is the easiest and fastest route. Similarly, if you are creating an object that receives thousands of requests, you may want to implement lazy loading. There is not easy answer, but hopefully these statistics and benchmarks help in your next project.</p>
+
+<h2>Known Caveats</h2>
+
+<p>These methods are purely for example and fails many edge cases.</p>
+
+<ol>
+<li>These methods require special cases when your object returns data that is actually <code>nil</code> or <code>null</code>. It could raise an exception instead of actually returning <code>nil</code> as expected.</li>
+<li>Allowing methods to by dynamically called opens you up to a world of hurt - especially if your data&#8217;s keys correspond to existing Ruby methods. As an example, when writing this blog post, my original hash had a key named <code>fork</code>. When I was actually sending <code>fork</code>, it was calling the Ruby <code>Kernel.fork</code> method, which really threw me for a loop.</li>
+<li>I neglected many qualitative metrics, such as ease of use, implementation time, and readability, when conducting this study. Those metrics, by definition, are extremely difficult to measure.</li>
+</ol>
+
+
+<script type="text/javascript">
+  google.load('visualization', '1', { packages:['corechart'] });
+  google.setOnLoadCallback(drawCharts);
+
+  var options = {
+    hAxis: {
+      title: 'Iterations'
+    },
+    vAxis: {
+      title: 'Seconds'
+    }
+  }
+
+  function drawCharts() {
+    _drawCreatingInitialObjectChart();
+    _drawFirstMethodCallChart();
+    _drawSubsequentMethodCallsChart();
+  }
+
+  function _drawCreatingInitialObjectChart() {
+    var data = google.visualization.arrayToDataTable([
+      [ 'Iterations', 'Pure Hash', 'OpenStruct', 'Eager Loading', 'Method Missing', 'Lazy Loading' ],
+      [          '0',    0.000007,     0.000002,        0.000002,         0.000003,       0.000002 ],
+      [         '10',    0.000003,     0.001660,        0.000406,         0.000007,       0.000007 ],
+      [        '100',    0.000008,     0.014470,        0.004800,         0.000029,       0.000029 ],
+      [       '1000',    0.000052,     0.147943,        0.046868,         0.000269,       0.000535 ],
+      [      '10000',    0.000514,     1.507701,        0.482254,         0.003883,       0.002656 ]
+    ]);
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart_creating_initial_object'));
+    chart.draw(data, options);
+  }
+
+  function _drawFirstMethodCallChart() {
+    var data = google.visualization.arrayToDataTable([
+      [ 'Iterations', 'Pure Hash', ' OpenStruct', 'Eager Loading', 'Method Missing', 'Lazy Loading' ],
+      [          '0',    0.000008,      0.000002,        0.000003,         0.000002,       0.000002 ],
+      [         '10',    0.000003,      0.001660,        0.000406,         0.000007,       0.000007 ],
+      [        '100',    0.000236,      0.328859,        0.103952,         0.003961,       0.009337 ],
+      [       '1000',    0.002248,      3.340419,        1.072228,         0.027261,       0.100895 ],
+      [      '10000',    0.021093,     33.446652,       10.856142,         0.257472,       1.013682 ]
+    ]);
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart_first_method_call'));
+    chart.draw(data, options);
+  }
+
+  function _drawSubsequentMethodCallsChart() {
+    var data = google.visualization.arrayToDataTable([
+      [ 'Iterations', 'Pure Hash', ' OpenStruct', 'Eager Loading',  'Method Missing',  'Lazy Loading' ],
+      [     '10,000',    0.021919,      0.078974,        0.084123,          0.186405,        0.072564 ],
+      [    '100,000',    0.210670,      0.781603,        0.839965,          1.916927,        0.737112 ],
+      [  '1,000,000',    2.155596,      7.977483,        8.513051,         19.288969,        7.400732 ],
+      [ '10,000,000',   21.669286,     76.648551,       80.623932,        188.095461,       72.202056 ]
+    ]);
+
+    var chart = new google.visualization.LineChart(document.getElementById('subsequent_method_calls'));
+    chart.draw(data, options);
+  }
+</script>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Welcome Jason Gilbertson!]]></title>
+    <link href="http://technology.customink.com/blog/2012/06/15/welcome-jason-gilbertson/"/>
+    <updated>2012-06-15T10:47:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/06/15/welcome-jason-gilbertson</id>
+    <content type="html"><![CDATA[<p>The CustomInk technology team would like welcome Jason Gilbertson.  Jason, a native of Iowa and a graduate of the Georgia Institute of Technology, has relocated himself to McLean, VA to join our team and we couldn&#8217;t be more excited.</p>
+
+<p><img src="http://technology.customink.com/images/jason_gilbertson.jpg" alt="Jason Gilbertson" /></p>
+
+<p>Like everyone on the CustomInk technology team, Jason was quick to create a <a href="http://technology.customink.com/blog/2012/05/24/welcome-interns/">feature branch</a> and then <a href="http://technology.customink.com/blog/2012/05/14/welcome-josh-born/">deploy his first feature</a> to production.  But there is another important aspect of our continuous deployment strategy that Jason participated in: feature verification.</p>
+
+<!-- more -->
+
+
+<p>When engineers think they are done with the feature, they need to show it to the feature owners.  For internal features, the people who care are our internal business owners.  For customer facing features, our product managers take ownership.  The best way to show a feature to someone is to let them use it.  And the best way to let someone use a feature is to put it on an easily accessible &#8220;production like&#8221; environment (aka a &#8216;Staging Environment&#8217;).</p>
+
+<p>Thanks to the power of <a href="http://technology.customink.com/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/">Web Ops</a> we can easily <a href="http://technology.customink.com/blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/">whip up a rails environment</a> any time and any where we please.  With our Chef recipes, we can make use of Amazon Web Services to spin up temporary staging environments and give them friendly URL&#8217;s that are easy for our feature owners to remember.  For instance, if feature branch is named &#8220;color_picker&#8221;, the URL for the staging server would be &#8220;color-picker.staging.ci.com&#8221;.</p>
+
+<p>When a feature is &#8220;done&#8221;, we stage it, drop a note in the ticket&#8217;s comments indicating the staged URL, and then move on to the next ticket.  If there is feedback about the feature, we can easily make the changes and redeploy the branch to the staging environment.  Once the ticket is verified, we tear down the staging environment and deploy the feature to production.</p>
+
+<p>Putting the new feature in a staging environment lets us do a few things.  First, it makes us more confident that our code can be deployed in a repeatable fashion (no surprises when we go to production).  Second, it let&#8217;s more than one person use the feature at a time.  Lastly, it removes the necessity for people to &#8220;get together&#8221; to review changes.</p>
+
+<p>Since we work on tickets one at a time, we can follow a simple process to continuously deploy new features to our site and tools:  Branch, build, verify, deploy.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Introducing Stoplight: Greenscreen 2.0]]></title>
+    <link href="http://technology.customink.com/blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0/"/>
+    <updated>2012-06-12T17:48:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0</id>
+    <content type="html"><![CDATA[<p><a href="http://technology.customink.com/images/stoplight.png"><img src="http://technology.customink.com/images/stoplight.png" width="300" style="float:right; margin:0 0 15px 15px;" /></a>
+At CustomInk, we use a variety of tools to monitor the status of our builds. One such tool was <a href="https://github.com/customink-webops/greenscreen">Greenscreen</a>. In fact, we even wrote <a href="http://technology.customink.com/blog/2012/01/02/green-screen/">a blog post about how we use Greenscreen at CustomInk</a> not too long ago.</p>
+
+<p>One of the biggest problems with Greenscreen was its extensibility. By default, Greenscreen only works with Hudson and Jenkins servers. With <a href="http://travis-ci.org">Travis CI</a> becoming quite popular in the open-source community, Greenscreen needed a major upgrade. Furthermore, Greenscreen was not very extensible.</p>
+
+<p>After some significant refactoring, Greenscreen evolved into <a href="https://github.com/customink/stoplight">Stoplight</a>&#8230;</p>
+
+<!-- more -->
+
+
+<h2>Significant Improvements</h2>
+
+<p>There are a number of improvements in Stoplight. These are the most critical or useful to the end-user:</p>
+
+<ul>
+<li>Support for multiple (any) continuous integration server</li>
+<li>Highly configurable yaml files</li>
+<li>Cross-browser beautiful UI</li>
+<li>More informative build statuses</li>
+<li>Extensibility</li>
+<li>Usability</li>
+<li>Full test suite</li>
+</ul>
+
+
+<h2>Refactoring</h2>
+
+<p>Originally, I was just going to add Travis CI support to Greenscreen. However, I quickly asked myself, &#8220;why stop at Travis CI?&#8221;; we should allow developers to connect Greenscreen to any continuous integration server. After cleaning up the code a bit, I introduced the concept of a <code>Provider</code>. Simply put, a <code>Provider</code> is an abstract Ruby class that maps server-data into Greenscreen data. It looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Provider is an abstract class that all providers inherit from. It requires that a specified format be returned. This way, stoplight</span>
+</span><span class='line'><span class="c1"># doesn&#39;t care who it&#39;s talking to, as long as it guarantees certain information.</span>
+</span><span class='line'><span class="k">module</span> <span class="nn">Stoplight::Providers</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">Provider</span>
+</span><span class='line'>    <span class="kp">attr_reader</span> <span class="ss">:options</span><span class="p">,</span> <span class="ss">:response</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># Initializes a hash `@options` of default options</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
+</span><span class='line'>      <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># `projects` must return an array of Stoplight::Project</span>
+</span><span class='line'>    <span class="c1"># see Stoplight::Project for more information on the spec</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">projects</span>
+</span><span class='line'>      <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>On the front-end, now we don&#8217;t have to worry about parsing different server responses; we know that any provider will respond to the <code>Provider#projects</code> instance method. This makes refactoring our front-end code much easier.</p>
+
+<p>The <code>Stoplight::Project</code> clearly defines a schema and method-set that must be adhered to. In the front-end, we can simply call <code>.projects</code> on any provider and know with 100% certainty that the given objects respond to a certain set of methods. Those methods are defined in the <code>Stoplight::Project</code> class:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">Stoplight</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">Project</span>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:build_url</span><span class="p">,</span> <span class="ss">:last_build_id</span><span class="p">,</span> <span class="ss">:last_build_time</span><span class="p">,</span> <span class="ss">:last_build_status</span><span class="p">,</span> <span class="ss">:current_status</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># Initialize (new) takes in a hash of options in the following format:</span>
+</span><span class='line'>    <span class="c1">#</span>
+</span><span class='line'>    <span class="c1"># {</span>
+</span><span class='line'>    <span class="c1">#   :name =&gt; &#39;my_project&#39;,</span>
+</span><span class='line'>    <span class="c1">#   :build_url =&gt; &#39;http://ci.jenkins.org/job/my_project&#39;,</span>
+</span><span class='line'>    <span class="c1">#   :web_url =&gt; &#39;http://github.com/username/my_project&#39;, # optional</span>
+</span><span class='line'>    <span class="c1">#   :last_build_id =&gt; &#39;7&#39;,</span>
+</span><span class='line'>    <span class="c1">#   :last_build_time =&gt; &#39;2012-05-24T03:19:53Z&#39;,</span>
+</span><span class='line'>    <span class="c1">#   :last_build_status =&gt; 0,</span>
+</span><span class='line'>    <span class="c1">#   :current_status =&gt; 1,</span>
+</span><span class='line'>    <span class="c1"># }</span>
+</span><span class='line'>    <span class="c1">#</span>
+</span><span class='line'>    <span class="c1"># - `name` - the name of this project</span>
+</span><span class='line'>    <span class="c1"># - `build_url` - the url where the build came from</span>
+</span><span class='line'>    <span class="c1"># - `build_id` - the unique build_id for this project</span>
+</span><span class='line'>    <span class="c1"># - `last_build_time` - last successful build</span>
+</span><span class='line'>    <span class="c1"># - `last_build_status` - integer representing the exit code of the last build:</span>
+</span><span class='line'>    <span class="c1">#   - -1: unknown</span>
+</span><span class='line'>    <span class="c1">#   -  0: passed (success)</span>
+</span><span class='line'>    <span class="c1">#   -  1: failed (error, failure)</span>
+</span><span class='line'>    <span class="c1"># - `current_status` - the current status of the build:</span>
+</span><span class='line'>    <span class="c1">#   - -1: unknwon</span>
+</span><span class='line'>    <span class="c1">#   -  0: done (sleeping, waiting)</span>
+</span><span class='line'>    <span class="c1">#   -  1: building (building, working, compiling)</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
+</span><span class='line'>      <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This set of simple instructions tells a provider how it must format data. Essentially this makes <code>Provider</code> a micro-data-mapper, massaging data from remote APIs into a standard format. Stoplight then uses that standard format to create a unified user experience.</p>
+
+<h3>Adding Tests</h3>
+
+<p>Since Stoplight is destined to become an open-source project, it needs a comprehensive test suite. Furthermore, during our refactoring, it&#8217;s important that we don&#8217;t break existing functionality. As such, I added a full test suite with RSpec. To make development easier, I also use Spork, Guard, and Growl-Ruby to automatically run tests in the background while I&#8217;m coding. This makes TDD much more exciting.</p>
+
+<h3>Foreman</h3>
+
+<p>With all those dependencies, plus running the server, it only made sense to use <a href="https://github.com/ddollar/foreman">Foreman</a> to manage all those processes. What used to be (in three different terminal tabs):</p>
+
+<pre><code>bundle exec shotgun -p 4567
+bundle exec compass watch -c config/compass.rb
+bundle exec guard
+</code></pre>
+
+<p>simply became:</p>
+
+<pre><code>bundle exec foreman start
+</code></pre>
+
+<p>with a tiny <code>Procfile</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">web</span><span class="p">:</span>      <span class="n">shotgun</span> <span class="o">-</span><span class="nb">p</span> <span class="mi">4567</span>
+</span><span class='line'><span class="n">compass</span><span class="p">:</span>  <span class="n">compass</span> <span class="n">watch</span> <span class="o">-</span><span class="n">c</span> <span class="n">config</span><span class="o">/</span><span class="n">compass</span><span class="o">.</span><span class="n">rb</span>
+</span><span class='line'><span class="n">guard</span><span class="p">:</span>    <span class="n">guard</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Compass</h3>
+
+<p>Under the hood, all the styles for Stoplight are generated by a framework called <a href="http://compass-style.org">Compass</a>. Compass allows us to leverage the power of SCSS and easily create a cross-browser compliant application. Stoplight uses Compass and SCSS for all it&#8217;s styles. This ensures a consistent user experience.</p>
+
+<h3>ABAP Text</h3>
+
+<p>ABAP stands for &#8220;As Big As Possible&#8221;. A tiny snippet of jQuery dynamically sizes text to fit in its bounds. Whether you&#8217;re displaying on a 60&#8221; LED TV or a 13&#8221; Monitor, the text will be as big and clear as possible.</p>
+
+<h3>Adding Travis</h3>
+
+<p>Brace yourself for a meta-moment. Since I wanted Stoplight to become a popular open-source project, I added the build on Travis CI. With <a href="http://travis-ci.org/#!/customink/stoplight">Stoplight on Travis CI</a> we can use Stoplight to monitor the build status of Stoplight.</p>
+
+<h2>Conclusion</h2>
+
+<p>There you have it! What was once a very isolated and less-than-configurable tool is now highly extensible and open to contributions by the community. If you are currently using Greenscreen or another build monitoring alternative, give Stoplight a try.</p>
+
+<h2>I Want it!</h2>
+
+<p>Stoplight is available for <a href="https://github.com/customink/stoplight">download and forking on github</a>. Pull requests are greatly welcome! There is also a highly-configurable <a href="https://github.com/customink-webops/stoplight">chef cookbook for installing Stoplight</a> on Apache and Passenger on your own servers.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MVT:  Foodcritic and Travis CI]]></title>
+    <link href="http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/"/>
+    <updated>2012-06-04T13:45:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci</id>
+    <content type="html"><![CDATA[<p>One of the big themes that emerged during <a href="http://chefconf.opscode.com/">#ChefConf</a> was that we should be testing our infrastructure code.  Software engineers have been practicing test-driven development, behavior-driven development, continuous integration, and many other testing-related practices for a long time.  It&#8217;s becoming more important for the infrastructure engineers to learn from and apply these practices to our day-to-day workflow.  When it comes to testing Chef-driven infrastructure automation, there are a number of tools and practices that are starting to emerge.  In this article I&#8217;ll look at a &#8220;minimum viable testing&#8221; (MVT) approach to this problem using <a href="http://acrmp.github.com/foodcritic/">Foodcritic</a> and <a href="http://travis-ci.org/">Travis CI</a>.  <a href="http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/#steps">Follow the steps in this article</a> to get your public cookbooks tested after every <code>git push</code>.</p>
+
+<h3>Testing with Chef</h3>
+
+<p>The idea of building automated tests for your infrastructure code has been getting a lot of traction lately.  When it comes to <a href="http://www.opscode.com/chef/">Chef</a>, many tools are starting to emerge.</p>
+
+<!-- more -->
+
+
+<p>The first tool in this area to get any significant traction, that I know of, was <a href="http://www.cucumber-chef.org/">cucumber-chef</a>.  I first learned of this tool when I saw a pre-release copy of <a href="http://shop.oreilly.com/product/0636920020042.do">Test-Driven Infrastructure with Chef</a> at the O&#8217;Reilly booth at <a href="http://velocityconf.com/velocity2011">Velocity Conf 2011</a>.  <a href="http://twitter.com/lordcope">Stephen Nelson-Smith</a>, the book&#8217;s author and framework&#8217;s lead developer, proposes an outside-in approach to testing where your tests can also act as monitors that look after the health of your infrastructure.  I like the idea of this approach and feel it makes a lot of sense in a greenfield environment.  One benefit of this approach is that it blurs the line between testing and monitoring.  You can easily hook-up your monitoring system to your cucumber tests.</p>
+
+<p><a href="https://github.com/acrmp/chefspec">ChefSpec</a> is another tool for testing your Chef code.  It is a gem that makes it easy to write <a href="http://rspec.info/">RSpec</a> examples for Chef cookbooks.  This style of testing allows you to execute your tests without needing to converge the node that your tests are running on.  In other words, you can execute your tests without needing to provision a server.  One huge appeal to this style of testing is that the feedback loop is very small.  You&#8217;ll get feedback about your cookbook changes within seconds or a very few minutes of saving your changes.</p>
+
+<p><a href="https://github.com/calavera/minitest-chef-handler">Minitest Chef Handler</a> is yet another tool for testing with Chef.  This runs a suite of <a href="https://github.com/seattlerb/minitest">minitest</a> tests as a report handler in your Chef-managed nodes.  As you may know, report handlers are run at the end of each <a href="http://wiki.opscode.com/display/chef/Anatomy+of+a+Chef+Run">chef run, or convergence</a>.</p>
+
+<h3>Testing at ChefConf</h3>
+
+<p>At the inaugural <a href="http://chefconf.opscode.com">#ChefConf</a> there were many sessions that included information about many companies&#8217; approach to testing.  Here&#8217;s a quick list of some of the sessions:</p>
+
+<ul>
+<li><p><a href="http://www.foodfightshow.org/2012/04/episode-10-testallthethings-testing.html">Food Fight Show Episode #10 - TESTALLTHETHINGS</a> &#8211; This wasn&#8217;t actually part of #ChefConf but is &#8216;required listening&#8217; for anyone interested in learning more about this space.</p></li>
+<li><p><a href="http://chefconf2012.sched.org/event/bfe13edac99e2b4d8582f0cd1005ee73?iframe=no&amp;w=700&amp;sidebar=no&amp;bg=no">#ChefConf Pre-event Hackday: TEST ALL THE THINGS!!!</a></p></li>
+<li><p><a href="https://github.com/atomic-penguin/ntp">NTP Cookbook with tests</a> - tests were added to this cookbook as part of the hackday event.</p></li>
+<li><p><a href="http://www.youtube.com/watch?v=o2e0aZUAVGw">Test-driven Development for Chef Practitioners</a> (video)</p></li>
+<li><p><a href="http://www.youtube.com/watch?v=dPaYfAIvqxw">Test Driven Development Roundtable</a> (video)</p></li>
+</ul>
+
+
+<!--more-->
+
+
+<h3>Foodcritic</h3>
+
+<p><a href="http://acrmp.github.com/foodcritic/">Foodcritic</a> is a lint tool for your Chef cookbooks.</p>
+
+<blockquote><p>Foodcritic has two goals:</p><p>* To make it easier to flag problems in your Chef cookbooks that will cause Chef to blow up when you attempt to converge. This is about faster feedback. If you automate checks for common problems you can save a lot of time.</p><p>* To encourage discussion within the Chef community on the more subjective stuff - what does a good cookbook look like? Opscode have avoided being overly prescriptive which by and large I think is a good thing. Having a set of rules to base discussion on helps drive out what we as a community think is good style.</p></blockquote>
+
+
+<h4>Why start with Foodcritic?</h4>
+
+<p>Given the plethora of options available, why should you start with Foodcritic?  Well, you have to start somewhere.  We felt Foodcritic was a good choice because it was easy to get started with, the tests ran quickly, and we are working under the assumption that once we started some automated testing, we&#8217;ll start layering on more and more pieces as we go.  After some initial experiments, we found that we could get Foodcritic looking after our each cookbook in a matter of minutes and local tests running in seconds.</p>
+
+<p>The pseudo-converge approaches (like ChefSpec) initially feel like we&#8217;ll need to do a lot of mocking that will take some time to get correct.  The post-converge approaches (like cucumber-chef and minitest) will take longer to run and are a bit more complex.</p>
+
+<p>One benefit of the post-converge approach is the ability to use your tests as health monitors.  We already have monitoring in place and use it as an indicator that a node is fully provisioned.  We call this &#8220;monitor-driven development.&#8221;  Given that, it was better for us to get started with something that runs without requiring a full converge.  Foodcritic fit the bill quite nicely.</p>
+
+<h3>Travis CI</h3>
+
+<p>Travis CI is:</p>
+
+<blockquote><p>A hosted continuous integration service for the open source community.</p></blockquote>
+
+
+<p>Using Travis CI in conjunction with Foodcritic, we&#8217;d have a basic automated test foundation to build on.</p>
+
+<h3>Automated Foodcritic tests with Travis CI <a name="steps"></a></h3>
+
+<p>Using Foodcritic and Travis CI, you can quickly set-up a &#8220;minimum viable testing&#8221; (MVT) environment.  The idea is that once you have some sort of tests running against your cookbooks, you&#8217;ll want to add more and doing so will be easy.  Let&#8217;s look at how to add Foodcritic and Travis CI to your cookbook workflow.</p>
+
+<h4>Initial set-up</h4>
+
+<p>Follow these steps to get everything set-up and ready for your first tests:</p>
+
+<ol>
+<li><code>gem install foodcritic</code></li>
+<li>Go to <a href="http://travis-ci.org/">Travis CI</a> and follow the Sign In link at the top.</li>
+<li>Activate the GitHub Service Hook for your cookbook&#8217;s repository from your TravisCI profile page.  Each of your cookbooks has its own repository, right?!</li>
+</ol>
+
+
+<h4>Configure your project</h4>
+
+<p>The next step is to add a .travis.yml file to your project.</p>
+
+<figure class='code'><figcaption><span>.travis.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">language</span><span class="p">:</span> <span class="n">ruby</span>
+</span><span class='line'><span class="n">gemfile</span><span class="p">:</span>
+</span><span class='line'>   <span class="o">-</span> <span class="nb">test</span><span class="o">/</span><span class="n">support</span><span class="o">/</span><span class="no">Gemfile</span>
+</span><span class='line'><span class="n">rvm</span><span class="p">:</span>
+</span><span class='line'>  <span class="o">-</span> <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">2</span>
+</span><span class='line'>  <span class="o">-</span> <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span>
+</span><span class='line'><span class="n">script</span><span class="p">:</span> <span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="n">foodcritic</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This file tells Travis CI how to build your project.  We&#8217;ve specified the language (ruby) and the versions of ruby to use when testing this cookbook (1.9.2 and 1.9.3).  We&#8217;ve also specified a Gemfile and script to execute when testing this project.  Let&#8217;s add a Gemfile to a new directory in our cookbook, <code>test/support</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>mkdir -p <span class="nb">test</span>/support
+</span><span class='line'>touch <span class="nb">test</span>/support/Gemfile
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Our Gemfile is pretty simple, just include <code>rake</code> and <code>foodcritic</code>.</p>
+
+<figure class='code'><figcaption><span>Gemfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">source</span> <span class="s2">&quot;https://rubygems.org&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;rake&#39;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;foodcritic&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, we&#8217;ll need to add a Rake file that will be run each time Travis builds our project.</p>
+
+<figure class='code'><figcaption><span>Rakefile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env rake</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">desc</span> <span class="s2">&quot;Runs foodcritic linter&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="ss">:foodcritic</span> <span class="k">do</span>
+</span><span class='line'>  <span class="k">if</span> <span class="no">Gem</span><span class="o">::</span><span class="no">Version</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;1.9.2&quot;</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="no">Gem</span><span class="o">::</span><span class="no">Version</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">RUBY_VERSION</span><span class="o">.</span><span class="n">dup</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">sandbox</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">),</span> <span class="sx">%w{tmp foodcritic cookbook}</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">prepare_foodcritic_sandbox</span><span class="p">(</span><span class="n">sandbox</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">sh</span> <span class="s2">&quot;foodcritic --epic-fail any </span><span class="si">#{</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">sandbox</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;WARN: foodcritic run is skipped as Ruby </span><span class="si">#{</span><span class="no">RUBY_VERSION</span><span class="si">}</span><span class="s2"> is &lt; 1.9.2.&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">task</span> <span class="ss">:default</span> <span class="o">=&gt;</span> <span class="s1">&#39;foodcritic&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kp">private</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">prepare_foodcritic_sandbox</span><span class="p">(</span><span class="n">sandbox</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">files</span> <span class="o">=</span> <span class="sx">%w{*.md *.rb attributes definitions files libraries providers</span>
+</span><span class='line'><span class="sx">recipes resources templates}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">rm_rf</span> <span class="n">sandbox</span>
+</span><span class='line'>  <span class="n">mkdir_p</span> <span class="n">sandbox</span>
+</span><span class='line'>  <span class="n">cp_r</span> <span class="no">Dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;{</span><span class="si">#{</span><span class="n">files</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">}&quot;</span><span class="p">),</span> <span class="n">sandbox</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This Rakefile will copy the contents of our cookbook to a temporary directory and run the foodcritic tests on the temporary directory.  Note the <code>--epic-fail</code> tag is used to fail the build (return a non-zero exit code) on <code>any</code> rule that does not pass.</p>
+
+<p>That&#8217;s it!  When you push your commit to github, you should see Travis CI pick-up the changes, run your build, and report on status.</p>
+
+<h3>Share Your Build Status</h3>
+
+<p>One final step that you may consider is adding a build status indicator to your README.  This simple line in your README will let others know what the current build status is for your cookbook.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="o">[</span>!<span class="o">[</span>Build Status<span class="o">](</span>https://secure.travis-ci.org/<span class="o">[</span>YOUR_GITHUB_USERNAME<span class="o">]</span>/<span class="o">[</span>YOUR_PROJECT_NAME<span class="o">]</span>.png<span class="o">)](</span>http://travis-ci.org/<span class="o">[</span>YOUR_GITHUB_USERNAME<span class="o">]</span>/<span class="o">[</span>YOUR_PROJECT_NAME<span class="o">])</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Thanks &amp; Additional Resources</h3>
+
+<p>A big &#8220;Thank You!&#8221; shout-out to <a href="https://twitter.com/fnichol">Fletcher Nichol</a> and <a href="https://twitter.com/atomic_penguin">Eric G. Wolfe</a> from whom I &#8216;borrowed&#8217; the <code>Rakefile</code> and <code>.travis.yml</code> used in this post.</p>
+
+<p>More information on Foodcritic and Travis CI can be found here:</p>
+
+<ul>
+<li><a href="http://acrmp.github.com/foodcritic/">Foodcritic</a></li>
+<li><a href="http://about.travis-ci.org/docs/user/getting-started/">Travis CI: Getting started guide</a></li>
+<li><a href="http://about.travis-ci.org/docs/user/status-images/">Travis CI: Status Images</a></li>
+</ul>
+
+
+<h3>Next Post</h3>
+
+<p>Be sure to read the next post on this topic:  <a href="http://technology.customink.com/blog/2012/07/06/mvt-knife-test-and-travisci/">MVT: knife test and Travis CI</a></p>
+
+<hr />
+
+<p><sub>Reposted from <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">Nathen Harvey&#8217;s blog</a><sub></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Provision your laptop with Chef: Part 1]]></title>
+    <link href="http://technology.customink.com/blog/2012/05/28/provision-your-laptop-with-chef-part-1/"/>
+    <updated>2012-05-28T20:32:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/05/28/provision-your-laptop-with-chef-part-1</id>
+    <content type="html"><![CDATA[<p>If you have ever tried to follow the <a href="http://wiki.opscode.com/display/chef/Getting+Started">Opscode Getting Started Guide for Chef</a>, you&#8217;ll quickly be overtaken by Chef jargon, confusing instructions, many assumptions, and no clear direction. Even the most experienced developers had a difficult time following the Opscode Wiki. While it serves as a great reference resource, you pretty much have to know Chef before it is of any use.</p>
+
+<p>In Part 1 of this 2-part series, we will walk through setting up the Chef environment on your local machine. In Part 2, we will demonstrate how to provision your personal laptop using Chef.</p>
+
+<!-- more -->
+
+
+<h2>What is Chef?</h2>
+
+<p>One of the best things about Chef is that it is idempotent. Unlike a simple bash script or complex startup script, Chef can be applied to the same machine hundreds of times. Only the &#8220;changes&#8221; will be executed on each of the clients. This makes deploying and updating thousands of machines as easy as baking a cake!</p>
+
+<h2>Understanding Chef &amp; Jargon</h2>
+
+<p>One of the most interesting and confusing parts about Chef is its lingo. Everything relates to <strong>food</strong>. Be sure to grab a snack before diving in any further.</p>
+
+<h3>Architecture</h3>
+
+<p>One of the most dangerous practices when using Chef is applying prior knowledge. In Chef, everything is named relative to Chef. This means, even though your are provisioning a production <em>server</em>, it&#8217;s still a Chef <em>client</em>. This can be very confusing at first, but once you start thinking in terms of Chef things will begin to make sense.</p>
+
+<ul>
+<li><code>(Chef) Server</code> [aka hosted chef] - refers a machines that stores cookbooks, roles, and other Chef configurations</li>
+<li><code>(Chef) Client</code> [aka node] - refers to a machine that connects to and is managed by a Chef Server</li>
+<li><code>(Chef) Workstation</code> - refers to a machine where recipes are developed, altered, deleted, and more</li>
+</ul>
+
+
+<p>This is the most simplistic picture. It&#8217;s possible for a single machine to exist in all three of these roles simultaneously! There are subsets of Chef, such as <a href="http://wiki.opscode.com/display/chef/Chef+Solo">Chef-Solo</a>, but those will not be discussed here.</p>
+
+<p>A typical scenario begins at the workstation. A developer creates a cookbook, role, or other artifact on the local machine. When finished, that artifact is uploaded to the Chef Server. The Chef Clients receive these (new) instructions and execute them locally.</p>
+
+<p><img src="http://technology.customink.com/images/chef-architecture.png" alt="Chef Architecture Graph" /></p>
+
+<h3>Jargon</h3>
+
+<p>We&#8217;ve also been throwing around some other terms that we should take a second to define:</p>
+
+<ul>
+<li><code>cookbook</code> - collection of recipe, resources, attributes, templates, metadata, and other files</li>
+<li><code>recipe</code> - a set of instructions written in a Ruby DSL that tells a node what commands to execute</li>
+<li><code>metadata</code> - additional information, such as dependencies, for a given cookbook</li>
+<li><code>resource</code> - cross-platform abstraction of the &#8220;thing&#8221; you&#8217;re configuring such as a package or a user</li>
+<li><code>provider</code> - a platform-specific implementation of a resource</li>
+<li><code>data bag</code> - JSON key-value store for storing data, attributes, and more</li>
+<li><code>environment</code> - provide a mechanism for managing different deployment locations such as production, staging, development, and testing</li>
+<li><code>template</code> - a file (like a config file) to be &#8220;rendered&#8221; on the server</li>
+</ul>
+
+
+<p> There are also a few tools:</p>
+
+<ul>
+<li><code>knife</code> - a command line tool for managing chef and chef recipes</li>
+<li><code>shef</code> - chef console. this is the equivalent of <code>rails console</code> for chef</li>
+</ul>
+
+
+<p>Before continuing, please make sure you understand that these are very over-simplified definitions and abstractions. Chef is much more powerful that these simplistic definitions allow.</p>
+
+<h2>Set up your Opscode Account</h2>
+
+<p>For the purposes of this tutorial, we will use Chef Hosted by Opscode (the creators of Chef). The service provides 5 free nodes for use. Go ahead and create your free account by heading over to the <a href="https://community.opscode.com/users/new">Hosted Chef Signup page</a>. You should see something like this:</p>
+
+<p><img src="http://technology.customink.com/images/hosted-chef-signup.png" alt="Hosted Chef Signup page" /></p>
+
+<p>You&#8217;ll need to confirm your email, but once that&#8217;s done, head on over to the <a href="https://manage.opscode.com/organizations">Opscode Management Console</a>. It really doesn&#8217;t matter what you call your organization - I used the same as my username. You should see a screen like this:</p>
+
+<p><img src="http://technology.customink.com/images/hosted-chef-management-console.png" alt="Hosted Chef Management Console" /></p>
+
+<p>You probably only have one organization, but the image should give you a good idea. First thing you&#8217;ll want to do is <strong>Regenerate validation key</strong> and <strong>Generate knife config</strong>. We will talk about this more in detail, but save these files in a handy place for later. These files should always be kept securely.</p>
+
+<p>Also, if you didn&#8217;t get your private key when registering, you should do that now (for some reason, Opscode does not always stream the key). Go to the <a href="http://community.opscode.com/">Opscode Community Site</a> and login (if you aren&#8217;t already). Click on your profile and then choose <strong>get private key</strong>.</p>
+
+<p><img src="http://technology.customink.com/images/chef-community-user.png" alt="Chef Community User" /></p>
+
+<p>At this point you should have the following files:</p>
+
+<pre><code>[your_organization_name]-validator.pem
+[your_username].pem
+knife.rb
+</code></pre>
+
+<p>For example, mine would be:</p>
+
+<pre><code>ci-validator.pem
+sethvargo.pem
+knife.rb
+</code></pre>
+
+<p>Sometimes Opscode doesn&#8217;t stream the correct files, so you may need to do some renaming:</p>
+
+<pre><code>_knife_config   #=&gt; knife.rb
+_regenerate_key #=&gt; [your_organization_name]-validator.pem
+</code></pre>
+
+<h2>Install Ruby, Chef, and Git</h2>
+
+<p>Chef is written in Ruby. Therefore, you must have Ruby installed. Installing Ruby is beyond the scope of this topic, but here are some quick resources:</p>
+
+<ul>
+<li><a href="http://rubyinstaller.org/">Ruby Installer for Windows</a> (also install the <a href="https://github.com/oneclick/rubyinstaller/wiki/development-kit">Development Kit</a>)</li>
+<li><a href="http://rvm.io/">Installing Ruby with rvm</a></li>
+<li><a href="https://github.com/sstephenson/rbenv">Installing Ruby with rbenv</a></li>
+</ul>
+
+
+<p>You should also install <code>git</code>. Check out the <a href="http://help.github.com/set-up-git-redirect">Github tutorial for installing git</a>.</p>
+
+<p>Once you have Ruby and Git installed, you&#8217;ll need to install chef:</p>
+
+<pre><code>gem install chef
+</code></pre>
+
+<p>This command will install the Chef gem as well as some other dependencies.</p>
+
+<p>A this point, you should have a novice understand of Chef and Chef Jargon, have an account on Opscode Hosted Chef, and have a working version of Ruby, Git, and the Chef gem installed. The rest of this guide will assume you have completed all those steps correctly.</p>
+
+<h2>Setup your Workstation</h2>
+
+<p>Find a working directory on your local machine where you plan to store your Chef cookbooks. For this tutorial, we will use <code>~/Development</code>. You&#8217;ll need a skeleton chef repository. You could make your own or clone the Opscode one:</p>
+
+<pre><code>git clone git@github.com:opscode/chef-repo.git
+</code></pre>
+
+<p>Take a few minutes to poke around the repository. You definitely won&#8217;t understand everything, but look at a few READMEs (in subdirectories).</p>
+
+<p>Inside the <code>chef-repo</code> directory (<code>~/Development/chef-repo</code>), we need to create a hidden folder named <code>.chef</code>:</p>
+
+<pre><code>cd ~/Development/chef-repo
+mkdir .chef
+</code></pre>
+
+<p>This is where you should put the files we downloaded earlier:</p>
+
+<pre><code>mv [location]/[your_username].pem ~/Development/chef-repo/.chef/
+mv [location]/[your_organization_name].pem ~/Development/chef-repo/.chef/
+mv [location]/knife.rb ~/Development/chef-repo/.chef/
+</code></pre>
+
+<p>For my case, it would be:</p>
+
+<pre><code>mv ~/Desktop/sethvargo.pem ~/Development/chef-repo/.chef/
+mv ~/Desktop/ci-validator.pem ~/Development/chef-repo/.chef/
+mv ~/Desktop/knife.rp ~/Development/chef-repo/.chef/
+</code></pre>
+
+<p>To confirm everything is working, try and list all the clients (it should be empty):</p>
+
+<pre><code>knife client list
+</code></pre>
+
+<p>If this command succeeds without error, everything is set up correctly!</p>
+
+<p>This concludes setting up your workstation. Now we are ready to create our first cookbook.</p>
+
+<h2>Create your first cookbook</h2>
+
+<p>Wash your hands, put on your Chef&#8217;s Hat, and get ready to bake! We are going to create your very first cookbook. The cookbook will be very simple and is more for demonstrating working with <code>knife</code> and <code>chef-client</code>.</p>
+
+<p>Our cookbook will be named &#8220;hello world&#8221;. Let&#8217;s start by using <code>knife</code> to create our cookbook skeleton:</p>
+
+<pre><code>cd ~/Development/chef-repo
+knife cookbook create hello_world
+</code></pre>
+
+<p>You should see the following output:</p>
+
+<pre><code>** Creating cookbook hello_world
+** Creating README for cookbook: hello_world
+** Creating metadata for cookbook: hello_world
+</code></pre>
+
+<p>Open up the project in your favorite text editor and look inside the <code>cookbooks</code> directory. You should see the following:</p>
+
+<p><img src="http://technology.customink.com/images/chef-cookbook-structure.png" alt="Chef Cookbook Structure" /></p>
+
+<p>This cookbook will create a file <code>~/hello_world.txt</code> that says &#8220;Hello World!&#8221;.</p>
+
+<p>Let&#8217;s first make the template. A template is like the &#8220;view&#8221; of MVC. It has access to instance variables and uses embedded ruby. Inside the <code>templates/default</code> directory, create a new file named <code>hello-world.txt.erb</code> and add some content:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='erb'><span class='line'><span class="cp">&lt;%</span> <span class="c1"># templates/default/hello-world.txt.erb </span><span class="cp">%&gt;</span><span class="x"></span>
+</span><span class='line'><span class="x">Hello World!</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">Chef Version: </span><span class="cp">&lt;%=</span> <span class="n">node</span><span class="o">[</span><span class="ss">:chef_packages</span><span class="o">][</span><span class="ss">:chef</span><span class="o">][</span><span class="ss">:version</span><span class="o">]</span> <span class="cp">%&gt;</span><span class="x"></span>
+</span><span class='line'><span class="x">Platform: </span><span class="cp">&lt;%=</span> <span class="n">node</span><span class="o">[</span><span class="ss">:platform</span><span class="o">]</span> <span class="cp">%&gt;</span><span class="x"></span>
+</span><span class='line'><span class="x">Version: </span><span class="cp">&lt;%=</span> <span class="n">node</span><span class="o">[</span><span class="ss">:platform_version</span><span class="o">]</span> <span class="cp">%&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can see we are referencing a <code>node</code> variable. This refers to the current client that Chef is running on.</p>
+
+<p>Now we need to create the actual recipe with instructions. You can think of the recipe as the &#8220;controller&#8221; of MVC. Open up the <code>recipes/default.rb</code> file and add the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># recipes/default.rb</span>
+</span><span class='line'><span class="n">template</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;HOME&#39;</span><span class="o">]</span><span class="si">}</span><span class="s2">/hello-world.txt&quot;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">source</span> <span class="s1">&#39;hello-world.txt.erb&#39;</span>
+</span><span class='line'>  <span class="n">mode</span> <span class="s1">&#39;0644&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>template</code> keyword is a resource like we defined before. It tells the recipe to render the given template source to the given file. We also specify the file permissions using <code>mode</code>.</p>
+
+<p>That&#8217;s it! Our cookbook is done and ready to be uploaded to Hosted Chef. We will use the <code>knife</code> command to do this:</p>
+
+<pre><code>knife cookbook upload hello_world
+</code></pre>
+
+<p>You should see output like this:</p>
+
+<pre><code>Uploading hello_world             [0.0.1]
+Uploaded 1 cookbook.
+</code></pre>
+
+<p>If you get a message like:</p>
+
+<pre><code>WARNING: No knife configuration file found
+ERROR: Your private key could not be loaded from /etc/chef/client.pem
+Check your configuration file and ensure that your private key is readable
+</code></pre>
+
+<p>it means that your key is invalid. Regenerate your personal and/or organization keys and ensure everything is placed in the correct directories.</p>
+
+<p>Our cookbook is now on Hosted Chef and ready to be distributed to our nodes. Chef doesn&#8217;t automatically tell nodes to update. You can do this with a cron job, running <code>chef-client</code> as a service, or by running <code>chef-client</code> manually on any node.</p>
+
+<p>For simplicity, let&#8217;s just run this on our local workstation. Let&#8217;s set up the local workstation as a client. Run the following command from the inside the repository:</p>
+
+<pre><code>sudo knife configure client /etc/chef
+</code></pre>
+
+<p>If you&#8217;re using <code>rvm</code>, use the <code>rvmsudo</code> command prefix:</p>
+
+<pre><code>rvmsudo knife configure client /etc/chef
+</code></pre>
+
+<p>You should see output like:</p>
+
+<pre><code>Creating client configuration
+Writing client.rb
+Writing validation.pem
+</code></pre>
+
+<p>That&#8217;s it! Your workstation is now a client. Let&#8217;s provision this server by running <code>chef-client</code>:</p>
+
+<pre><code>sudo chef-client
+</code></pre>
+
+<p>Or with RVM:</p>
+
+<pre><code>rvmsudo chef-client
+</code></pre>
+
+<p>You should see output like this:</p>
+
+<pre><code>INFO: *** Chef 0.10.10 ***
+INFO: Client key /etc/chef/client.pem is not present - registering
+INFO: Run List is []
+INFO: Run List expands to []
+INFO: Starting Chef Run for NODE
+INFO: Running start handlers
+INFO: Start handlers complete.
+INFO: Loading cookbooks []
+WARN: Node NODE has an empty run list.
+INFO: Chef Run complete in 0.988165 seconds
+INFO: Running report handlers
+INFO: Report handlers complete
+</code></pre>
+
+<p>Take a look inside your <code>$HOME</code> directory and see if the <code>hello-word.txt</code> file was created&#8230;</p>
+
+<p>It doesn&#8217;t appear the file was created. We must have done something wrong! Actually, we did everything correctly. We just forgot one step - we never <strong>told</strong> our node to execute the recipe we just wrote. By default, Chef does not execute any of your recipes. You must explicitly require them. There are a variety of ways to do this. We will use a <code>run_list</code> here.</p>
+
+<p>First, we need to figure out what our node is named. Run <code>knife node list</code> and you should now see two nodes:</p>
+
+<pre><code>NODE
+[your_organization_name]-validator
+</code></pre>
+
+<p>Mine looks like:</p>
+
+<pre><code>seth
+sethvargo-validator
+</code></pre>
+
+<p>We obviously want <code>NODE</code>. In my case, it&#8217;s <code>seth</code>. Now we can edit the <code>run_list</code> for that node:</p>
+
+<pre><code>knife node run_list add NODE hello_world
+</code></pre>
+
+<p>For me, that command would look like:</p>
+
+<pre><code>knife node run_list add seth hello_world
+</code></pre>
+
+<p>You should see the following output:</p>
+
+<pre><code>run_list:  [recipe[hello_world]]
+</code></pre>
+
+<p>Let&#8217;s inspect this node using the <code>show</code> command:</p>
+
+<pre><code>knife node show NODE
+</code></pre>
+
+<p>You should now see <code>hello_world</code> in the <code>run_list</code>. Run the <code>chef-client</code> command again (remember you might need to use <code>sudo</code>) and you should get output like the following:</p>
+
+<pre><code>INFO: *** Chef 0.10.10 ***
+INFO: Run List is [recipe[hello_world]]
+INFO: Run List expands to [hello_world]
+INFO: Starting Chef Run for seth
+INFO: Running start handlers
+INFO: Start handlers complete.
+INFO: Loading cookbooks [hello_world]
+INFO: Storing updated cookbooks/hello_world/recipes/default.rb in the cache.
+INFO: Processing template[/Users/seth/hello-world.txt] action create (hello_world::default line 10)
+INFO: template[/Users/seth/hello-world.txt] mode changed to 644
+INFO: template[/Users/seth/hello-world.txt] updated content
+INFO: Chef Run complete in 1.188536 seconds
+INFO: Running report handlers
+INFO: Report handlers complete
+</code></pre>
+
+<p>Open up your <code>$HOME</code> directory and you should see a file named <code>hello-world.txt</code>. Look inside and you&#8217;ll see the those node variables were translated into plain text. Awesome!</p>
+
+<p>You can delete that file or leave it around as a reminder of how awesome Chef is. We have one last thing to do before we are done with this tutorial.</p>
+
+<p>Let&#8217;s remove that recipe from the <code>run_list</code>:</p>
+
+<pre><code>knife node run_list remove NODE hello_world
+</code></pre>
+
+<p>Again, mine would be:</p>
+
+<pre><code>knife node run_list remove seth hello_world
+</code></pre>
+
+<p>You should see output like the following:</p>
+
+<pre><code>run_list:  [recipe[hello_world]]
+</code></pre>
+
+<p>Well, this concludes this (rather lengthy) tutorial on installing Chef, registering for Hosted Chef, creating your first cookbook, and provisioning your first machine.</p>
+
+<p>Part 2 of this series will cover more recipes and full provisioning and customization of your personal laptop using Chef.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[5 Things You Always Wanted to Know About Chef]]></title>
+    <link href="http://technology.customink.com/blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef/"/>
+    <updated>2012-05-26T21:51:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef</id>
+    <content type="html"><![CDATA[<p>When I first started working with Chef, there were a couple of areas that I knew were going to be really awesome and helpful but I wasn&#8217;t sure how to get started with them.  In this presentation, I&#8217;ll provide a quick introduction to five things you&#8217;ve always wanted to know about Chef but were afraid to ask.</p>
+
+<p>I gave this presentation at <a href="http://chefconf.opscode.com">#ChefConf 2012</a>.</p>
+
+<p>Level-up your Chef skills by learning about these areas of Chef:</p>
+
+<!-- more -->
+
+
+<ul>
+<li><strong>Attribute Precedence</strong> - Role, environment, cookbook, data bag? Which attribute value will be used in my chef run?</li>
+<li><strong>Encrypted Databags</strong> - Chef 0.10 brought us encrypted databags. We&#8217;ll look at how to create and use databags and how to keep them up-to-date in your repository.</li>
+<li><strong>LWRP</strong> - What is a LWRP? How and why do you create one? We&#8217;ll look at a couple of sample LWRPs and learn how to build a simple one.</li>
+<li><strong>Error Handlers</strong> - Demystify exception and report handlers by writing a simple one and seeing examples of how they work in the wild.</li>
+<li><strong>Capistrano and Chef</strong> - Take a quick look at why and how to integrate Chef search into your Capistrano configuration to make deploying your Rails apps even easier.</li>
+</ul>
+
+
+<p>One thing I didn&#8217;t mention in the presentation was how to use the data from the encrypted data bag.  I&#8217;ve updated the slides to include this info but it doesn&#8217;t appear in the video.  In any case, here&#8217;s a quick demo of how you might use it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">creds</span> <span class="o">=</span> <span class="no">Chef</span><span class="o">::</span><span class="no">EncryptedDataBagItem</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;db&quot;</span><span class="p">,</span> <span class="s2">&quot;creds&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">env_db_creds</span> <span class="o">=</span> <span class="n">db_creds</span><span class="o">[</span><span class="n">node</span><span class="o">[</span><span class="s2">&quot;rails_env&quot;</span><span class="o">]]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">template</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">app_dir</span><span class="si">}</span><span class="s2">/shared/config/database.yml&quot;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">source</span> <span class="s2">&quot;database.yml.erb&quot;</span>
+</span><span class='line'>  <span class="n">variables</span><span class="p">(</span>
+</span><span class='line'>    <span class="ss">:rails_env</span> <span class="o">=&gt;</span> <span class="n">node</span><span class="o">[</span><span class="s2">&quot;rails_env&quot;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>    <span class="ss">:username</span> <span class="o">=&gt;</span> <span class="n">env_db_creds</span><span class="o">[</span><span class="s2">&quot;username&quot;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>    <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="n">env_db_creds</span><span class="o">[</span><span class="s2">&quot;password&quot;</span><span class="o">]</span>
+</span><span class='line'>  <span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Video</h3>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/uREL4FFPddo" frameborder="0" allowfullscreen></iframe>
+
+
+<h3>Slides</h3>
+
+<script async class="speakerdeck-embed" data-id="4fb532f2850667001f0008f8" data-ratio="1.2945638432364097" src="http://technology.customink.com//speakerdeck.com/assets/embed.js"></script>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Joy of Cooking - Whip Up a Rails Environment with Chef]]></title>
+    <link href="http://technology.customink.com/blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/"/>
+    <updated>2012-05-25T14:59:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef</id>
+    <content type="html"><![CDATA[<p>You&#8217;ve heard of Chef, Puppet, and other frameworks that can help you build out your infrastructure. You&#8217;ve been meaning to play around with one or more of them for some time now. Now&#8217;s your chance; Start cooking up on your own servers!</p>
+
+<p>In this presentation, I provide an introduction to Chef with a focus on what you&#8217;ll need to know to get a Rails application up and running.</p>
+
+<p>Topics include:
+  * Introduction to Chef
+  * Nodes, roles, environments, and other terminology
+  * Introduction to cookbooks
+  * Provisioning an environment for a Rails application
+  * Deploying with Capistrano</p>
+
+<!-- more -->
+
+
+<p>You won&#8217;t be ready to compete in Iron Chef, but you will be ready to serve up your own Rails environment in no time.</p>
+
+<p>I gave slightly different versions of this presentation at <a href="http://www.rubynation.org/">RubyNation 2012</a> and <a href="http://chefconf.opscode.com">#ChefConf 2012</a>.</p>
+
+<p>I&#8217;d really appreciate any comments, questions, or feedback in the comments section below.</p>
+
+<h3>Video from ChefConf</h3>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/X1mmzERRkeI" frameborder="0" allowfullscreen></iframe>
+
+
+<h3>Slides</h3>
+
+<script async class="speakerdeck-embed" data-id="4fb421272cf6f5001f00ba85" data-ratio="1.2945638432364097" src="http://technology.customink.com//speakerdeck.com/assets/embed.js"></script>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Taming the Kraken - How Operations enables developer productivity]]></title>
+    <link href="http://technology.customink.com/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/"/>
+    <updated>2012-05-25T14:31:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity</id>
+    <content type="html"><![CDATA[<p>At <a href="http://railsconf2012.com/">RailsConf 2012</a>, I gave a presentation on how our web operations team enables developer productivity.</p>
+
+<p>There&#8217;s always a bit of tension when getting features from idea to production. In this talk, I describe some of the changes CustomInk has made to reduce this friction and keep the new features coming. Gone are the days of bi-monthly deploys, office pools dedicated to guessing when this deploy will be rolled back, and the ceremony surrounding the deploy-rollback-fix-deploy cycle. Today, ideas flow from product managers to developers to production with ease thanks to a number of changes that we&#8217;ve made to our teams, processes and tools.</p>
+
+<!-- more -->
+
+
+<p>Presenting at RailsConf was a really enjoyable experience and the presentation was well received.  There were lots of questions from the audience after the presentation.  Unfortunately, the Q &amp; A section was not captured in the video.  I&#8217;d really appreciate any questions or feedback you have, just drop a comment below.</p>
+
+<h3>Video</h3>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/5vzNzQzmAk0" frameborder="0" allowfullscreen></iframe>
+
+
+<h3>Slides</h3>
+
+<script async class="speakerdeck-embed" data-id="4f96da12947c45001f018683" data-ratio="1.2945638432364097" src="http://technology.customink.com//speakerdeck.com/assets/embed.js"></script>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Welcome Interns!]]></title>
+    <link href="http://technology.customink.com/blog/2012/05/24/welcome-interns/"/>
+    <updated>2012-05-24T16:01:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/05/24/welcome-interns</id>
+    <content type="html"><![CDATA[<p>Last week the CustomInk Tech team welcomed two new interns, Nolan Carroll and Seth Vargo.  Nolan and Seth are joining us for the summer from Carnegie Mellon University where they are both majoring in Information Systems.</p>
+
+<p>Nolan and Seth wasted no time hopping on our <a href="http://technology.customink.com/blog/2012/05/14/welcome-josh-born">deploy train</a> last week, but they couldn&#8217;t have done it without the help of our (semi) automated build process.  A while ago, Nathen Harvey talked about our <a href="http://technology.customink.com/blog/2012/01/02/green-screen/">Green Screen</a> build monitor.  While this serves as a great motivator for us to keep our builds passing, the ability for us to quickly create builds for any branch is what keeps us moving fast.</p>
+
+<!-- more -->
+
+
+<p>Using some home grown capistrano scripts, any developer can easily create and manage an automated Jenkins build, which will automatically be monitored by Green Screen.  A developer&#8217;s typical workflow might look something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="o">&gt;&gt;</span> <span class="n">git</span> <span class="n">branch</span> <span class="n">new_feature</span>
+</span><span class='line'>  <span class="o">&gt;&gt;</span> <span class="n">git</span> <span class="n">checkout</span> <span class="n">new_feature</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span> <span class="n">code</span> <span class="n">changes</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>  <span class="o">&gt;&gt;</span> <span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&quot;added new feature&quot;</span>
+</span><span class='line'>  <span class="o">&gt;&gt;</span> <span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">new_feature</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now that a new feature branch is available in our remote repository, the developer can create and start their own Jenkins build:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="o">&gt;&gt;</span> <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:create</span>
+</span><span class='line'>  <span class="s2">&quot;I&#39;ve created rfe_new_feature.&quot;</span>
+</span><span class='line'>  <span class="o">&gt;&gt;</span> <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:build</span>
+</span><span class='line'>  <span class="s2">&quot;I&#39;ve found rfe_new_feature and it&#39;s building now.&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now a build is running on our Jenkins server.  More importantly, Jenkins will use it&#8217;s Jedi powers to detect any changes to the remote branch and automatically kick off a new build.  When builds fail, the entire team is notified and Green Screen turns red.  We have a handful of other useful Jenkins tasks as well:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:build</span>     <span class="c1"># Kicks off a build for the current branch</span>
+</span><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:console</span>   <span class="c1"># Shows the job&#39;s console</span>
+</span><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:create</span>    <span class="c1"># Create a job for the current branch</span>
+</span><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:delete</span>    <span class="c1"># Deletes a job with name = rfe_[current_branch]</span>
+</span><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:list</span>      <span class="c1"># Lists all jobs in jenkins</span>
+</span><span class='line'>  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:status</span>    <span class="c1"># Gets the status of a job with name = rfe_[current_branch]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Continuous deployment can&#8217;t happen without automation.  I&#8217;d like to give a big shout out to our Web Ops team for driving us down the automation super highway.  I&#8217;d also like to extend a warm welcome to Nolan and Seth, we look forward to seeing their builds pass all summer long.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Coderetreat Floyd 2012]]></title>
+    <link href="http://technology.customink.com/blog/2012/05/16/coderetreat-floyd-2012/"/>
+    <updated>2012-05-16T15:27:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/05/16/coderetreat-floyd-2012</id>
+    <content type="html"><![CDATA[<h2>One Saturday dedicated to honing your craft</h2>
+
+<p>It&#8217;s easy to get caught up in the whirlwind of projects and deadlines and forget that software development is very much a craft that needs to be practiced. The complex requirements and external pressures of a production application often cloud our judgement, forcing us to forgo the fundamental concepts that create great software.</p>
+
+<p>It&#8217;s useful to step away from the code you work on day-to-day to focus on honing your skills merely for the sake of improving as a developer. Corey Haines&#8217; <a href="http://coderetreat.org">Coderetreat</a> format facilitates this by strongly suggesting its participants delete their code immediately after each session. By the end of the day, the value created is not the code that is written, but the skills and insights learned from writing that code.</p>
+
+<!-- more -->
+
+
+<p>The Coderetreat consisted of five 45 minute pairing sessions building <a href="http://en.wikipedia.org/wiki/Conway's_Game_of_Life">Conway&#8217;s Game of Life</a>. The &#8216;zero-player&#8217; game is a form of cellular automata that consists of a grid of dead or alive &#8216;cells&#8217; represented by the squares in the grid. Based on a set of four simple rules, the grid comes to life with complex patterns and interactions between the cells.</p>
+
+<p>The rules are:</p>
+
+<ol>
+<li>Any live cell with fewer than two live neighbours dies, as if caused by under-population.</li>
+<li>Any live cell with two or three live neighbours lives on to the next generation.</li>
+<li>Any live cell with more than three live neighbours dies, as if by overcrowding.</li>
+<li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
+</ol>
+
+
+<p>With just a simple initial configuration of cells, patterns like Gosper&#8217;s Glider Gun can be made:</p>
+
+<p><img src="http://technology.customink.com/images/gospers_glider_gun.gif" alt="Gosper's Glider Gun" /></p>
+
+<p>Rules and image taken from <a href="http://en.wikipedia.org/wiki/Conway's_Game_of_Life">Conway&#8217;s Game of Life Wikipedia Article</a></p>
+
+<h3>Session One</h3>
+
+<p>For the first session, I worked with another developer to build up &#8216;Cell&#8217; object using CoffeeScript and Jasmine. It went well, but about half way into the session, the requirements of the game were changed to include zombie cells that come to life based on its own set of rules. We were asked about the impact of introducing these new requirements into our code. We were largely unaffected by the change due to not being very far into the implementation, but it was obvious to see how we could have been bitten by the change.</p>
+
+<p>We chose to deal with alive and dead cells through a boolean attribute on the Cell class. Had we fleshed out the game more, our logic and objects would be tightly bound to this concept and introducing a third state would require considerable time and effort.</p>
+
+<p>Thus, the stage was set for the remaining sessions. We would learn how to better build software that can bend and mold to the often changing demands of the real world.</p>
+
+<h3>Session Two</h3>
+
+<p>In Session Two, we were introduced to a set of constraints:</p>
+
+<ul>
+<li>No primitives across method boundaries</li>
+<li>Less than 3 lines of code per method</li>
+<li>No if statements</li>
+<li>No explicit loops</li>
+</ul>
+
+
+<p>Immediately we were able to notice changes in our design:</p>
+
+<p>Without if statements, instead of a Cell class with a boolean state, we pushed the state logic into AliveCell and DeadCell classes. Our CellCollection class only needed to know about its Cell-like objects, specific behavior was encapsulated within each AliveCell or DeadCell.</p>
+
+<p>Having less than 3 lines of code per method encouraged a top-down approach to designing our game. With only two lines available to us per method, we were forced to continuously delegate behavior to new objects. The result was a healthy layer of abstractions above very specific implementing objects.</p>
+
+<h3>Session Three</h3>
+
+<p>Session Three lifted the constraints from Session Two, but introduced the mute session:</p>
+
+<p>Each pair would have one test writer and one code writer. Adhering to TDD, the test writer would write a test that defined the desired behavior of an object. The code writer would write the code to match that test with two caveats:</p>
+
+<ol>
+<li>Neither the test writer nor the code writer could speak to each other</li>
+<li>The code writer was instructed to be an &#8216;Evil Coder&#8217; by only writing enough (likely wrong) code to get the corresponding test to pass</li>
+</ol>
+
+
+<p>We found that the top-down abstraction-building method learned in the previous session was helpful in avoiding the obstacle that was the Evil Coder. It was easy to write specs of objects merely calling methods on other objects. By not testing the result state of some combination of logic, the Evil Coder was forced to implement exactly the behaviors defined by the test writer.</p>
+
+<p>At the detail layer, proper use of stubs and mocks prevented the Evil Coder from purposefully implementing the wrong code.</p>
+
+<h3>Session Four</h3>
+
+<p>Session Four again dropped all previous constraints but required a 2-minute green-to-green cycle:</p>
+
+<p>At the start of writing a test, we would start a timer for 2 minutes. If by the end of those 2 minutes we did not have that test passing, we would delete our changes for that cycle and start over. Between each cycle, we would have 2 minutes to refactor what we had.</p>
+
+<p>After several minutes the entire room rang with alarms. We found ourselves trying to test too much at once. In order to fit within the 2 minutes cycles, it was often helpful to initially use a naïve approach to get our test passing and refactor later.</p>
+
+<p>By taking the next simplest step in every cycle, we ere able to have completely working code every 2 minutes.</p>
+
+<h3>Session Five</h3>
+
+<p>Session Five removed all constraints and allowed us to use what we learned in the previous sessions freely.</p>
+
+<p>Interestingly enough, although Session Five had the same lack of constraints as Session One, the code we wrote was remarkably different and incorporated many of the ideas from the previous sessions.</p>
+
+<h3>Wrapping Up</h3>
+
+<p>At the end of the day, all of the participants grouped up and discussed what they had discovered in during the retreat.</p>
+
+<p>Session Two showed us how encapsulating behaviors into objects can dramatically reduce the impact of changes to your system. Session Three reinforced the idea of Tests as Documentation and revealed an approach that allows for a high degree of unit test coverage. Session Four encouraged us to work in smaller batches, allowing constant verification of working code and reducing the need to debug larger chunks of code at infrequent intervals.</p>
+
+<p>These concepts are not new. They are fundamental aspects of object oriented design and test driven development that have been practiced successfully for years. The Coderetreat is a great way to expose these concepts to those who have never heard of them, and to reinforce the concepts to those who have merely forgotten.</p>
+
+<p>It&#8217;s also a great way of keeping in touch with the developer community, with more relaxed gathering and discussion before and after the actual event. I had a great weekend in Floyd and I would recommend a Coderetreat for anyone interested a weekend of practice and reflection.</p>
+
+<p>I hope to see you at one some day!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Welcome Josh Born!]]></title>
+    <link href="http://technology.customink.com/blog/2012/05/14/welcome-josh-born/"/>
+    <updated>2012-05-14T13:17:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/05/14/welcome-josh-born</id>
+    <content type="html"><![CDATA[<p>The CustomInk technology team wants to extend a warm welcome to our newest member, Josh Born.  Josh wasted no time and hopped onto the deploy train today for his first production release.</p>
+
+<p>At CustomInk we like to <a href="http://www.customink.com/designs/proofs/jub0-000p-fxs7/front.jpg" target="_new">continuously deploy</a> changes to our site.  This means no sprints, no iterations, no milestones.  We work, and when we are satisfied with our work, we deploy it.  On average, engineers deploy updates to our site about five to seven times a day.</p>
+
+<!-- more -->
+
+
+<p>We like to manage our deployments in a very low fidelity way, which was inspired largely by the engineers at Etsy.  We call it the &#8220;deploy train&#8221; and it&#8217;s nothing more then a virtual line managed by our campfire topic.</p>
+
+<p><img src="http://technology.customink.com/images/deploy_train.png" alt="Campfire Deploy Train" /></p>
+
+<p>When you are ready to deploy a change, you add yourself to the end of the deploy train and simply wait for your turn.  The responsibility of the engineer at the front of the deploy train is to merge, deploy, and verify his or her changes in production.  When the engineer is satisfied, they take themselves off the list and notify the next engineer in line that it is their turn.</p>
+
+<p><img src="http://technology.customink.com/images/josh_born_ponder_deploy.jpg" alt="Josh ponders his first release" /></p>
+
+<p>This will be the first of many deploys for Josh.  We are very excited to have him on board and look forward to his next release, sometime later this week.</p>
+
+<p><img src="http://technology.customink.com/images/josh_born_first_deploy.png" alt="Josh releases his first code" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Critical Oversight: Indexes]]></title>
+    <link href="http://technology.customink.com/blog/2012/04/27/critical-oversight-indexes/"/>
+    <updated>2012-04-27T11:48:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/04/27/critical-oversight-indexes</id>
+    <content type="html"><![CDATA[<p>One of the most common production issues I run into are missing indexes.  The other day I got to thinking that they are usually missing because of the evolution of the software.</p>
+
+<p>We might use some rails generators to prototype some basic functionality.  Then we&#8217;ll iterate over a set of stories incorporating new behavior.  Maybe we&#8217;ll do some refactoring, scrap some features, pull out some dead code and &#8220;harden&#8221; some areas we&#8217;ve identified as brittle.  But we almost never analyze the &#8220;data model&#8221; before we deploy.</p>
+
+<!-- more -->
+
+
+<p>Have we considered our data access patterns?  Did we create foreign keys to enforce data integrity?  Do we have any idea how big these tables are going to grow?  We almost certainly don&#8217;t need to shard them…do we?</p>
+
+<p>No, we almost never do this.</p>
+
+<p>Instead we race to ship.  &#8221;<a href="http://www.customink.com/lab/?cid=jub0-000p-fxs7#shared">Deploy early, deploy often</a>&#8221; is our motto, and we love it.  Deploying code is awesome, it means people are going to use it.  People using our code makes us happy because it means we didn&#8217;t waste our time today.  We did something real that people got to use.</p>
+
+<p>A few months down the road comes the tipping point.  One of your tables amasses a few hundred thousand rows.  Your pages start to take seconds to load because your queries take seconds to run.  Your database connections are tied up, and when your site gets enough traffic, things start to fall over.</p>
+
+<p>This literally just happened to us.  Again.  We missed one little index on one little foreign key in one little table.  And then one of our database servers stopped responding.   Spiked CPU, connections maxed out, alerts firing, then fail over.</p>
+
+<p>While Rails makes it really easy to create models without even thinking about the database, Rails also makes it very easy to deal with the database.  In James Edward Gray&#8217;s talk <a href="http://speakerdeck.com/u/jeg2/p/10-things-you-didnt-know-rails-could-do?utm_source=rubyweekly&amp;utm_medium=email">10 Things You Didn&#8217;t Know Rails Could Do</a> he shows you how to use rails migration generators to create your table AND index your fields.</p>
+
+<p>If you don&#8217;t like generators, you can simply use the &#8216;add_index&#8217; method in the migration itself:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateFoo</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">up</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:foos</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:foreign_key</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">string</span>  <span class="ss">:other_valuable_data</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">add_index</span><span class="p">(</span><span class="ss">:foos</span><span class="p">,</span> <span class="ss">:foreign_key</span><span class="p">,</span> <span class="ss">:name</span> <span class="o">=&gt;</span> <span class="s1">&#39;foos_foreign_key&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Of course, if you don&#8217;t think to add the index when you created the table, you can always create a migration just to add the index.  The key is adding a checkpoint to your development process in which you analyze your data structures for completeness.  Adding this checkpoint gives you a chance to add any missing database constructs before it&#8217;s too late.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RubyNation 2012]]></title>
+    <link href="http://technology.customink.com/blog/2012/03/26/rubynation-2012/"/>
+    <updated>2012-03-26T13:36:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/03/26/rubynation-2012</id>
+    <content type="html"><![CDATA[<p><a href="http://www.rubynation.org/">RubyNation</a> is awesome.  Most ruby events are awesome, but in particular I enjoy RubyNation because it&#8217;s local to me.  It&#8217;s not that I don&#8217;t like traveling to other conferences or that I think Washington DC is the best possible place for a conference.  What I love about RubyNation being local is having 200+ ruby developers from my immediate locale in one single place, at one single time.  Of course, it doesn&#8217;t hurt to have <a href="http://onestepback.org">Jim Weirich</a> and <a href="http://coreyhaines.com/">Corey Haines</a> show up, either.</p>
+
+<p>The other thing I love about RubyNation are all the great talks.  Even the bad talks are still good talks.  Even the terrible talks turn into great talks because when you step into the hallway, there are amazing people who showed up to RubyNation waiting to have a great talk with you.  Every year, without fail, I meet new people and learn new things.  I don&#8217;t think you can put a price tag on that.</p>
+
+<!-- more -->
+
+
+<p>There were lots of highlights for me this year, and some surprises.  The first surprise should really have been no surprise at all, since it&#8217;s a developing trend at all Ruby/Rails related events: JavaScript.  In his opening keynote, Justin Getland says something to the effect of &#8220;Adapt or die&#8221;.  Justin&#8217;s message was clear: wherever there is a gap, someone will be there to fill it.  There is a gap in JavaScript knowledge, so it&#8217;s time to step in or someone else will.</p>
+
+<p>The first day at RubyNation had one track that was entirely JavaScript and View focused.  The second track was a grab bag of ruby related topics such as toolkits or programming approaches.  Some of the JS/View track presentations that stuck out to me were:</p>
+
+<p>Roy Tomeij&#8217;s talk on <a href="http://roytomeij.com/slides/rubynation2012">Modular and Reusable Front-End code</a>,
+Brennan Dunn&#8217;s talk on <a href="http://speakerdeck.com/u/brennandunn/p/rails-without-views">Rails Without Views</a>,
+John Athayde&#8217;s talk on <a href="http://speakerdeck.com/u/boboroshi/p/the-rails-view-the-junk-drawer-grows-up">The Rails View: The Junk Drawer Grows Up</a>,
+Chris Strom&#8217;s talk on <a href="http://speakerdeck.com/u/chris/p/you-aint-spdy-ruby-nation">You Ain&#8217;t SPDY</a></p>
+
+<p>Andrew Glover&#8217;s <a href="https://github.com/aglover/resque-example">Asynchronous Processing and Messaging</a> talk was a great introduction to Resque and Redis.  Although I didn&#8217;t attend his talk, people told me that Mike Subelsky&#8217;s talk <a href="http://www.subelsky.com/2012/03/slides-from-my-coding-for-uncertainty.html">Coding for Uncertainty</a> was amazing.  Before you knew it, Jim Weirich was wrapping up day one by teaching us how to use Ruby for purely functional programming purposes to implement the <a href="https://twitter.com/#!/karledurante/status/183312951598514176/photo/1">Y Combinator</a>.</p>
+
+<p>Day two had a couple of front end related talks, but really seemed to focus more on some of the toolkits we use with ruby and some theory to help rubyists navigate the programming waters.</p>
+
+<p>I really enjoyed Russ Olsen&#8217;s <a href="http://speakerdeck.com/u/russolsen/p/eloquent-explanations-rubynation-2012">Eloquent Expressions</a> and Jeff Casimir&#8217;s <a href="http://speakerdeck.com/u/j3/p/adventures-on-the-golden-path">Adventures on the Golden Path</a>.  As well, Patrick Peak and Nathen Harvey gave great talks on how to better organize your applications with <a href="http://speakerdeck.com/u/peakpg/p/plays-well-with-others-building-mountable-apps">mountable applications</a> and <a href="https://github.com/nathenharvey/cooking-with-chef">deployment strategies</a>, respectively.  <a href="https://github.com/ajburton">Anthony Burton</a> has posted a more <a href="https://gist.github.com/2182892">complete list of talks here</a>.</p>
+
+<p>Corey Haines closed out the event with a call to arms for our community to mentor the next generation.  Corey&#8217;s point was simple: there is a need for more developers.  Companies will step in to &#8220;make&#8221; new ones.  Do you want good developers or bad developers?  <a href="http://rubytutor.org/">Ruby Tutor</a> is a place where we can help to make the next generation great.</p>
+
+<p>Thanks to all the people who made RubyNation such a great event this year.  See you all next year.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Simple Garbage Collection Tuning for Rails]]></title>
+    <link href="http://technology.customink.com/blog/2012/03/16/simple-garbage-collection-tuning-for-rails/"/>
+    <updated>2012-03-16T08:07:00-04:00</updated>
+    <id>http://technology.customink.com/blog/2012/03/16/simple-garbage-collection-tuning-for-rails</id>
+    <content type="html"><![CDATA[<p>Ruby is known for being bad at garbage collection.  The truth is that the default GC settings aren&#8217;t very good for a Rails application so if you run a Rails app you really should do some tuning (this requires either Ruby Enterprise or Ruby 1.9.2).  Here&#8217;s a streamlined process for getting started:</p>
+
+<h3>Get a Baseline</h3>
+
+<p>Turn on collecting GC stats for New Relic (of course you&#8217;re using <a href="http://newrelic.com/">New Relic</a>).  You want to know what you&#8217;re fixing and this will probably show you that about &#8531; of the &#8220;Ruby&#8221; portion of your app response time is really garbage collection.  Just add the following line to your <code>environment.rb</code> file:</p>
+
+<p><code>GC.enable_stats if defined?(GC) &amp;&amp; GC.respond_to?(:enable_stats)</code></p>
+
+<!-- more -->
+
+
+<h3>Examine the Heap</h3>
+
+<p>Once you&#8217;ve gathered enough data in NewRelic to be able to see a change, you&#8217;ll want to see what the heap looks like in one of your passenger threads.</p>
+
+<ul>
+<li>Take one of your app servers out of production</li>
+<li>Install gdb.rb:</li>
+</ul>
+
+
+<p><code>sudo gem install gdb.rb</code></p>
+
+<ul>
+<li>Use <code>sudo passenger-status</code> to find a thread that has handled enough requests to be pretty well warmed up and note its PID.</li>
+<li>Connect to the passenger thread with gdb.rb:</li>
+</ul>
+
+
+<p><code>sudo gdb.rb &lt;pid&gt;</code></p>
+
+<ul>
+<li>Get gdb.rb to print out the stats about your objects:</li>
+</ul>
+
+
+<p><code>ruby objects</code></p>
+
+<p>You&#8217;re looking for a section that looks like this:</p>
+
+<pre><code>HEAPS            9
+  SLOTS      3061241
+  LIVE       1457106 (47.60%)
+  FREE       1604135 (52.40%)
+</code></pre>
+
+<p>We&#8217;re going to assume that &#8220;LIVE&#8221; number is representative of how many slots you normally use up.  Round that up to something sensible like 1,500,000.  Now do the math like this:</p>
+
+<pre><code>RUBY_HEAP_MIN_SLOTS=1800000          # Slots Live + 20%
+RUBY_HEAP_FREE_MIN=18000             # 1% of HEAP_MIN_SLOTS
+RUBY_HEAP_SLOTS_INCREMENT=144000     # 8% of HEAP_MIN_SLOTS
+RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+RUBY_GC_MALLOC_LIMIT=60000000
+</code></pre>
+
+<p>I know there&#8217;s no explanation for those last two settings, but I haven&#8217;t really explained the math behind the other numbers either.  This is meant to be a good starting point.  Its customized for your app to some degree, but with some assumptions.</p>
+
+<h2>Wrap Your Ruby</h2>
+
+<p>Now create a wrapper script that sets these variables in the environment before calling ruby.  I&#8217;m going to assume you put it in <code>/usr/local/bin</code> and call it <code>ruby_tuned</code>.  The file should look like this (make sure you adjust for the path to ruby on your system):</p>
+
+<pre><code>#!/bin/bash
+
+export RUBY_HEAP_MIN_SLOTS=1800000
+export RUBY_HEAP_FREE_MIN=18000
+export RUBY_HEAP_SLOTS_INCREMENT=144000
+export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+export RUBY_GC_MALLOC_LIMIT=60000000
+
+exec "/usr/local/bin/ruby" "$@"
+</code></pre>
+
+<h2>Update Passenger</h2>
+
+<p>Have passenger use your <code>ruby_tuned</code> wrapper instead of calling ruby directly by updating <code>passenger.conf</code> (look in <code>/etc/apache2/mods-enabled</code> on Ubuntu).  You&#8217;ll want it to look like this:</p>
+
+<pre><code>PassengerRoot /usr/local/lib/ruby/gems/1.8/gems/passenger-3.0.11
+PassengerRuby /usr/local/bin/ruby_tuned
+</code></pre>
+
+<p>Now restart apache, add the server back into production and check NewRelic to see how you did.</p>
+
+<h2>What We Got</h2>
+
+<p><img src="http://technology.customink.com/images/Response_Time_GC.jpg"></p>
+
+<p>The graph above is from New Relic as I rolled the changes out one server at a time.  When we applied these changes to our first app we saw:</p>
+
+<ul>
+<li>Time spent in GC drop from ~35ms per request to ~10ms</li>
+<li>CPU usage drop almost in half</li>
+<li>A slight increase in memory used</li>
+</ul>
+
+
+<h2>Where Those Numbers Actually Came From</h2>
+
+<p>To understand these settings and what they do checkout:</p>
+
+<ul>
+<li><a href="http://www.viddler.com/v/87ae120a">This Presentation from Joe Damato</a></li>
+<li><a href="http://www.coffeepowered.net/2009/06/13/fine-tuning-your-garbage-collector/">This Post from Chris Heald</a> (he adds a gem to his app instead of using gdb.rb)</li>
+<li><a href="http://www.rubyenterpriseedition.com/documentation.html#_garbage_collector_performance_tuning">The Ruby Enterprise GC documentation</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Simple Data Mapper]]></title>
+    <link href="http://technology.customink.com/blog/2012/03/02/simple-data-mapper/"/>
+    <updated>2012-03-02T15:35:00-05:00</updated>
+    <id>http://technology.customink.com/blog/2012/03/02/simple-data-mapper</id>
+    <content type="html"><![CDATA[<p>I recently tackled a pretty typical data migration task where some source model had to be transformed into some target model.  About 80% of the elements were mapped field for field, and the other 20% had to be mutated in some way.  Tired of writing one off rake tasks to pull and transform data, I came up with a little data mapper class that I cold reuse in the future.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Mapper</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:source_model</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:mappings</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">AttributeMapping</span><span class="p">;</span><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">ListMapping</span> <span class="o">&lt;</span> <span class="no">AttributeMapping</span>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:fields</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># fields - array of field symbols we want to map data into</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="n">fields</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">source_obj</span><span class="p">,</span> <span class="n">source_attribute</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">{}</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">values</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">fields</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">field</span><span class="o">|</span>
+</span><span class='line'>          <span class="n">values</span><span class="o">[</span><span class="n">field</span><span class="o">]</span> <span class="o">=</span> <span class="n">source_obj</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">source_attribute</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">ComplexMapping</span> <span class="o">&lt;</span> <span class="no">AttributeMapping</span>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:field</span>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:instruction</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># field       - field symbol we want to map data into</span>
+</span><span class='line'>    <span class="c1"># instruction - lambda which accepts source object and source attribute. </span>
+</span><span class='line'>    <span class="c1">#               expected to return value to be mapped to field (on target obj)</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">instruction</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">field</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">instruction</span> <span class="o">=</span> <span class="n">instruction</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">source_obj</span><span class="p">,</span> <span class="n">source_attribute</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">{</span> <span class="n">field</span> <span class="o">=&gt;</span> <span class="n">instruction</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">source_obj</span><span class="p">,</span> <span class="n">source_attribute</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">source_model</span><span class="p">,</span> <span class="n">mappings</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">source_model</span> <span class="o">=</span> <span class="n">source_model</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">mappings</span> <span class="o">=</span> <span class="n">mappings</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">conjure</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">values</span> <span class="o">=</span> <span class="n">map_values_for</span><span class="p">(</span> <span class="nb">self</span><span class="o">.</span><span class="n">source_model</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">mappings</span> <span class="p">)</span>
+</span><span class='line'>    <span class="n">model</span><span class="o">.</span><span class="n">to_s</span><span class="o">.</span><span class="n">camelize</span><span class="o">.</span><span class="n">constantize</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">map_values_for</span><span class="p">(</span><span class="n">source_model</span><span class="p">,</span> <span class="n">mappings</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{}</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">values</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">mappings</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="kp">attr</span><span class="p">,</span> <span class="n">mapping</span><span class="o">|</span>
+</span><span class='line'>        <span class="k">if</span> <span class="no">AttributeMapping</span> <span class="o">===</span> <span class="n">mapping</span>
+</span><span class='line'>          <span class="n">values</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">mapping</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">source_model</span><span class="p">,</span> <span class="kp">attr</span><span class="p">))</span>
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>          <span class="n">values</span><span class="o">[</span><span class="n">mapping</span><span class="o">]</span> <span class="o">=</span> <span class="n">source_model</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="kp">attr</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+<p>Using the mapper is really simple.  Let&#8217;s say my source model, LegacyCustomer, is based off of a legacy table from an older system and looks like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">LegacyCustomer</span><span class="p">(</span>
+</span><span class='line'>  <span class="n">userid</span><span class="p">:</span> <span class="n">integer</span><span class="p">,</span>        <span class="c1"># primary key</span>
+</span><span class='line'>  <span class="n">creationdate</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="c1"># date record was created</span>
+</span><span class='line'>  <span class="n">accountnum</span><span class="p">:</span> <span class="n">string</span>      <span class="c1"># customer number. it&#39;s prefixed with </span>
+</span><span class='line'>                          <span class="c1"># &quot;LGCY-&quot; string that we no longer need!</span>
+</span><span class='line'><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And we want to migrate the LegacyCustomer data to a new Customer model that looks like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Customer</span><span class="p">(</span>
+</span><span class='line'>  <span class="nb">id</span><span class="p">:</span> <span class="n">integer</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">created_at</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">updated_at</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">account_number</span><span class="p">:</span> <span class="n">string</span>
+</span><span class='line'><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>My rake task to run the migration would look like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">namespace</span> <span class="ss">:migrate</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">task</span> <span class="ss">:legacy_customers</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">field_mappings</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>      <span class="ss">:userid</span>         <span class="o">=&gt;</span> <span class="ss">:id</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:creation_date</span>  <span class="o">=&gt;</span> <span class="no">Mapper</span><span class="o">::</span><span class="no">ListMapping</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+</span><span class='line'>                          <span class="o">[</span><span class="ss">:created_at</span><span class="p">,</span> <span class="ss">:update_at</span><span class="o">]</span>
+</span><span class='line'>                         <span class="p">),</span>
+</span><span class='line'>      <span class="ss">:user_data</span>      <span class="o">=&gt;</span> <span class="no">Mapper</span><span class="o">::</span><span class="no">ComplexMapping</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+</span><span class='line'>                          <span class="ss">:account_number</span><span class="p">,</span>
+</span><span class='line'>                          <span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">obj</span><span class="p">,</span> <span class="kp">attr</span><span class="o">|</span> <span class="n">obj</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="kp">attr</span><span class="p">)</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;LGCY-&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)}</span>
+</span><span class='line'>                         <span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="no">LegacyCustomer</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">legacy_customer</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">mapper</span> <span class="o">=</span> <span class="no">Mapper</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">legacy_customer</span><span class="p">,</span> <span class="n">field_mappings</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">customer</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">conjure</span><span class="p">(</span><span class="ss">:customer</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">customer</span><span class="o">.</span><span class="n">save!</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As my migration marched on &#8216;one off&#8217; data errors would pop up causing the script to fail.  This is what ultimately led me to create the ComplexMapping class.  Every time some white space, funny character, or field split requirement bombed my script I was able to add some code to my ComplexMapping requirement to solve it.</p>
+
+<p>I wanted to share this experience for two reasons:</p>
+
+<p>Ruby is awesome.  Metaprogramming and Procs made this mapper possible.  When I first started programming with Ruby, these were the two hardest concepts for me to wrap my head around.  Investing time into learning these aspects of ruby have made me such a better ruby programmer.</p>
+
+<p>The second reason is to reinforce the lesson that doing things the lazy (comfortable) way will rarely ever benefit you.  This mapper class not only made writing and maintaining my migration script easier.  It has also found it&#8217;s way into some production code.</p>
+
+<p>Abstracting concepts (or remembering the <a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">single responsibility principle</a>) will always benefit you in the future.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Organizing Your Rails Models]]></title>
+    <link href="http://technology.customink.com/blog/2012/02/03/organizing-your-rails-models/"/>
+    <updated>2012-02-03T15:38:00-05:00</updated>
+    <id>http://technology.customink.com/blog/2012/02/03/organizing-your-rails-models</id>
+    <content type="html"><![CDATA[<p>Like people, applications start out small.  Unlike people, applications do not always have a predictable growth pattern.  Sometimes they grow really big, and sometimes not at all.  When applications grow large, organization becomes important because it is no longer possible to remember every detail about your application without consulting the source code.</p>
+
+<p>&#8220;We use Rails, the convention tells us how to organize our code&#8221;.  Yes, but having 50 or more files in your app/models directory is hardly being organized.</p>
+
+<!-- more -->
+
+
+<p>A simple thing I like to do is group related models into folders.  This allows you to organize the related models of a domain into a single location while any shared or stand alone models simply remain in the root directory.  For instance, my directory structure may look something like:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>app
+</span><span class='line'>|_models
+</span><span class='line'>   |_address.rb
+</span><span class='line'>   |_orders
+</span><span class='line'>      |_order.rb
+</span><span class='line'>      |_item.rb
+</span><span class='line'>      |_shipping_detail.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And to make sure Rails can find all of my models, I need to update config/application.rb file as such:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">autoload_paths</span> <span class="o">+=</span> <span class="o">[</span><span class="err">&#39;</span><span class="n">app</span><span class="o">/</span><span class="n">models</span><span class="o">/**</span><span class="s2">&quot;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This allows developers to quickly see what models make up an order and what models either stand on their own, or are shared across multiple domains.  And for a large application, you are now able to quickly summarize the high level business objects that make up your system.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[PagerDuty, Nagios and Chef]]></title>
+    <link href="http://technology.customink.com/blog/2012/01/31/pagerduty/"/>
+    <updated>2012-01-31T10:14:00-05:00</updated>
+    <id>http://technology.customink.com/blog/2012/01/31/pagerduty</id>
+    <content type="html"><![CDATA[<h2>Three Things that Work Great Together</h2>
+
+<p>If you use Chef and Nagios, you already know what a great combination they make.  As you build new servers they automatically start getting monitored by Nagios.  Without you having to do anything they&#8217;re grouped together based on role, so its easy to apply the same checks for all servers in a given role.  If you haven&#8217;t tried Nagios built with the chef cookbook its easy to get started with this <a href="http://wiki.opscode.com/display/chef/Nagios+Quick+Start">guide</a> from Opscode.</p>
+
+<p><a href="http://www.pagerduty.com/]">PagerDuty</a> is a service that manages your on-call alerting and escalation policies.  Its hard to love a service that wakes you up in the middle of the night telling you about problems with your servers (my wife is really not a fan), but PagerDuty is helpful.  We generally set it to send an email about a problem first, then send an SMS text and finally to actually make a phone call if no one has responded.  It will go through a rotating list of people on call and accepts alerts from a number of monitoring services including Nagios and AlertSite.</p>
+
+<!-- more -->
+
+
+<p>Opscode recently accepted my addition of a PagerDuty recipe to the <a href="https://github.com/opscode/cookbooks/tree/master/nagios">Nagios cookbook</a> which makes it incredibly easy to connect your Nagios instance to PagerDuty.  You just add a PagerDuty API key as an attribute, apply the pagerduty recipe to your nagios server (see their <a href="http://www.pagerduty.com/docs/guides/nagios-integration-guide">guide</a> for instructions on getting your key) and you&#8217;re good to go.</p>
+
+<p>If you add the API key(s) to your Chef environments, you can tie each environment to a different escalation policy.  That way your staging environments just send email alerts while production actually texts and calls.</p>
+
+<p>One of the big wins of using the Nagios plugins is that if a service recovers the PagerDuty incident gets resolved automatically so it doesn&#8217;t continue to escalate the problem.  Also if you acknowledge a problem in Nagios the acknowledgment flows through to PagerDuty.</p>
+]]></content>
+  </entry>
+  
+</feed>
