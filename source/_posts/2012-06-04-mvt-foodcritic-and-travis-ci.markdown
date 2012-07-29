@@ -5,7 +5,7 @@ date: 2012-06-04 13:45
 author: nathen-harvey
 comments: true
 published: true
-categories: 
+categories:
   - chef
   - chefconf
   - customink
@@ -21,7 +21,7 @@ categories:
   - web operations
   - webops
 ---
-One of the big themes that emerged during [#ChefConf](http://chefconf.opscode.com/) was that we should be testing our infrastructure code.  Software engineers have been practicing test-driven development, behavior-driven development, continuous integration, and many other testing-related practices for a long time.  It's becoming more important for the infrastructure engineers to learn from and apply these practices to our day-to-day workflow.  When it comes to testing Chef-driven infrastructure automation, there are a number of tools and practices that are starting to emerge.  In this article I'll look at a "minimum viable testing" (MVT) approach to this problem using [Foodcritic](http://acrmp.github.com/foodcritic/) and [Travis CI](http://travis-ci.org/).  [Follow the steps in this article](http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/#steps) to get your public cookbooks tested after every `git push`.
+One of the big themes that emerged during [#ChefConf](http://chefconf.opscode.com/) was that we should be testing our infrastructure code.  Software engineers have been practicing test-driven development, behavior-driven development, continuous integration, and many other testing-related practices for a long time.  It's becoming more important for the infrastructure engineers to learn from and apply these practices to our day-to-day workflow.  When it comes to testing Chef-driven infrastructure automation, there are a number of tools and practices that are starting to emerge.  In this article I'll look at a "minimum viable testing" (MVT) approach to this problem using [Foodcritic](http://acrmp.github.com/foodcritic/) and [Travis CI](http://travis-ci.org/).  [Follow the steps in this article](/blog/2012/06/04/mvt-foodcritic-and-travis-ci/#steps) to get your public cookbooks tested after every `git push`.
 
 ### Testing with Chef
 
@@ -184,8 +184,8 @@ More information on Foodcritic and Travis CI can be found here:
 
 ### Next Post
 
-Be sure to read the next post on this topic:  [MVT: knife test and Travis CI](http://technology.customink.com/blog/2012/07/06/mvt-knife-test-and-travisci/)
- 
+Be sure to read the next post on this topic:  [MVT: knife test and Travis CI](/blog/2012/07/06/mvt-knife-test-and-travisci/)
+
 ---
 <sub>Reposted from [Nathen Harvey's blog](http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/)<sub>
- 
+

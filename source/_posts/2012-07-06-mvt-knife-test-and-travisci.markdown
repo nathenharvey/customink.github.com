@@ -17,7 +17,7 @@ categories:
   - web operations
   - webops
 ---
-In my last post, [MVT: Foodcritic and Travis CI](http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/) I described the process for having Travis CI look after your cookbooks and run Foodcritic, the cookbook lint tool, on your cookbook after each `git push`.  In this post, we'll iterate on the "Minimum Viable Test" idea by adding in support for knife's cookbook testing.
+In my last post, [MVT: Foodcritic and Travis CI](/blog/2012/06/04/mvt-foodcritic-and-travis-ci/) I described the process for having Travis CI look after your cookbooks and run Foodcritic, the cookbook lint tool, on your cookbook after each `git push`.  In this post, we'll iterate on the "Minimum Viable Test" idea by adding in support for knife's cookbook testing.
 
 Wait, I'm already running foodcritic, do I really need to run `knife cookbook test`, too?
 
@@ -70,7 +70,7 @@ To get Travis CI running `knife cookbook test` for us, we'll need to add or upda
 * test/.chef/knife.rb
 * test/support/Gemfile
 
-Of course, this assumes you've configured your cookbook as described in the [previous post](http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/).  Let's start with the Rakefile.
+Of course, this assumes you've configured your cookbook as described in the [previous post](/blog/2012/06/04/mvt-foodcritic-and-travis-ci/).  Let's start with the Rakefile.
 
 ``` ruby Rakefile
 #!/usr/bin/env rake
@@ -138,7 +138,7 @@ To run the rake tasks locally, you'll need to tell bundler where the Gemfile is,
 
 ## Full source code
 
-You can checkout this [Github compare view](https://github.com/customink-webops/percona-install/compare/03b9446...d423b14) to see the changes made to the code from the [previous post](http://technology.customink.com/blog/2012/06/04/mvt-foodcritic-and-travis-ci/).
+You can checkout this [Github compare view](https://github.com/customink-webops/percona-install/compare/03b9446...d423b14) to see the changes made to the code from the [previous post](/blog/2012/06/04/mvt-foodcritic-and-travis-ci/).
 
 
 ``` ruby test/.chef/knife.rb
@@ -207,7 +207,7 @@ gem 'chef', '~> 10.12.0'
 
 ### Credit
 
-A big "Thank You!" shout-out to [Seth Vargo](http://technology.customink.com/blog/our-team/seth-vargo.html) for writing most of the code used in this post!
+A big "Thank You!" shout-out to [Seth Vargo](/blog/our-team/seth-vargo.html) for writing most of the code used in this post!
 
 ---
 <sub>Reposted from [Nathen Harvey's blog](http://nathenharvey.com/blog/2012/07/06/mvt-knife-test-and-travisci/)<sub>

@@ -14,7 +14,7 @@ categories:
   - testing
 ---
 <a href="/images/stoplight.png"><img src="/images/stoplight.png" width="300" style="float:right; margin:0 0 15px 15px;" /></a>
-At CustomInk, we use a variety of tools to monitor the status of our builds. One such tool was [Greenscreen](https://github.com/customink-webops/greenscreen). In fact, we even wrote [a blog post about how we use Greenscreen at CustomInk](http://technology.customink.com/blog/2012/01/02/green-screen/) not too long ago.
+At CustomInk, we use a variety of tools to monitor the status of our builds. One such tool was [Greenscreen](https://github.com/customink-webops/greenscreen). In fact, we even wrote [a blog post about how we use Greenscreen at CustomInk](/blog/2012/01/02/green-screen/) not too long ago.
 
 One of the biggest problems with Greenscreen was its extensibility. By default, Greenscreen only works with Hudson and Jenkins servers. With [Travis CI](http://travis-ci.org) becoming quite popular in the open-source community, Greenscreen needed a major upgrade. Furthermore, Greenscreen was not very extensible.
 
