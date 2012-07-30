@@ -118,7 +118,7 @@ end
 ```
 but this is generally considered bad practice and will not pass [foodcritic](http://acrmp.github.com/foodcritic/#FC013) tests. Use Chef's `:file_cache_path` configuration option instead. This is especially important when developing a community cookbook.
 
-Next we need to give the background image a `source` url. For copyright reasons, I'm going to use a [placehold.it](http://placehold.it) to generate our image. You could use any image you'd like, including one directly inside the cookbook (you would need to use the `cookbook_file` LWRP instead of `remote_file` in that case). I have a high resolution display, so I want a background image 1920x1080 (HD):
+Next we need to give the background image a `source` url. For copyright reasons, I'm going to use a [placehold.it](http://placehold.it) to generate our image. You could use any image you'd like, including one directly inside the cookbook (you would need to use the `cookbook_file` resource instead of `remote_file` in that case). I have a high resolution display, so I want a background image 1920x1080 (HD):
 
 ```ruby
 remote_file "#{Chef::Config[:file_cache_path]}/background.png" do
@@ -148,7 +148,7 @@ It turns out we need to do something like this:
 gconftool-2 -t string -s /desktop/gnome/background/picture_filename <path>
 ```
 
-Because this is a bash command, we could use the `Bash` LWRP. However, I like the execute LWRP, because it is more Rubyesque in my opinion:
+Because this is a bash command, we could use the `Bash` resource. However, I like the `execute` resource, because it is more Rubyesque in my opinion:
 
 ```ruby
 execute 'set Desktop background' do
@@ -374,7 +374,7 @@ To keep things organized, I'm going to create a separate recipe for each of the 
 # (default is MacPorts)
 include_recipe 'homebrew'
 
-# Install each of the packages using the `package` LWRP
+# Install each of the packages using the `package` resource
 %w(apple-gcc42 aspell bash-completion elasticsearch erlang ghostscript git imagemagick jasper mongodb mysql node postgresql qt rabbitmq readline redis solr wget).each do |package|
   package package
 end
