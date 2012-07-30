@@ -528,6 +528,7 @@ include_recipe 'sethinator::dotfiles'
 
 Now add `sethinator` (or whatever you called your cookbook) to your node's `run_list` and run `sudo chef-client`. You should have your bash prompt, configuration, aliases, and more right at your fingertips!
 
+If you're looking for a more complete and customizable solution that you don't need to write from scratch, head on over to [Joshua Timberman's blog post](http://jtimberman.housepub.org/blog/2012/07/29/os-x-workstation-management-with-chef/). He goes into much more detail about MacOSX provisioning.
 
 Caveats
 -------
