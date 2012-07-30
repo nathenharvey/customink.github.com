@@ -46,7 +46,12 @@ and make sure you have a clean working directory:
 
 If you have unstaged commits, make sure to either stash or commit them before continuing.
 
-Next, let's create our first cookbook. This cookbook will manage our Desktop background. If we were creating a cookbook that installed a particular piece of software, like ImageMagick, convention would dictate that we name it after that software. However, in this case, we are free to choose any name we'd like. You could be boring and pick something like "desktop-background", but that's no fun. Let's name our cookbook "major-tom" (background-control => ground-control => major-tom for those following along at home). Use the `knife cookbook create` command to generate the cookbook skeleton:
+Before we create our first cookbook, let's add a couple of things to our `knife.rb` file to make the process go a little more smoothly.  Open up your `knife.rb` file and add the following two lines to the end of the file replacing the sample values with your information.  (NOTE:  if you set-up your chef-repo like the [previous post]((/blog/2012/05/28/provision-your-laptop-with-chef-part-1/)), you'll find the file at `~/Development/chef-repo/.chef/knife.rb`.)
+
+    cookbook_email      'email@example.com'
+    cookbook_copyright  'Your Name'
+
+With these new knife values, we're ready to create our first cookbook. This cookbook will manage our Desktop background. If we were creating a cookbook that installed a particular piece of software, like ImageMagick, convention would dictate that we name it after that software. However, in this case, we are free to choose any name we'd like. You could be boring and pick something like "desktop-background", but that's no fun. Let's name our cookbook "major-tom" (background-control => ground-control => major-tom for those following along at home). Use the `knife cookbook create` command to generate the cookbook skeleton:
 
     $ knife cookbook create major-tom
 
@@ -84,7 +89,7 @@ CHANGELOG
 - Initial release
 ```
 
-Next, we need to fix up the `metadata.rb`. Update all the required fields so it looks like this:
+Next, we need to fix up the `metadata.rb`. Update the description to include a bit more detail.  Everything else should be OK.
 
 ```ruby
 maintainer 'Your Name'
@@ -93,19 +98,6 @@ license 'All rights reserved'
 description 'Installs/Configures desktop background images'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '0.0.1'
-```
-
-Now we are ready to start writing our default receipe. Open up the `recipes/default.rb` file and change the Copyright and Author to match who you are:
-
-```ruby
-#
-# Cookbook Name:: major-tom
-# Recipe:: default
-#
-# Copyright 2012, Your Name
-#
-# All rights reserved - Do Not Redistribute
-#
 ```
 
 In this scenario, let's imagine that we want to download our desktop image from the Internet. We will use the [Remote File](http://wiki.opscode.com/display/chef/Resources#Resources-RemoteFile) LWRP to fetch the remote image:
