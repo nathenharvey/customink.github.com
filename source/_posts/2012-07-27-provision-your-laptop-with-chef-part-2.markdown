@@ -207,7 +207,7 @@ execute 'set Desktop background' do
 end
 ```
 
-But what if you wanted to set the Desktop background for **all** the users? Maybe you operate in an Enterprise that requires the company logo be on the Desktop background. Or maybe you just have OCD and like everything to be the same. Either way, there are two possible solutions for accomplishing this.
+But what if you wanted to set the Desktop background for **all** the users? Maybe you operate in an Enterprise that requires the company logo be on the Desktop background. Or maybe you just have OCD and like everything to be the same. Either way, there are a few possible solutions for accomplishing this.  Let's look at one way to do this.
 
 #### Using `node['etc']['password']`
 You can iterate over all the local accounts on a given machine using the `node['etc']['passwd']` hash. It looks like this:
@@ -224,27 +224,6 @@ end
 ```
 
 Here, we iterate over each user and execute the command once for each user. Notice the `only_if` block as well. This tells Chef to only run for non-system accounts (> 1000).
-
-#### Using `search(:users)`
-This implementation is slightly more complex and has more coupling with an entire environment rather than provisioning a single machine.
-
-1. Get a list of all user `data_bags` using Chef search.
-2. For each user, execute the command if and only if that account exists on the local machine.
-
-It might look something like this:
-
-```ruby
-search(:users).each do |user|
-  execute 'set Desktop background' do
-    command "gconftool-2 -t string -s /desktop/gnome/background/picture_filename #{Chef::Config[:file_cache_path]}/background.png"
-    user user['id']
-    action :nothing
-    only_if { data['uid'].to_i > 1000 && node['etc']['passwd'].include?(user['id']) }
-  end
-end
-```
-
-The reason I prefer using `node['etc']['passwd']` here is because there's a lot of overhead with databags and maintenance if you use Chef search. Chef search definitely has its uses, but it seems a little overkill in this case.
 
 Upload the cookbook and run `sudo chef-client` again and you should see you Desktop background change. Depending on your machine, you may need to logout and login for the changes to take effect.
 
