@@ -100,7 +100,7 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '0.0.1'
 ```
 
-In this scenario, let's imagine that we want to download our desktop image from the Internet. We will use the [Remote File](http://wiki.opscode.com/display/chef/Resources#Resources-RemoteFile) LWRP to fetch the remote image:
+In this scenario, let's imagine that we want to download our desktop image from the Internet. We will use the [Remote File](http://wiki.opscode.com/display/chef/Resources#Resources-RemoteFile) resource to fetch the remote image:
 
 ```ruby
 # recipes/default.rb
