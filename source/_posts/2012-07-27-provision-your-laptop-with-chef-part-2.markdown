@@ -265,7 +265,7 @@ In this next step, I'm going to switch over to a Mac because I personally use a 
 
 > "What should I configure?"
 
-This question is has potentially endless answers and all depends on how much time you want to spend capturing your current configuration in Chef. For this tutorial, I'm going to do the following:
+This question has potentially endless number of answers and all depends on how much time you want to spend capturing your current configuration in Chef. For this tutorial, I'm going to do the following:
 
 1. Install the following packages:
     - `apple-gcc42`
@@ -427,7 +427,7 @@ default['sethinator']['git'] = [
 ]
 ```
 
-I've suppressed the URLs to our private repositories, but you get the general idea. Notice there are additional options such as `reference` and `revision` that I have left out because I'm okay with their default values. If you use another CVS such as SVN, you may want to support additional attributes and tweak accordingly.
+I've suppressed the URLs to our private repositories, but you get the general idea. Notice there are additional options such as `reference` and `revision` that I have left out because I'm okay with their default values. If you use another CVS such as SVN, you may want to support additional attributes and tweak accordingly.  Specifying the attribute values in the cookbook works but there are lots of other places that are more appropriate for managing these attributes.  Checkout the [Attributes page on the Opscode wiki](http://wiki.opscode.com/display/chef/Attributes) for more details.
 
 ### Installing dotfiles
 Since I spend 90% of my time working in Terminal, I have a small [collection of dotfiles](https://github.com/sethvargo/dotfiles) that I've accumulated over the years. Everything from my bash prompt to RVM setup.
@@ -518,6 +518,8 @@ The official Opscode wiki detailing various workflow implementations.
 Created by [Jon Cowie](https://github.com/jonlives) over at [Etsy](http://www.etsy.com/), KnifeSpork makes bumping, uploading, and sharing cookbooks a breeze, especially in collaborative environments.
 ##### [Librarian](https://github.com/applicationsonline/librarian)
 Librarian is a tool for managing cookbooks. If you're familiar with Ruby, it's the equivalent of a `Gemfile`.
+##### [Berkshelf](https://github.com/RiotGames/berkshelf)
+Berkshelf allows you to manage a cookbook or an application's cookbook dependencies.  Check-out this [comparison of Librarian and Berkshelf](http://christian-trabold.de/librarian-chef-vs-berkshelf).
 
 ### Testing
 I will not go into cookbook testing extensively here, but it's very important that your cookbooks follow some standard. At the time of this writing, there are a few solutions for testing cookbooks - [chefspec](https://github.com/acrmp/chefspec), [cucumber-chef](http://www.cucumber-chef.org/), [minitest-chef-handler](https://github.com/calavera/minitest-chef-handler), and [rspec-chef](https://github.com/calavera/rspec-chef) – and they each have their own distinct advantages. At the very least, you should run `knife cookbook test` and `foodcritic` against all your cookbooks. Nathen Harvey covered this in his [MVT: knife test and TravisCI](http://technology.customink.com/blog/2012/07/06/mvt-knife-test-and-travisci/) blog post.
