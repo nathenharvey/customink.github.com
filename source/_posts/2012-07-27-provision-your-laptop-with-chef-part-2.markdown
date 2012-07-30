@@ -197,7 +197,7 @@ In the `run_list` part of the JSON file, add `recipe[major-tom]`:
 
 Save and close this file so that it is updated on the Chef Server.
 
-Upload the cookbook and run `sudo chef-client`. You should see that the command completes successfully. However, your Desktop background may not change. Why? Well, by default, Chef runs as the root user. We just set the root user's background, but we wanted to set our own! After a bit of research, it turns out that we need to set the `user` attribute on the `execute` block to tell Chef which user to run the command as:
+Upload the cookbook (`knife cookbook upload major-tom`) and run `sudo chef-client`. You should see that the command completes successfully. However, your Desktop background may not change. Why? Well, by default, Chef runs as the root user. We just set the root user's background, but we wanted to set our own! After a bit of research, it turns out that we need to set the `user` attribute on the `execute` block to tell Chef which user to run the command as:
 
 ```ruby
 execute 'set Desktop background' do
